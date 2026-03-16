@@ -19,11 +19,7 @@ export function Navigation({ theme, toggleTheme }) {
       </a>
       <nav className="fixed top-0 left-0 right-0 z-[100] px-6 py-4 flex items-center justify-between bg-bg/85 backdrop-blur-md border-b border-border transition-all duration-300" role="navigation" aria-label="Main navigation">
         <div className="flex items-center gap-2">
-          <svg className="w-8 h-8" viewBox="0 0 32 32" fill="none" aria-label="hf.pl logo">
-            <rect x="2" y="2" width="28" height="28" rx="6" stroke="currentColor" strokeWidth="1.5" strokeOpacity="0.15"/>
-            <text x="16" y="22" textAnchor="middle" className="font-display text-[18px] fill-primary">hf</text>
-          </svg>
-          <span className="font-display text-xl text-primary tracking-tight">hf<span className="opacity-40">.pl</span></span>
+          <span className="font-display text-[1.4rem] font-bold bg-gradient-to-r from-primary to-[#e8c962] bg-clip-text text-transparent tracking-tight">hf<span className="opacity-60">.pl</span></span>
         </div>
         
         <div className="flex items-center gap-3">

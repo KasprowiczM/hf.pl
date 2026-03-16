@@ -11,8 +11,13 @@ const SectionHeader = ({ overline, title, desc }) => (
 );
 
 const cardVariants = {
-  hidden: { opacity: 0, y: 30 },
-  visible: { opacity: 1, y: 0 }
+  hidden: { opacity: 0, scale: 0.9, y: 40 },
+  visible: { 
+    opacity: 1, 
+    scale: 1, 
+    y: 0, 
+    transition: { type: 'spring', stiffness: 100, damping: 15 }
+  }
 };
 
 export function WhySection() {
@@ -70,7 +75,7 @@ export function WhySection() {
           <motion.div 
             key={idx} 
             variants={cardVariants}
-            className="group relative bg-surface-2 border border-border rounded-xl p-8 overflow-hidden hover:border-primary-dim transition-colors"
+            className="group relative bg-surface-2 border border-border rounded-2xl p-8 overflow-hidden hover:border-primary/50 transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_40px_-15px_rgba(201,164,76,0.15)]"
           >
             <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-primary to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
             {card.icon}

@@ -12,8 +12,13 @@ const useCasesList = [
 ];
 
 const itemVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0 }
+  hidden: { opacity: 0, x: -30, y: 20 },
+  visible: { 
+    opacity: 1, 
+    x: 0, 
+    y: 0,
+    transition: { type: 'spring', stiffness: 100, damping: 15 }
+  }
 };
 
 export function UseCases() {
@@ -38,11 +43,11 @@ export function UseCases() {
           <motion.div 
             key={idx}
             variants={itemVariants}
-            className="flex items-start gap-4 p-6 bg-surface border border-border rounded-lg transition-colors hover:border-primary-dim"
+            className="flex items-start gap-4 p-6 bg-surface border border-border rounded-xl transition-all duration-300 hover:border-primary/50 hover:-translate-y-1 hover:shadow-[0_10px_30px_-10px_rgba(201,164,76,0.1)] group cursor-default"
           >
             <div className="w-2 h-2 min-w-[8px] rounded-full bg-primary mt-2" aria-hidden="true"></div>
             <div>
-              <div className="font-semibold text-text text-base sm:text-[clamp(1rem,0.95rem+0.25vw,1.125rem)] mb-1">
+              <div className="font-semibold text-text group-hover:text-primary transition-colors duration-300 text-base sm:text-[clamp(1rem,0.95rem+0.25vw,1.125rem)] mb-1">
                 {uc.domain || t(uc.i18nDomainKey)}
               </div>
               <div className="text-sm sm:text-[clamp(0.875rem,0.8rem+0.35vw,1rem)] text-text-muted">
