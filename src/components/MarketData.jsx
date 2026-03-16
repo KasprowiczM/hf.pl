@@ -12,7 +12,7 @@ import {
   Tooltip,
   Filler,
 } from 'chart.js';
-import { Line, Bar, Doughnut } from 'react-chartjs-2';
+import { Line, Bar, Pie } from 'react-chartjs-2';
 import { motion } from 'framer-motion';
 
 ChartJS.register(
@@ -151,7 +151,6 @@ export function MarketData({ theme }) {
   const availOptions = {
     responsive: true,
     maintainAspectRatio: false,
-    cutout: '70%',
     plugins: {
       legend: {
         display: true,
@@ -227,7 +226,7 @@ export function MarketData({ theme }) {
               <span className="text-xs text-text-muted">{t('chart3_sub')}</span>
             </div>
             <div className="relative h-[260px] w-full">
-              <Doughnut data={availData} options={availOptions} />
+              <Pie data={availData} options={availOptions} />
             </div>
           </motion.div>
         </div>
