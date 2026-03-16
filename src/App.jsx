@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Navigation } from './components/Navigation';
 import { Hero } from './components/Hero';
-import { StatsBar } from './components/StatsBar';
 import { WhySection } from './components/WhySection';
 import { UseCases } from './components/UseCases';
 import { MarketData } from './components/MarketData';
@@ -29,7 +28,6 @@ function App() {
       <Navigation theme={theme} toggleTheme={toggleTheme} />
       <main id="main" className="flex-grow">
         <Hero />
-        <StatsBar />
         <WhySection />
         <UseCases />
         <MarketData theme={theme} />

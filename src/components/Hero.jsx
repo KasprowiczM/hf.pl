@@ -1,7 +1,44 @@
-import React from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Mail, ArrowDown, ChevronDown } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { motion, useInView } from 'framer-motion';
+
+function AnimatedNumber({ value, suffix = '', prefix = '' }) {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, amount: 0.5 });
+  const [displayValue, setDisplayValue] = useState(0);
+
+  useEffect(() => {
+    if (isInView) {
+      let start = 0;
+      const duration = 1500;
+      const startTime = performance.now();
+
+      const tick = (now) => {
+        const elapsed = now - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        const ease = 1 - Math.pow(1 - progress, 4); // easeOutQuart
+        const current = Math.floor(ease * value);
+        
+        setDisplayValue(current);
+        
+        if (progress < 1) {
+          requestAnimationFrame(tick);
+        } else {
+          setDisplayValue(value);
+        }
+      };
+
+      requestAnimationFrame(tick);
+    }
+  }, [isInView, value]);
+
+  return (
+    <div ref={ref} className="font-display text-4xl sm:text-[clamp(1.5rem,1.5rem+1.25vw,2.5rem)] text-primary mb-2 font-variant-numeric tabular-nums lining-nums">
+      {prefix}{displayValue.toLocaleString()}{suffix}
+    </div>
+  );
+}
 
 export function Hero() {
   const { t } = useTranslation();
@@ -62,10 +99,37 @@ export function Hero() {
       </motion.div>
       
       <motion.div 
+        initial="hidden"
+        animate="visible"
+        variants={{
+          hidden: {},
+          visible: { transition: { staggerChildren: 0.15, delayChildren: 0.6 } }
+        }}
+        className="w-full max-w-[1000px] mx-auto mt-24 grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 z-10"
+      >
+        <motion.div variants={{ hidden: { opacity: 0, y: 30, scale: 0.9 }, visible: { opacity: 1, y: 0, scale: 1, transition: { type: 'spring', stiffness: 100, damping: 15 } } }} className="bg-surface-2/40 backdrop-blur-md border border-border rounded-2xl p-6 text-center hover:border-primary/30 transition-colors">
+          <AnimatedNumber value={2} />
+          <div className="text-xs text-text-muted uppercase tracking-[0.1em]">{t('stat_chars')}</div>
+        </motion.div>
+        <motion.div variants={{ hidden: { opacity: 0, y: 30, scale: 0.9 }, visible: { opacity: 1, y: 0, scale: 1, transition: { type: 'spring', stiffness: 100, damping: 15 } } }} className="bg-surface-2/40 backdrop-blur-md border border-border rounded-2xl p-6 text-center hover:border-primary/30 transition-colors">
+          <AnimatedNumber value={676} />
+          <div className="text-xs text-text-muted uppercase tracking-[0.1em]">{t('stat_total')}</div>
+        </motion.div>
+        <motion.div variants={{ hidden: { opacity: 0, y: 30, scale: 0.9 }, visible: { opacity: 1, y: 0, scale: 1, transition: { type: 'spring', stiffness: 100, damping: 15 } } }} className="bg-surface-2/40 backdrop-blur-md border border-border rounded-2xl p-6 text-center hover:border-primary/30 transition-colors">
+          <AnimatedNumber value={5} prefix="<" suffix="%" />
+          <div className="text-xs text-text-muted uppercase tracking-[0.1em]">{t('stat_available')}</div>
+        </motion.div>
+        <motion.div variants={{ hidden: { opacity: 0, y: 30, scale: 0.9 }, visible: { opacity: 1, y: 0, scale: 1, transition: { type: 'spring', stiffness: 100, damping: 15 } } }} className="bg-surface-2/40 backdrop-blur-md border border-border rounded-2xl p-6 text-center hover:border-primary/30 transition-colors">
+          <AnimatedNumber value={340} prefix="+" suffix="%" />
+          <div className="text-xs text-text-muted uppercase tracking-[0.1em]">{t('stat_growth')}</div>
+        </motion.div>
+      </motion.div>
+      
+      <motion.div 
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 1, duration: 1 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-text-faint text-xs animate-[scrollBounce_2s_ease-in-out_infinite]"
+        transition={{ delay: 1.5, duration: 1 }}
+        className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-text-faint text-xs animate-[scrollBounce_2s_ease-in-out_infinite] z-10"
         aria-hidden="true"
       >
         <ChevronDown size={16} />
