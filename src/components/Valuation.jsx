@@ -13,7 +13,7 @@ export function Valuation() {
       </div>
 
       <motion.div 
-        initial={{ opacity: 0, y: 60, scale: 0.95 }}
+        initial={{ opacity: 0, x: -100, scale: 0.95 }}
         whileInView={{ opacity: 1, y: 0, scale: 1 }}
         viewport={{ once: true, amount: 0.3 }}
         transition={{ type: 'spring', stiffness: 70, damping: 20 }}

@@ -26,7 +26,7 @@ export function Contact() {
       </div>
 
       <motion.div 
-        initial={{ opacity: 0, y: 40 }}
+        initial={{ opacity: 0, x: 100 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.3 }}
         transition={{ type: 'spring', stiffness: 80, damping: 20, delay: 0.1 }}

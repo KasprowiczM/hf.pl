@@ -19,7 +19,10 @@ export function Navigation({ theme, toggleTheme }) {
       </a>
       <nav className="fixed top-0 left-0 right-0 z-[100] px-6 py-4 flex items-center justify-between bg-bg/85 backdrop-blur-md border-b border-border transition-all duration-300" role="navigation" aria-label="Main navigation">
         <div className="flex items-center gap-2">
-          <span className="font-display text-[1.4rem] font-bold text-text-muted hover:text-text transition-colors tracking-tight cursor-default">hf.pl</span>
+          <span className="font-display text-[1.4rem] font-bold tracking-tight cursor-default">
+            <span className="bg-[linear-gradient(135deg,var(--color-primary)_0%,#e8c962_50%,var(--color-primary)_100%)] bg-[length:200%_200%] bg-clip-text text-transparent animate-[goldShimmer_4s_ease-in-out_infinite]">hf</span>
+            <span className="text-text-faint">.pl</span>
+          </span>
         </div>
         
         <div className="flex items-center gap-3">

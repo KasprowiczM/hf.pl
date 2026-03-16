@@ -12,13 +12,13 @@ const useCasesList = [
 ];
 
 const itemVariants = {
-  hidden: { opacity: 0, x: -30, y: 20 },
-  visible: { 
+  hidden: (idx) => ({ opacity: 0, x: idx % 2 === 0 ? -80 : 80, y: 20 }),
+  visible: (idx) => ({ 
     opacity: 1, 
     x: 0, 
     y: 0,
-    transition: { type: 'spring', stiffness: 100, damping: 15 }
-  }
+    transition: { type: 'spring', stiffness: 100, damping: 15, delay: idx * 0.1 }
+  })
 };
 
 export function UseCases() {
@@ -42,6 +42,7 @@ export function UseCases() {
         {useCasesList.map((uc, idx) => (
           <motion.div 
             key={idx}
+            custom={idx}
             variants={itemVariants}
             className="flex items-start gap-4 p-6 bg-surface border border-border rounded-xl transition-all duration-300 hover:border-primary/50 hover:-translate-y-1 hover:shadow-[0_10px_30px_-10px_rgba(201,164,76,0.1)] group cursor-default"
           >
