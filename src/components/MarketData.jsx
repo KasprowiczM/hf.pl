@@ -184,10 +184,11 @@ export function MarketData({ theme }) {
       <div className="max-w-[1200px] mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="lg:col-span-2 bg-surface-2 border border-border rounded-xl p-6"
+            initial={{ opacity: 0, x: -50, scale: 0.95 }}
+            whileInView={{ opacity: 1, x: 0, scale: 1 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ type: 'spring', stiffness: 80, damping: 20 }}
+            className="lg:col-span-2 bg-surface-2 border border-border rounded-xl p-6 hover:border-primary/30 transition-colors duration-500 hover:shadow-[0_10px_30px_-10px_rgba(201,164,76,0.1)]"
           >
             <div className="flex flex-col sm:flex-row sm:items-baseline justify-between mb-6">
               <span className="text-base font-semibold text-text">{t('chart1_title')}</span>
@@ -199,10 +200,11 @@ export function MarketData({ theme }) {
           </motion.div>
 
           <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="bg-surface-2 border border-border rounded-xl p-6"
+            initial={{ opacity: 0, x: 50, scale: 0.95 }}
+            whileInView={{ opacity: 1, x: 0, scale: 1 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ type: 'spring', stiffness: 80, damping: 20, delay: 0.1 }}
+            className="bg-surface-2 border border-border rounded-xl p-6 hover:border-primary/30 transition-colors duration-500 hover:shadow-[0_10px_30px_-10px_rgba(201,164,76,0.1)]"
           >
             <div className="flex flex-col sm:flex-row sm:items-baseline justify-between mb-6">
               <span className="text-base font-semibold text-text">{t('chart2_title')}</span>
@@ -214,10 +216,11 @@ export function MarketData({ theme }) {
           </motion.div>
 
           <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="bg-surface-2 border border-border rounded-xl p-6"
+            initial={{ opacity: 0, x: 50, scale: 0.95 }}
+            whileInView={{ opacity: 1, x: 0, scale: 1 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ type: 'spring', stiffness: 80, damping: 20, delay: 0.2 }}
+            className="bg-surface-2 border border-border rounded-xl p-6 hover:border-primary/30 transition-colors duration-500 hover:shadow-[0_10px_30px_-10px_rgba(201,164,76,0.1)]"
           >
             <div className="flex flex-col sm:flex-row sm:items-baseline justify-between mb-6">
               <span className="text-base font-semibold text-text">{t('chart3_title')}</span>

@@ -13,11 +13,11 @@ export function Valuation() {
       </div>
 
       <motion.div 
-        initial={{ opacity: 0, scale: 0.95 }}
-        whileInView={{ opacity: 1, scale: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.6 }}
-        className="max-w-[960px] mx-auto bg-gradient-to-br from-surface-2 to-surface-3 border border-border-strong rounded-2xl p-[clamp(2.5rem,5vw,4rem)] px-8 text-center relative overflow-hidden"
+        initial={{ opacity: 0, y: 60, scale: 0.95 }}
+        whileInView={{ opacity: 1, y: 0, scale: 1 }}
+        viewport={{ once: true, amount: 0.3 }}
+        transition={{ type: 'spring', stiffness: 70, damping: 20 }}
+        className="max-w-[960px] mx-auto bg-gradient-to-br from-surface-2 to-surface-3 border border-border-strong rounded-2xl p-[clamp(2.5rem,5vw,4rem)] px-8 text-center relative overflow-hidden flex flex-col items-center hover:shadow-[0_20px_50px_-20px_rgba(201,164,76,0.2)] transition-shadow duration-700"
       >
         <div className="absolute -top-[50%] left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-[radial-gradient(circle,var(--color-primary-glow)_0%,transparent_70%)] rounded-full z-0"></div>
         

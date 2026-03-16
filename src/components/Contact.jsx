@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Mail, Check } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 export function Contact() {
   const { t } = useTranslation();
@@ -24,7 +25,13 @@ export function Contact() {
         <p className="text-base sm:text-[clamp(1rem,0.95rem+0.25vw,1.125rem)] text-text-muted leading-[1.7]">{t('contact_desc')}</p>
       </div>
 
-      <div className="max-w-[640px] mx-auto text-center relative">
+      <motion.div 
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.3 }}
+        transition={{ type: 'spring', stiffness: 80, damping: 20, delay: 0.1 }}
+        className="max-w-[640px] mx-auto text-center relative"
+      >
         <a 
           href="mailto:domain@hf.pl" 
           onClick={handleCopy}
@@ -50,7 +57,7 @@ export function Contact() {
             </li>
           ))}
         </ul>
-      </div>
+      </motion.div>
     </section>
   );
 }

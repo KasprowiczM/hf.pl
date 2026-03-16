@@ -19,7 +19,13 @@ export function Scarcity() {
       <div className="max-w-[1200px] mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
           
-          <div className="relative max-w-[380px] mx-auto w-full" ref={ref}>
+          <motion.div 
+            initial={{ opacity: 0, x: -50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ type: 'spring', stiffness: 80, damping: 20 }}
+            className="relative max-w-[380px] mx-auto w-full" ref={ref}
+          >
             <svg viewBox="0 0 300 300" fill="none" className="w-full h-auto">
               <circle cx="150" cy="150" r="130" stroke="var(--color-border)" strokeWidth="2" />
               <motion.circle 
@@ -40,9 +46,15 @@ export function Scarcity() {
                 ~5% <tspan fill="var(--color-text-faint)">{t('scarcity_avail')}</tspan>
               </text>
             </svg>
-          </div>
+          </motion.div>
 
-          <div className="space-y-6">
+          <motion.div 
+            initial={{ opacity: 0, x: 50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ type: 'spring', stiffness: 80, damping: 20, delay: 0.1 }}
+            className="space-y-6"
+          >
             <div>
               <div className="text-xs text-primary uppercase tracking-[0.12em] font-semibold mb-3">{t('scarcity_overline')}</div>
               <h3 className="font-display text-2xl sm:text-[clamp(1.5rem,1.2rem+1.25vw,2.25rem)] text-text">{t('scarcity_title')}</h3>
@@ -65,7 +77,7 @@ export function Scarcity() {
                 </motion.li>
               ))}
             </ul>
-          </div>
+          </motion.div>
 
         </div>
       </div>
