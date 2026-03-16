@@ -105,21 +105,24 @@ export function Hero() {
           hidden: {},
           visible: { transition: { staggerChildren: 0.15, delayChildren: 0.6 } }
         }}
-        className="w-full max-w-[1000px] mx-auto mt-24 grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 z-10"
+        className="w-full max-w-[1200px] mx-auto mt-16 lg:mt-0 grid grid-cols-2 gap-4 lg:absolute lg:inset-0 lg:pointer-events-none z-10"
       >
-        <motion.div variants={{ hidden: { opacity: 0, y: 30, scale: 0.9 }, visible: { opacity: 1, y: 0, scale: 1, transition: { type: 'spring', stiffness: 100, damping: 15 } } }} className="bg-surface-2/40 backdrop-blur-md border border-border rounded-2xl p-6 text-center hover:border-primary/30 transition-colors">
+        <motion.div variants={{ hidden: { opacity: 0, scale: 0.8, y: 20 }, visible: { opacity: 1, scale: 1, y: 0, transition: { type: 'spring', stiffness: 100, damping: 15 } } }} className="bg-surface-2/40 backdrop-blur-md border border-border rounded-2xl p-6 text-center hover:border-primary/30 transition-colors lg:pointer-events-auto lg:absolute lg:top-[20%] xl:top-[22%] lg:left-[2%] xl:left-[8%] lg:w-[220px]">
           <AnimatedNumber value={2} />
           <div className="text-xs text-text-muted uppercase tracking-[0.1em]">{t('stat_chars')}</div>
         </motion.div>
-        <motion.div variants={{ hidden: { opacity: 0, y: 30, scale: 0.9 }, visible: { opacity: 1, y: 0, scale: 1, transition: { type: 'spring', stiffness: 100, damping: 15 } } }} className="bg-surface-2/40 backdrop-blur-md border border-border rounded-2xl p-6 text-center hover:border-primary/30 transition-colors">
+        
+        <motion.div variants={{ hidden: { opacity: 0, scale: 0.8, y: 20 }, visible: { opacity: 1, scale: 1, y: 0, transition: { type: 'spring', stiffness: 100, damping: 15 } } }} className="bg-surface-2/40 backdrop-blur-md border border-border rounded-2xl p-6 text-center hover:border-primary/30 transition-colors lg:pointer-events-auto lg:absolute lg:top-[20%] xl:top-[22%] lg:right-[2%] xl:right-[8%] lg:w-[220px]">
           <AnimatedNumber value={676} />
           <div className="text-xs text-text-muted uppercase tracking-[0.1em]">{t('stat_total')}</div>
         </motion.div>
-        <motion.div variants={{ hidden: { opacity: 0, y: 30, scale: 0.9 }, visible: { opacity: 1, y: 0, scale: 1, transition: { type: 'spring', stiffness: 100, damping: 15 } } }} className="bg-surface-2/40 backdrop-blur-md border border-border rounded-2xl p-6 text-center hover:border-primary/30 transition-colors">
+        
+        <motion.div variants={{ hidden: { opacity: 0, scale: 0.8, y: 20 }, visible: { opacity: 1, scale: 1, y: 0, transition: { type: 'spring', stiffness: 100, damping: 15 } } }} className="bg-surface-2/40 backdrop-blur-md border border-border rounded-2xl p-6 text-center hover:border-primary/30 transition-colors lg:pointer-events-auto lg:absolute lg:bottom-[15%] xl:bottom-[20%] lg:left-[2%] xl:left-[8%] lg:w-[220px]">
           <AnimatedNumber value={5} prefix="<" suffix="%" />
           <div className="text-xs text-text-muted uppercase tracking-[0.1em]">{t('stat_available')}</div>
         </motion.div>
-        <motion.div variants={{ hidden: { opacity: 0, y: 30, scale: 0.9 }, visible: { opacity: 1, y: 0, scale: 1, transition: { type: 'spring', stiffness: 100, damping: 15 } } }} className="bg-surface-2/40 backdrop-blur-md border border-border rounded-2xl p-6 text-center hover:border-primary/30 transition-colors">
+        
+        <motion.div variants={{ hidden: { opacity: 0, scale: 0.8, y: 20 }, visible: { opacity: 1, scale: 1, y: 0, transition: { type: 'spring', stiffness: 100, damping: 15 } } }} className="bg-surface-2/40 backdrop-blur-md border border-border rounded-2xl p-6 text-center hover:border-primary/30 transition-colors lg:pointer-events-auto lg:absolute lg:bottom-[15%] xl:bottom-[20%] lg:right-[2%] xl:right-[8%] lg:w-[220px]">
           <AnimatedNumber value={340} prefix="+" suffix="%" />
           <div className="text-xs text-text-muted uppercase tracking-[0.1em]">{t('stat_growth')}</div>
         </motion.div>

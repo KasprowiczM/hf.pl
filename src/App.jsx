@@ -8,6 +8,7 @@ import { Scarcity } from './components/Scarcity';
 import { Valuation } from './components/Valuation';
 import { Contact } from './components/Contact';
 import { Footer } from './components/Footer';
+import { SEO } from './components/SEO';
 
 function App() {
   const [theme, setTheme] = useState('dark');
@@ -25,6 +26,7 @@ function App() {
 
   return (
     <div className="flex flex-col min-h-screen">
+      <SEO theme={theme} />
       <Navigation theme={theme} toggleTheme={toggleTheme} />
       <main id="main" className="flex-grow">
         <Hero />
