@@ -1,0 +1,51 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bg: light-dark(#faf9f6, #0a0a0b);
+  --color-surface: light-dark(#ffffff, #111113);
+  --color-surface-2: light-dark(#f5f4f1, #18181b);
+  --color-surface-3: light-dark(#edecea, #1f1f23);
+  --color-surface-offset: light-dark(#f0efec, #141416);
+  --color-border: light-dark(rgba(0, 0, 0, 0.08), rgba(255, 255, 255, 0.08));
+  --color-border-strong: light-dark(rgba(0, 0, 0, 0.14), rgba(255, 255, 255, 0.14));
+  --color-divider: light-dark(rgba(0, 0, 0, 0.06), rgba(255, 255, 255, 0.06));
+
+  --color-text: light-dark(#1a1a1d, #e8e6e1);
+  --color-text-muted: light-dark(#6b6966, #9a9894);
+  --color-text-faint: light-dark(#a09e9a, #5a5856);
+
+  --color-primary: light-dark(#9a7a2e, #c9a44c);
+  --color-primary-hover: light-dark(#b8922e, #dbb860);
+  --color-primary-active: light-dark(#7d6324, #b89338);
+  --color-primary-dim: light-dark(rgba(154, 122, 46, 0.08), rgba(201, 164, 76, 0.12));
+  --color-primary-glow: light-dark(rgba(154, 122, 46, 0.04), rgba(201, 164, 76, 0.06));
+
+  --color-success: light-dark(#437a22, #6daa45);
+  --color-error: light-dark(#a13544, #dd6974);
+  
+  --shadow-sm: light-dark(0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.3));
+  --shadow-md: light-dark(0 4px 12px rgba(0,0,0,0.08), 0 4px 16px rgba(0,0,0,0.4));
+  --shadow-lg: light-dark(0 12px 32px rgba(0,0,0,0.12), 0 12px 40px rgba(0,0,0,0.5));
+  --shadow-gold: light-dark(0 0 60px rgba(154,122,46,0.06), 0 0 60px rgba(201,164,76,0.08));
+
+  --font-display: "Instrument Serif", "Georgia", serif;
+  --font-body: "Satoshi", "Inter", "Helvetica Neue", sans-serif;
+}
+
+@layer base {
+  html {
+    color-scheme: light dark;
+    /* Default theme overrides if applying manual class */
+  }
+
+  html.dark {
+    color-scheme: dark;
+  }
+  
+  body {
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    font-family: var(--font-body);
+    overflow-x: hidden;
+  }
+}
