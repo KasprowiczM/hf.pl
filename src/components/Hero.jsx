@@ -1,138 +1,91 @@
-import React, { useEffect, useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Mail, ArrowDown, ChevronDown } from 'lucide-react';
-import { motion, useInView } from 'framer-motion';
+import { ArrowDown, Mail } from 'lucide-react';
+import heroGraphic from '../assets/hero.png';
 
-function AnimatedNumber({ value, suffix = '', prefix = '' }) {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, amount: 0.5 });
-  const [displayValue, setDisplayValue] = useState(0);
-
-  useEffect(() => {
-    if (isInView) {
-      let start = 0;
-      const duration = 1500;
-      const startTime = performance.now();
-
-      const tick = (now) => {
-        const elapsed = now - startTime;
-        const progress = Math.min(elapsed / duration, 1);
-        const ease = 1 - Math.pow(1 - progress, 4); // easeOutQuart
-        const current = Math.floor(ease * value);
-        
-        setDisplayValue(current);
-        
-        if (progress < 1) {
-          requestAnimationFrame(tick);
-        } else {
-          setDisplayValue(value);
-        }
-      };
-
-      requestAnimationFrame(tick);
-    }
-  }, [isInView, value]);
-
-  return (
-    <div ref={ref} className="font-display text-4xl sm:text-[clamp(1.5rem,1.5rem+1.25vw,2.5rem)] text-primary mb-2 font-variant-numeric tabular-nums lining-nums">
-      {prefix}{displayValue.toLocaleString()}{suffix}
-    </div>
-  );
-}
+const proofPanelKeys = [
+  ['hero_panel_status_title', 'hero_panel_status_body'],
+  ['hero_panel_flex_title', 'hero_panel_flex_body'],
+  ['hero_panel_transfer_title', 'hero_panel_transfer_body'],
+];
 
 export function Hero() {
   const { t } = useTranslation();
+  const proofItems = [
+    { value: t('metric_1_value'), label: t('metric_1_label') },
+    { value: t('metric_2_value'), label: t('metric_2_label') },
+    { value: t('metric_3_value'), label: t('metric_3_label') },
+  ];
 
   return (
-    <section className="min-h-screen flex flex-col items-center justify-center text-center px-6 pt-32 pb-16 relative overflow-hidden" id="hero">
-      <div className="absolute inset-0 z-[-1]" aria-hidden="true">
-        <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg_width=%2240%22_height=%2240%22_xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cpath_d=%22M40_0L0_0_0_40%22_fill=%22none%22_stroke=%22%23ffffff%22_stroke-width=%220.3%22_opacity=%220.04%22/%3E%3C/svg%3E')] dark:opacity-10 opacity-5"></div>
+    <section className="section-shell relative overflow-hidden pt-32 sm:pt-36 lg:pt-40" id="hero">
+      <div className="pointer-events-none absolute inset-0" aria-hidden="true">
+        <div className="absolute left-[8%] top-[18%] h-48 w-48 rounded-full bg-primary/12 blur-3xl"></div>
+        <div className="absolute bottom-[14%] right-[12%] h-56 w-56 rounded-full bg-surface-offset/8 blur-3xl"></div>
       </div>
-      
-      <motion.div 
-        initial={{ opacity: 0, x: -80 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-        className="inline-flex items-center gap-2 px-4 py-1 bg-primary-dim border border-primary/20 rounded-full text-xs text-primary font-semibold tracking-widest uppercase mb-8"
-      >
-        <span className="w-1.5 h-1.5 bg-primary rounded-full animate-pulse" aria-hidden="true"></span>
-        <span>{t('badge')}</span>
-      </motion.div>
-      
-      <motion.h1 
-        initial={{ opacity: 0, x: 80, scale: 0.95 }}
-        animate={{ opacity: 1, x: 0, scale: 1 }}
-        transition={{ duration: 0.6, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-        className="font-display text-[clamp(3.5rem,1rem+8vw,9rem)] text-text tracking-tight leading-none mb-4"
-      >
-        <span className="bg-[linear-gradient(135deg,var(--color-primary)_0%,#e8c962_50%,var(--color-primary)_100%)] bg-[length:200%_200%] bg-clip-text text-transparent animate-[goldShimmer_4s_ease-in-out_infinite]">{t('domain_prefix')}</span>
-        <span className="text-text-faint">.pl</span>
-      </motion.h1>
-      
-      <motion.p 
-        initial={{ opacity: 0, x: -80 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.6, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-        className="text-lg text-text-muted max-w-[560px] mx-auto mb-10 leading-relaxed"
-      >
-        {t('hero_subtitle')}
-      </motion.p>
-      
-      <motion.div 
-        initial={{ opacity: 0, y: 50, scale: 0.9 }}
-        animate={{ opacity: 1, y: 0, scale: 1 }}
-        transition={{ duration: 0.6, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-        className="flex gap-4 items-center flex-wrap justify-center"
-      >
-        <a href="mailto:domain@hf.pl" className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm font-semibold transition-all duration-180 cursor-pointer no-underline bg-primary text-bg hover:bg-primary-hover hover:-translate-y-px hover:shadow-[0_4px_20px_rgba(201,164,76,0.3)] hover:text-bg active:translate-y-0">
-          <Mail size={16} />
-          <span>{t('cta_offer')}</span>
-        </a>
-        <a href="#valuation" className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm font-semibold transition-all duration-180 cursor-pointer no-underline bg-transparent text-text-muted border border-border hover:text-text hover:border-border-strong hover:bg-surface">
-          <span>{t('cta_valuation')}</span>
-          <ArrowDown size={14} />
-        </a>
-      </motion.div>
-      
-      <motion.div 
-        initial="hidden"
-        animate="visible"
-        variants={{
-          hidden: {},
-          visible: { transition: { staggerChildren: 0.15, delayChildren: 0.6 } }
-        }}
-        className="w-full max-w-[1200px] mx-auto mt-16 lg:mt-0 grid grid-cols-2 gap-4 lg:absolute lg:inset-0 lg:pointer-events-none z-10"
-      >
-        <motion.div variants={{ hidden: { opacity: 0, scale: 0.8, y: 20 }, visible: { opacity: 1, scale: 1, y: 0, transition: { type: 'spring', stiffness: 100, damping: 15 } } }} className="bg-surface-2/40 backdrop-blur-md border border-border rounded-2xl p-6 text-center hover:border-primary/30 transition-colors lg:pointer-events-auto lg:absolute lg:top-[20%] xl:top-[22%] lg:left-[2%] xl:left-[8%] lg:w-[220px]">
-          <AnimatedNumber value={2} />
-          <div className="text-xs text-text-muted uppercase tracking-[0.1em]">{t('stat_chars')}</div>
-        </motion.div>
-        
-        <motion.div variants={{ hidden: { opacity: 0, scale: 0.8, y: 20 }, visible: { opacity: 1, scale: 1, y: 0, transition: { type: 'spring', stiffness: 100, damping: 15 } } }} className="bg-surface-2/40 backdrop-blur-md border border-border rounded-2xl p-6 text-center hover:border-primary/30 transition-colors lg:pointer-events-auto lg:absolute lg:top-[20%] xl:top-[22%] lg:right-[2%] xl:right-[8%] lg:w-[220px]">
-          <AnimatedNumber value={676} />
-          <div className="text-xs text-text-muted uppercase tracking-[0.1em]">{t('stat_total')}</div>
-        </motion.div>
-        
-        <motion.div variants={{ hidden: { opacity: 0, scale: 0.8, y: 20 }, visible: { opacity: 1, scale: 1, y: 0, transition: { type: 'spring', stiffness: 100, damping: 15 } } }} className="bg-surface-2/40 backdrop-blur-md border border-border rounded-2xl p-6 text-center hover:border-primary/30 transition-colors lg:pointer-events-auto lg:absolute lg:bottom-[15%] xl:bottom-[20%] lg:left-[2%] xl:left-[8%] lg:w-[220px]">
-          <AnimatedNumber value={5} prefix="<" suffix="%" />
-          <div className="text-xs text-text-muted uppercase tracking-[0.1em]">{t('stat_available')}</div>
-        </motion.div>
-        
-        <motion.div variants={{ hidden: { opacity: 0, scale: 0.8, y: 20 }, visible: { opacity: 1, scale: 1, y: 0, transition: { type: 'spring', stiffness: 100, damping: 15 } } }} className="bg-surface-2/40 backdrop-blur-md border border-border rounded-2xl p-6 text-center hover:border-primary/30 transition-colors lg:pointer-events-auto lg:absolute lg:bottom-[15%] xl:bottom-[20%] lg:right-[2%] xl:right-[8%] lg:w-[220px]">
-          <AnimatedNumber value={340} prefix="+" suffix="%" />
-          <div className="text-xs text-text-muted uppercase tracking-[0.1em]">{t('stat_growth')}</div>
-        </motion.div>
-      </motion.div>
-      
-      <motion.div 
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.5, duration: 1 }}
-        className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-text-faint text-xs animate-[scrollBounce_2s_ease-in-out_infinite] z-10"
-        aria-hidden="true"
-      >
-        <ChevronDown size={16} />
-      </motion.div>
+
+      <div className="section-frame grid items-center gap-12 lg:grid-cols-[minmax(0,1.04fr)_minmax(420px,0.96fr)] lg:gap-16">
+        <div className="max-w-[40rem]">
+          <div className="eyebrow">
+            <span className="h-2 w-2 rounded-full bg-primary"></span>
+            {t('badge')}
+          </div>
+          <h1 className="display-title text-balance text-[clamp(4.75rem,2.4rem+9vw,10rem)] leading-[0.86]">
+            <span className="gold-gradient bg-clip-text text-transparent">{t('domain_prefix')}</span>
+            <span className="text-text-faint">.pl</span>
+          </h1>
+          <p className="mt-6 max-w-[36rem] text-balance text-lg leading-8 text-text-muted sm:text-xl">
+            {t('hero_subtitle')}
+          </p>
+          <div className="mt-8 flex flex-wrap items-center gap-3">
+            <a href="mailto:domain@hf.pl" className="action-pill bg-text text-white no-underline hover:-translate-y-0.5 hover:bg-surface-offset">
+              <Mail size={16} />
+              {t('cta_offer')}
+            </a>
+            <a href="#valuation" className="action-pill border border-border bg-white/80 text-text no-underline hover:-translate-y-0.5 hover:border-border-strong hover:bg-white">
+              {t('cta_valuation')}
+              <ArrowDown size={15} />
+            </a>
+          </div>
+          <p className="mt-5 max-w-[34rem] text-sm leading-7 text-text-muted">{t('hero_note')}</p>
+
+          <dl className="mt-10 grid gap-4 sm:grid-cols-3">
+            {proofItems.map((item) => (
+              <div key={item.label} className="rounded-[1.5rem] border border-border bg-white/72 p-5 shadow-[0_16px_30px_rgba(15,23,34,0.05)]">
+                <dt className="text-xs uppercase tracking-[0.18em] text-text-faint">{item.label}</dt>
+                <dd className="stat-value mt-3 text-[clamp(2rem,1.6rem+1.8vw,3rem)] leading-none text-text">{item.value}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+
+        <div className="relative">
+          <div className="hero-shadow relative overflow-hidden rounded-[2rem] border border-border bg-surface-offset px-6 py-6 text-white sm:px-8">
+            <div className="backdrop-grain absolute inset-0 opacity-80"></div>
+            <div className="relative z-10">
+              <div className="flex items-center justify-between text-[0.72rem] uppercase tracking-[0.22em] text-white/65">
+                <span>{t('hero_visual_label')}</span>
+                <span>{t('hero_visual_tag')}</span>
+              </div>
+              <div className="relative mt-8 overflow-hidden rounded-[1.7rem] border border-white/10 bg-[radial-gradient(circle_at_top,#1f2a39_0%,#101720_80%)] px-6 py-8 sm:px-8">
+                <div className="absolute inset-x-10 top-6 h-px origin-left bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.8),transparent)] [animation:pulseLine_3.2s_ease-in-out_infinite]"></div>
+                <img
+                  src={heroGraphic}
+                  alt={t('hero_art_alt')}
+                  className="mx-auto w-full max-w-[340px] object-contain [animation:drift_8s_ease-in-out_infinite]"
+                />
+              </div>
+              <div className="mt-6 grid gap-3 sm:grid-cols-3">
+                {proofPanelKeys.map(([titleKey, bodyKey]) => (
+                  <div key={titleKey} className="rounded-[1.25rem] border border-white/10 bg-white/6 p-4">
+                    <p className="text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-white/50">{t(titleKey)}</p>
+                    <p className="mt-2 text-sm leading-6 text-white/78">{t(bodyKey)}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
   );
 }

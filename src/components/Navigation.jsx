@@ -1,62 +1,82 @@
-import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Sun, Moon } from 'lucide-react';
-import { clsx } from 'clsx';
-import { twMerge } from 'tailwind-merge';
+import { ArrowUpRight } from 'lucide-react';
+import { persistLanguage } from '../i18n';
 
-export function Navigation({ theme, toggleTheme }) {
+const navItems = [
+  { key: 'nav_why', href: '#why' },
+  { key: 'nav_potential', href: '#usecases' },
+  { key: 'nav_market', href: '#market' },
+  { key: 'nav_faq', href: '#faq' },
+  { key: 'nav_contact', href: '#contact' },
+];
+
+export function Navigation() {
   const { t, i18n } = useTranslation();
 
-  const changeLanguage = (lng) => {
-    i18n.changeLanguage(lng);
-    document.documentElement.lang = lng;
+  const changeLanguage = (language) => {
+    i18n.changeLanguage(language);
+    persistLanguage(language);
   };
 
   return (
     <>
-      <a href="#main" className="sr-only absolute top-0 left-0 p-4 bg-primary text-black z-[999]">
+      <a href="#main" className="sr-only absolute left-0 top-0 z-[999] bg-primary px-4 py-3 text-black focus:not-sr-only">
         {t('skip')}
       </a>
-      <nav className="fixed top-0 left-0 right-0 z-[100] px-6 py-4 flex items-center justify-between bg-bg/85 backdrop-blur-md border-b border-border transition-all duration-300" role="navigation" aria-label="Main navigation">
-        <div className="flex items-center gap-2">
-          <span className="font-display text-[1.4rem] font-bold tracking-tight cursor-default">
-            <span className="bg-[linear-gradient(135deg,var(--color-primary)_0%,#e8c962_50%,var(--color-primary)_100%)] bg-[length:200%_200%] bg-clip-text text-transparent animate-[goldShimmer_4s_ease-in-out_infinite]">hf</span>
-            <span className="text-text-faint">.pl</span>
-          </span>
-        </div>
-        
-        <div className="flex items-center gap-3">
-          <div className="flex gap-1 bg-surface-2 rounded-full p-1 border border-border" role="group" aria-label="Language">
-            <button 
-              onClick={() => changeLanguage('pl')}
-              className={twMerge(
-                "px-3 py-1 rounded-full text-xs font-semibold tracking-wider uppercase transition-all duration-180",
-                i18n.language === 'pl' ? "bg-primary text-bg" : "text-text-muted hover:text-text"
-              )}
-              aria-pressed={i18n.language === 'pl'}
-            >
-              PL
-            </button>
-            <button 
-              onClick={() => changeLanguage('en')}
-              className={twMerge(
-                "px-3 py-1 rounded-full text-xs font-semibold tracking-wider uppercase transition-all duration-180",
-                i18n.language === 'en' ? "bg-primary text-bg" : "text-text-muted hover:text-text"
-              )}
-              aria-pressed={i18n.language === 'en'}
-            >
-              EN
-            </button>
+      <header className="fixed inset-x-0 top-0 z-50 px-4 pt-4 sm:px-6 lg:px-8">
+        <nav
+          className="section-frame flex items-center justify-between rounded-full border border-border bg-[rgba(248,244,237,0.82)] px-4 py-3 shadow-[0_20px_40px_rgba(15,23,34,0.08)] backdrop-blur-xl sm:px-5"
+          aria-label="Main navigation"
+        >
+          <a href="#hero" className="flex items-center gap-3 no-underline">
+            <span className="display-title text-[1.65rem] leading-none tracking-tight text-text">
+              <span className="gold-gradient bg-clip-text text-transparent">hf</span>
+              <span className="text-text-faint">.pl</span>
+            </span>
+          </a>
+
+          <div className="hidden items-center gap-6 lg:flex">
+            {navItems.map(({ key, href }) => (
+              <a key={key} href={href} className="anchor-link no-underline">
+                {t(key)}
+              </a>
+            ))}
           </div>
-          <button 
-            onClick={toggleTheme}
-            className="w-9 h-9 flex items-center justify-center rounded-full bg-surface-2 border border-border text-text-muted transition-all duration-180 hover:text-primary hover:border-primary-dim" 
-            aria-label="Switch theme"
-          >
-            {theme === 'dark' ? <Moon size={18} /> : <Sun size={18} />}
-          </button>
-        </div>
-      </nav>
+
+          <div className="flex items-center gap-2 sm:gap-3">
+            <div className="flex rounded-full border border-border bg-white/70 p-1" role="group" aria-label="Language">
+              <button
+                type="button"
+                onClick={() => changeLanguage('pl')}
+                className={`rounded-full px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.16em] ${
+                  i18n.language === 'pl' ? 'bg-text text-bg' : 'text-text-muted hover:text-text'
+                }`}
+                aria-pressed={i18n.language === 'pl'}
+              >
+                PL
+              </button>
+              <button
+                type="button"
+                onClick={() => changeLanguage('en')}
+                className={`rounded-full px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.16em] ${
+                  i18n.language === 'en' ? 'bg-text text-bg' : 'text-text-muted hover:text-text'
+                }`}
+                aria-pressed={i18n.language === 'en'}
+              >
+                EN
+              </button>
+            </div>
+
+            <a
+              href="#contact"
+              className="action-pill hidden bg-text text-white no-underline hover:-translate-y-0.5 hover:bg-surface-offset sm:inline-flex"
+            >
+              {t('nav_offer')}
+              <ArrowUpRight size={15} />
+            </a>
+          </div>
+        </nav>
+      </header>
     </>
   );
 }

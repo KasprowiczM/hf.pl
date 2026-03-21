@@ -1,16 +1,54 @@
-# React + Vite
+# hf.pl
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Premium bilingual landing page for selling the `hf.pl` two-letter domain.
 
-Currently, two official plugins are available:
+## Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- React `19.2.4`
+- Vite `8.0.1`
+- Tailwind CSS `4.2.2`
+- i18next `25.10.2`
+- Wrangler `4.76.0`
 
-## React Compiler
+## Local development
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+```bash
+npm install
+npm run dev
+```
 
-## Expanding the ESLint configuration
+The page supports Polish by default and English through `?lang=en`. Language choice is also persisted locally in the browser.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Quality checks
+
+```bash
+npm run lint
+npm run build
+npm run check
+```
+
+## Deployment
+
+This repository is prepared for both Cloudflare Pages and Cloudflare Workers static asset deployment.
+
+- Pages build command: `npm run build`
+- Pages output directory: `dist`
+- Worker deploy command: `npm run deploy:worker`
+- Pages deploy command: `npm run deploy:pages`
+
+Node is pinned through [.node-version](.node-version) to align with Cloudflare Pages build-image expectations.
+
+See [CLOUDFLARE.md](CLOUDFLARE.md) for deployment details.
+
+## SEO and content
+
+The page includes:
+
+- canonical and alternate language links
+- Open Graph and Twitter metadata
+- `WebSite`, `Product`, and `FAQPage` JSON-LD
+- `robots.txt`, `sitemap.xml`, and an Open Graph card asset
+
+## Repo notes
+
+Project-local sync tooling is documented in [DEV_SYNC_README.md](DEV_SYNC_README.md) and [DEV_SYNC_OPERATIONS.md](DEV_SYNC_OPERATIONS.md).

@@ -1,30 +1,40 @@
-import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { motion } from 'framer-motion';
+import { ArrowUpRight } from 'lucide-react';
 
 export function Valuation() {
   const { t } = useTranslation();
+  const terms = ['val_term_1', 'val_term_2', 'val_term_3'];
 
   return (
-    <section className="px-6 py-[clamp(3rem,8vw,6rem)]" id="valuation">
-      <div className="text-center max-w-[680px] mx-auto mb-12">
-        <div className="text-xs text-primary uppercase tracking-[0.12em] font-semibold mb-3">{t('val_overline')}</div>
-        <h2 className="font-display text-[clamp(2rem,1.2rem+2.5vw,3.5rem)] text-text mb-4 tracking-[-0.02em]">{t('val_title')}</h2>
-      </div>
+    <section className="section-shell" id="valuation">
+      <div className="section-frame">
+        <div className="overflow-hidden rounded-[2rem] border border-border bg-[linear-gradient(135deg,#13202d_0%,#1b2432_48%,#412a18_100%)] px-6 py-8 text-white shadow-[0_40px_110px_rgba(15,23,34,0.18)] sm:px-8 sm:py-10 lg:grid lg:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)] lg:items-center lg:gap-10">
+          <div>
+            <div className="text-xs uppercase tracking-[0.22em] text-white/58">{t('val_overline')}</div>
+            <h2 className="display-title mt-4 max-w-[18ch] text-[clamp(2.7rem,1.9rem+2.8vw,4.8rem)] leading-[0.95] text-white">
+              {t('val_title')}
+            </h2>
+            <p className="mt-5 max-w-[34rem] text-base leading-8 text-white/72">{t('val_note')}</p>
+          </div>
 
-      <motion.div 
-        initial={{ opacity: 0, y: 60, scale: 0.95 }}
-        whileInView={{ opacity: 1, y: 0, scale: 1 }}
-        viewport={{ once: true, amount: 0.3 }}
-        transition={{ type: 'spring', stiffness: 70, damping: 20 }}
-        className="max-w-[720px] mx-auto bg-gradient-to-br from-surface-2 to-surface-3 border border-border-strong rounded-2xl p-[clamp(2.5rem,5vw,4rem)] px-8 text-center relative overflow-hidden flex flex-col items-center hover:shadow-[0_20px_50px_-20px_rgba(201,164,76,0.2)] transition-shadow duration-700"
-      >
-        <div className="absolute -top-[50%] left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-[radial-gradient(circle,var(--color-primary-glow)_0%,transparent_70%)] rounded-full z-0"></div>
-        
-        <div className="relative z-10 text-xs text-text-muted uppercase tracking-[0.1em] mb-3">{t('val_label')}</div>
-        <div className="relative z-10 font-display text-[clamp(2.5rem,1rem+4vw,5rem)] text-primary mb-4 tabular-nums">{t('val_price')}</div>
-        <p className="relative z-10 text-sm text-text-muted max-w-[500px] mx-auto leading-relaxed">{t('val_note')}</p>
-      </motion.div>
+          <div className="mt-8 rounded-[1.8rem] border border-white/10 bg-white/6 px-6 py-7 backdrop-blur-sm lg:mt-0">
+            <p className="text-xs uppercase tracking-[0.22em] text-white/55">{t('val_label')}</p>
+            <p className="stat-value mt-4 text-[clamp(2.7rem,1.8rem+3vw,4.6rem)] leading-none text-white">{t('val_price')}</p>
+            <ul className="mt-6 space-y-3">
+              {terms.map((term) => (
+                <li key={term} className="flex gap-3 text-sm leading-7 text-white/74">
+                  <span className="mt-2 h-2 w-2 rounded-full bg-[#d8b27d]"></span>
+                  <span>{t(term)}</span>
+                </li>
+              ))}
+            </ul>
+            <a href="#contact" className="action-pill mt-7 w-full bg-white text-text no-underline hover:-translate-y-0.5 hover:bg-[#f5e5d0]">
+              {t('val_cta')}
+              <ArrowUpRight size={16} />
+            </a>
+          </div>
+        </div>
+      </div>
     </section>
   );
 }

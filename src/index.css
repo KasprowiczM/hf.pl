@@ -1,51 +1,182 @@
 @import "tailwindcss";
 
 @theme {
-  --color-bg: light-dark(#faf9f6, #0a0a0b);
-  --color-surface: light-dark(#ffffff, #111113);
-  --color-surface-2: light-dark(#f5f4f1, #18181b);
-  --color-surface-3: light-dark(#edecea, #1f1f23);
-  --color-surface-offset: light-dark(#f0efec, #141416);
-  --color-border: light-dark(rgba(0, 0, 0, 0.08), rgba(255, 255, 255, 0.08));
-  --color-border-strong: light-dark(rgba(0, 0, 0, 0.14), rgba(255, 255, 255, 0.14));
-  --color-divider: light-dark(rgba(0, 0, 0, 0.06), rgba(255, 255, 255, 0.06));
-
-  --color-text: light-dark(#1a1a1d, #e8e6e1);
-  --color-text-muted: light-dark(#6b6966, #9a9894);
-  --color-text-faint: light-dark(#a09e9a, #5a5856);
-
-  --color-primary: light-dark(#9a7a2e, #c9a44c);
-  --color-primary-hover: light-dark(#b8922e, #dbb860);
-  --color-primary-active: light-dark(#7d6324, #b89338);
-  --color-primary-dim: light-dark(rgba(154, 122, 46, 0.08), rgba(201, 164, 76, 0.12));
-  --color-primary-glow: light-dark(rgba(154, 122, 46, 0.04), rgba(201, 164, 76, 0.06));
-
-  --color-success: light-dark(#437a22, #6daa45);
-  --color-error: light-dark(#a13544, #dd6974);
-  
-  --shadow-sm: light-dark(0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.3));
-  --shadow-md: light-dark(0 4px 12px rgba(0,0,0,0.08), 0 4px 16px rgba(0,0,0,0.4));
-  --shadow-lg: light-dark(0 12px 32px rgba(0,0,0,0.12), 0 12px 40px rgba(0,0,0,0.5));
-  --shadow-gold: light-dark(0 0 60px rgba(154,122,46,0.06), 0 0 60px rgba(201,164,76,0.08));
-
+  --color-bg: #f4efe6;
+  --color-surface: #f8f4ed;
+  --color-surface-2: #f0e8dc;
+  --color-surface-3: #e7dccd;
+  --color-surface-offset: #0f1722;
+  --color-border: rgba(15, 23, 34, 0.12);
+  --color-border-strong: rgba(15, 23, 34, 0.18);
+  --color-divider: rgba(15, 23, 34, 0.08);
+  --color-text: #161311;
+  --color-text-muted: #665c53;
+  --color-text-faint: #8f857b;
+  --color-primary: #8c5c2f;
+  --color-primary-hover: #74461f;
+  --color-primary-active: #5f3616;
+  --color-primary-dim: rgba(140, 92, 47, 0.12);
+  --color-primary-glow: rgba(140, 92, 47, 0.2);
+  --color-success: #2b6641;
+  --color-error: #b1483c;
+  --shadow-sm: 0 14px 32px rgba(15, 23, 34, 0.06);
+  --shadow-md: 0 24px 56px rgba(15, 23, 34, 0.12);
+  --shadow-lg: 0 40px 120px rgba(15, 23, 34, 0.16);
+  --shadow-gold: 0 30px 100px rgba(140, 92, 47, 0.16);
   --font-display: "Instrument Serif", "Georgia", serif;
   --font-body: "Satoshi", "Inter", "Helvetica Neue", sans-serif;
 }
 
 @layer base {
-  html {
-    color-scheme: light dark;
-    /* Default theme overrides if applying manual class */
+  * {
+    box-sizing: border-box;
   }
 
-  html.dark {
-    color-scheme: dark;
+  html {
+    color-scheme: light;
+    scroll-behavior: smooth;
   }
-  
+
+  body,
+  #root {
+    min-height: 100vh;
+  }
+
   body {
     background-color: var(--color-bg);
+    background-image:
+      radial-gradient(circle at top left, rgba(200, 161, 109, 0.2), transparent 32%),
+      radial-gradient(circle at 90% 20%, rgba(15, 23, 34, 0.09), transparent 24%),
+      linear-gradient(180deg, #fbf7ef 0%, #f4efe6 52%, #efe6d8 100%);
     color: var(--color-text);
     font-family: var(--font-body);
     overflow-x: hidden;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a,
+  button {
+    transition:
+      color 180ms ease,
+      background-color 180ms ease,
+      border-color 180ms ease,
+      transform 180ms ease,
+      box-shadow 180ms ease,
+      opacity 180ms ease;
+  }
+
+  ::selection {
+    background: rgba(140, 92, 47, 0.18);
+    color: var(--color-text);
+  }
+}
+
+@layer components {
+  .section-shell {
+    @apply scroll-mt-28 px-6 py-16 sm:py-20 lg:px-10 lg:py-24;
+  }
+
+  .section-frame {
+    @apply mx-auto w-full max-w-[1240px];
+  }
+
+  .eyebrow {
+    @apply mb-4 inline-flex items-center gap-2 text-[0.72rem] font-semibold uppercase tracking-[0.22em] text-primary;
+  }
+
+  .display-title {
+    font-family: var(--font-display);
+    letter-spacing: -0.04em;
+  }
+
+  .soft-panel {
+    background:
+      linear-gradient(180deg, rgba(248, 244, 237, 0.92) 0%, rgba(240, 232, 220, 0.84) 100%);
+    border: 1px solid var(--color-border);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .section-title {
+    font-family: var(--font-display);
+    font-size: clamp(2.35rem, 1.55rem + 2.2vw, 4.6rem);
+    letter-spacing: -0.04em;
+    line-height: 0.95;
+  }
+
+  .section-lead {
+    @apply max-w-[44rem] text-base leading-8 text-text-muted sm:text-lg;
+  }
+
+  .anchor-link {
+    @apply text-sm font-medium text-text-muted hover:text-text;
+  }
+
+  .action-pill {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-5 py-3 text-sm font-semibold;
+  }
+
+  .stat-value {
+    font-family: var(--font-display);
+    letter-spacing: -0.04em;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .hero-shadow {
+    box-shadow: var(--shadow-lg);
+  }
+
+  .gold-gradient {
+    background-image: linear-gradient(135deg, #5e3818 0%, #b98343 42%, #f0d4a6 100%);
+  }
+
+  .backdrop-grain {
+    background-image:
+      linear-gradient(135deg, rgba(255, 255, 255, 0.32), transparent 52%),
+      radial-gradient(circle at top right, rgba(140, 92, 47, 0.18), transparent 32%),
+      radial-gradient(circle at bottom left, rgba(15, 23, 34, 0.08), transparent 28%);
+  }
+}
+
+@keyframes drift {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+
+  50% {
+    transform: translateY(-10px) rotate(-1.5deg);
+  }
+}
+
+@keyframes pulseLine {
+  0%,
+  100% {
+    transform: scaleX(0.92);
+    opacity: 0.55;
+  }
+
+  50% {
+    transform: scaleX(1);
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }

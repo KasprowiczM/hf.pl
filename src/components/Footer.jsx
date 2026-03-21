@@ -1,27 +1,28 @@
-import React from 'react';
-
 import { useTranslation } from 'react-i18next';
 
 export function Footer() {
   const { t } = useTranslation();
+
   return (
-    <footer className="px-6 py-12 border-t border-border bg-surface text-sm text-text-muted">
-      <div className="max-w-[1200px] mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 items-center text-center md:text-left">
-        <div className="flex flex-col gap-2 items-center md:items-start">
-          <span className="font-display text-[1.4rem] font-bold tracking-tight cursor-default">
-            <span className="bg-[linear-gradient(135deg,var(--color-primary)_0%,#e8c962_50%,var(--color-primary)_100%)] bg-[length:200%_200%] bg-clip-text text-transparent">hf</span>
+    <footer className="border-t border-border bg-[rgba(248,244,237,0.72)] px-6 py-10 text-sm text-text-muted">
+      <div className="section-frame grid gap-6 md:grid-cols-[auto_1fr_auto] md:items-center">
+        <div>
+          <p className="display-title text-[1.8rem] leading-none text-text">
+            <span className="gold-gradient bg-clip-text text-transparent">hf</span>
             <span className="text-text-faint">.pl</span>
-          </span>
-          <span>{t('footer_desc')}</span>
+          </p>
+          <p className="mt-2">{t('footer_desc')}</p>
         </div>
-        <div className="flex justify-center">
-          <a href="#valuation" className="inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-full text-xs font-semibold uppercase tracking-widest transition-all duration-180 cursor-pointer no-underline bg-primary/10 text-primary border border-primary/20 hover:bg-primary hover:text-bg hover:shadow-[0_4px_20px_rgba(201,164,76,0.3)]">
-            {t('footer_btn')}
-          </a>
+
+        <div className="flex flex-wrap items-center gap-4 md:justify-center">
+          <a href="#market" className="anchor-link no-underline">{t('nav_market')}</a>
+          <a href="#faq" className="anchor-link no-underline">{t('nav_faq')}</a>
+          <a href="#contact" className="anchor-link no-underline">{t('footer_btn')}</a>
         </div>
-        <div className="flex flex-col gap-2 md:text-right">
+
+        <div className="md:text-right">
           <span>&copy; {new Date().getFullYear()} hf.pl</span>
-          <span>{t('footer_rights')}</span>
+          <p className="mt-2">{t('footer_rights')}</p>
         </div>
       </div>
     </footer>

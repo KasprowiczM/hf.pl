@@ -1,0 +1,29 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="630" fill="#0F1722"/>
+  <circle cx="221" cy="112" r="210" fill="#8C5C2F" fill-opacity="0.32"/>
+  <circle cx="1104" cy="522" r="240" fill="#F0D4A6" fill-opacity="0.18"/>
+  <rect x="72" y="72" width="1056" height="486" rx="40" fill="url(#panel)" stroke="rgba(255,255,255,0.12)"/>
+  <path d="M798 165C798 142.909 815.909 125 838 125H946C968.091 125 986 142.909 986 165V355C986 377.091 968.091 395 946 395H838C815.909 395 798 377.091 798 355V165Z" fill="url(#card)"/>
+  <path d="M832 164L892 126L952 164V230L892 268L832 230V164Z" fill="#F5E6CF" fill-opacity="0.9"/>
+  <path d="M846 282L892 255L938 282V334L892 360L846 334V282Z" fill="#C38E4D"/>
+  <text x="120" y="236" fill="#F9F4EB" font-family="Georgia, serif" font-size="170" font-style="italic" letter-spacing="-16">hf</text>
+  <text x="303" y="236" fill="#A49A90" font-family="Satoshi, Arial, sans-serif" font-size="160" font-weight="600" letter-spacing="-10">.pl</text>
+  <text x="124" y="312" fill="#F9F4EB" font-family="Satoshi, Arial, sans-serif" font-size="32" font-weight="500">Premium two-letter .pl domain for sale</text>
+  <text x="124" y="374" fill="#C7BEB2" font-family="Satoshi, Arial, sans-serif" font-size="28" font-weight="400">Short, memorable and built for finance, health, fashion,</text>
+  <text x="124" y="412" fill="#C7BEB2" font-family="Satoshi, Arial, sans-serif" font-size="28" font-weight="400">technology, umbrella-brand and investment positioning.</text>
+  <rect x="124" y="466" width="182" height="58" rx="29" fill="#F6E6CF"/>
+  <text x="160" y="503" fill="#0F1722" font-family="Satoshi, Arial, sans-serif" font-size="22" font-weight="700">2 letters</text>
+  <rect x="326" y="466" width="226" height="58" rx="29" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.14)"/>
+  <text x="364" y="503" fill="#F9F4EB" font-family="Satoshi, Arial, sans-serif" font-size="22" font-weight="700">676 .pl pairs</text>
+  <defs>
+    <linearGradient id="panel" x1="72" y1="72" x2="1128" y2="558" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#13202D"/>
+      <stop offset="0.55" stop-color="#1A2432"/>
+      <stop offset="1" stop-color="#352313"/>
+    </linearGradient>
+    <linearGradient id="card" x1="798" y1="125" x2="986" y2="395" gradientUnits="userSpaceOnUse">
+      <stop stop-color="rgba(255,255,255,0.1)"/>
+      <stop offset="1" stop-color="rgba(255,255,255,0.03)"/>
+    </linearGradient>
+  </defs>
+</svg>

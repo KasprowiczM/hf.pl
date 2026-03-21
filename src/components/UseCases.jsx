@@ -1,6 +1,4 @@
-import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { motion } from 'framer-motion';
 
 const useCasesList = [
   { domain: 'healthfitness.pl', i18nKey: 'uc1' },
@@ -11,53 +9,33 @@ const useCasesList = [
   { i18nDomainKey: 'uc6_domain', i18nKey: 'uc6' },
 ];
 
-const itemVariants = {
-  hidden: (idx) => ({ opacity: 0, x: idx % 2 === 0 ? -80 : 80, y: 20 }),
-  visible: (idx) => ({ 
-    opacity: 1, 
-    x: 0, 
-    y: 0,
-    transition: { type: 'spring', stiffness: 100, damping: 15, delay: idx * 0.1 }
-  })
-};
-
 export function UseCases() {
   const { t } = useTranslation();
 
   return (
-    <section className="px-6 py-[clamp(3rem,8vw,6rem)] bg-surface" id="usecases">
-      <div className="text-center max-w-[680px] mx-auto mb-12">
-        <div className="text-xs text-primary uppercase tracking-[0.12em] font-semibold mb-3">{t('use_overline')}</div>
-        <h2 className="font-display text-[clamp(2rem,1.2rem+2.5vw,3.5rem)] text-text mb-4 tracking-[-0.02em]">{t('use_title')}</h2>
-        <p className="text-base sm:text-[clamp(1rem,0.95rem+0.25vw,1.125rem)] text-text-muted leading-[1.7]">{t('use_desc')}</p>
+    <section className="section-shell bg-white/35" id="usecases">
+      <div className="section-frame grid gap-12 lg:grid-cols-[minmax(0,0.72fr)_minmax(0,1fr)] lg:gap-16">
+        <div className="max-w-[34rem]">
+          <div className="eyebrow">{t('use_overline')}</div>
+          <h2 className="section-title text-balance">{t('use_title')}</h2>
+          <p className="section-lead mt-5">{t('use_desc')}</p>
+        </div>
+
+        <div className="grid gap-4 sm:grid-cols-2">
+          {useCasesList.map((useCase) => (
+            <article
+              key={useCase.i18nKey}
+              className="rounded-[1.6rem] border border-border bg-white/80 px-5 py-6 shadow-[0_18px_30px_rgba(15,23,34,0.04)]"
+            >
+              <p className="text-xs uppercase tracking-[0.18em] text-text-faint">{t('use_case_label')}</p>
+              <h3 className="mt-3 text-lg font-semibold tracking-[-0.02em] text-text">
+                {useCase.domain || t(useCase.i18nDomainKey)}
+              </h3>
+              <p className="mt-3 text-sm leading-7 text-text-muted">{t(useCase.i18nKey)}</p>
+            </article>
+          ))}
+        </div>
       </div>
-      
-      <motion.div 
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.1 }}
-        transition={{ staggerChildren: 0.1 }}
-        className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-[1200px] mx-auto"
-      >
-        {useCasesList.map((uc, idx) => (
-          <motion.div 
-            key={idx}
-            custom={idx}
-            variants={itemVariants}
-            className="flex items-start gap-4 p-6 bg-surface border border-border rounded-xl transition-all duration-300 hover:border-primary/50 hover:-translate-y-1 hover:shadow-[0_10px_30px_-10px_rgba(201,164,76,0.1)] group cursor-default"
-          >
-            <div className="w-2 h-2 min-w-[8px] rounded-full bg-primary mt-2" aria-hidden="true"></div>
-            <div>
-              <div className="font-semibold text-text group-hover:text-primary transition-colors duration-300 text-base sm:text-[clamp(1rem,0.95rem+0.25vw,1.125rem)] mb-1">
-                {uc.domain || t(uc.i18nDomainKey)}
-              </div>
-              <div className="text-sm sm:text-[clamp(0.875rem,0.8rem+0.35vw,1rem)] text-text-muted">
-                {t(uc.i18nKey)}
-              </div>
-            </div>
-          </motion.div>
-        ))}
-      </motion.div>
     </section>
   );
 }
