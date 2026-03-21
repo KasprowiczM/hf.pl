@@ -18,6 +18,8 @@ dist-ssr
 .idea
 .DS_Store
 **/.DS_Store
+__pycache__/
+*.pyc
 .dev_sync_config.json
 dev_sync_logs/
 dev_sync_demo/
