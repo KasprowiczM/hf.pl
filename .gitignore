@@ -17,6 +17,10 @@ dist-ssr
 !.vscode/extensions.json
 .idea
 .DS_Store
+**/.DS_Store
+.dev_sync_config.json
+dev_sync_logs/
+dev_sync_demo/
 *.suo
 *.ntvs*
 *.njsproj
