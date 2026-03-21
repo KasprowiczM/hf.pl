@@ -339,7 +339,10 @@ def get_local_overlay_candidates(repo_root: Path, config: SyncConfig) -> set[str
 def filter_overlay_paths(paths: Iterable[str], config: SyncConfig) -> set[str]:
     filtered: set[str] = set()
     for rel_path in paths:
-        normalized = rel_path.strip().lstrip("./").replace(os.sep, "/")
+        normalized = rel_path.strip().replace(os.sep, "/")
+        if normalized.startswith("./"):
+            normalized = normalized[2:]
+        normalized = normalized.lstrip("/")
         if not normalized:
             continue
         if should_include_overlay(normalized, config):
