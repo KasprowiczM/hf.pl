@@ -54,6 +54,7 @@
   "use_title": "One asset. Multiple strategic fits.",
   "use_desc": "The domain works across premium consumer, technology, finance, and holding-company scenarios. A buyer does not need to force the initials to fit one narrow niche.",
   "use_case_label": "Use case",
+  "use_case_maps_to": "this can map to",
   "uc1": "Health and fitness platform, clinic network, supplement house, or performance membership brand.",
   "uc2": "Finance studio, private capital vehicle, fintech operator, advisory house, or holding platform.",
   "uc3": "Luxury fashion label, editorial commerce project, beauty concept, or premium retail experience.",

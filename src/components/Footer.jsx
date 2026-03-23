@@ -4,7 +4,7 @@ export function Footer() {
   const { t } = useTranslation();
 
   return (
-    <footer className="reveal reveal-up border-t border-white/12 bg-[#090b10] px-6 py-10 text-sm text-white/68">
+    <footer className="reveal reveal-up border-t border-white/12 bg-[#090b10] px-4 py-8 text-sm text-white/68 sm:px-6 sm:py-10">
       <div className="section-frame grid gap-6 md:grid-cols-[auto_1fr_auto] md:items-center">
         <div>
           <p className="display-title text-[1.8rem] leading-none text-white">

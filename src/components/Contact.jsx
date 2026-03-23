@@ -20,7 +20,7 @@ export function Contact() {
 
   return (
     <section className="section-shell section-tone-light reveal reveal-up" id="contact">
-      <div className="section-frame grid gap-10 lg:grid-cols-[minmax(0,0.88fr)_minmax(0,1.12fr)] lg:gap-14">
+      <div className="section-frame grid gap-7 sm:gap-10 lg:grid-cols-[minmax(0,0.88fr)_minmax(0,1.12fr)] lg:gap-14">
         <div className="max-w-[36rem]">
           <div className="eyebrow">{t('contact_overline')}</div>
           <h2 className="section-title text-balance">{t('contact_title')}</h2>
@@ -28,7 +28,7 @@ export function Contact() {
           <p className="mt-6 max-w-[34rem] text-sm leading-7 text-text-muted">{t('contact_info')}</p>
         </div>
 
-        <div className="soft-panel interactive-card reveal reveal-right rounded-[2rem] px-6 py-7 sm:px-8">
+        <div className="soft-panel interactive-card reveal reveal-right rounded-[2rem] px-5 py-6 sm:px-8 sm:py-7">
           <div className="flex flex-col gap-4 sm:flex-row">
             <a
               href="mailto:domain@hf.pl"

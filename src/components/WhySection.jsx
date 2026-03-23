@@ -17,11 +17,13 @@ export function WhySection() {
           <p className="section-lead mt-5">{t('why_desc')}</p>
         </div>
 
-        <div className="mt-14 grid gap-px overflow-hidden rounded-[2rem] border border-border bg-border/60 lg:grid-cols-3">
+        <div className="mt-8 sm:mt-12 lg:mt-14 grid gap-px overflow-hidden rounded-[2rem] border border-border bg-border/60 lg:grid-cols-3">
           {reasons.map((reason) => (
             <article key={reason.index} className="interactive-card reveal reveal-up bg-surface/92 px-6 py-8 sm:px-8">
               <p className="text-xs uppercase tracking-[0.22em] text-text-faint">{reason.index}</p>
-              <h3 className="display-title mt-5 text-[1.85rem] leading-tight text-text">{reason.title}</h3>
+              <h3 className="display-title mt-4 sm:mt-5 text-[1.55rem] sm:text-[1.85rem] leading-tight">
+                <span className="gold-gradient bg-clip-text text-transparent">{reason.title}</span>
+              </h3>
               <p className="mt-4 text-base leading-7 text-text-muted">{reason.text}</p>
             </article>
           ))}

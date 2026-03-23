@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ArrowDown, Mail } from 'lucide-react';
 import { trackEvent } from '../lib/analytics';
@@ -9,23 +9,59 @@ const proofPanelKeys = [
   ['hero_panel_transfer_title', 'hero_panel_transfer_body'],
 ];
 
-const SHAPES = ['circle', 'square', 'triangle'];
-const COLORS = ['#f3efe7', '#cfb68b', '#a7bed8', '#f6d8a8', '#93b4ff'];
+const TOKENS = ['$', '€', '£', '¥', '₿', '₿', '$', '€', '₿', '¥', '£'];
+const COLORS = ['#f3efe7', '#cfb68b', '#f6d8a8', '#93b4ff', '#f7ca82'];
 
 export function Hero() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const boxRef = useRef(null);
   const canvasRef = useRef(null);
   const particlesRef = useRef([]);
   const pointerRef = useRef({ x: 0, y: 0, active: false });
   const animationRef = useRef(0);
   const trackedInteractionRef = useRef(false);
+  const metricAnimationRef = useRef(0);
+  const [animatedMetrics, setAnimatedMetrics] = useState({
+    metric1: Number(t('metric_1_value')) || 2,
+    metric2: Number(t('metric_2_value')) || 676,
+  });
+  const metric1Target = Number(t('metric_1_value')) || 2;
+  const metric2Target = Number(t('metric_2_value')) || 676;
 
   const proofItems = [
-    { value: t('metric_1_value'), label: t('metric_1_label') },
-    { value: t('metric_2_value'), label: t('metric_2_label') },
+    { value: String(animatedMetrics.metric1), label: t('metric_1_label') },
+    { value: String(animatedMetrics.metric2), label: t('metric_2_label') },
     { value: t('metric_3_value'), label: t('metric_3_label') },
   ];
+
+  useEffect(() => {
+    const start = performance.now();
+    const duration = 900;
+
+    const run = (time) => {
+      const progress = Math.min((time - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      setAnimatedMetrics({
+        metric1: Math.max(0, Math.round(metric1Target * eased)),
+        metric2: Math.max(0, Math.round(metric2Target * eased)),
+      });
+
+      if (progress < 1) {
+        metricAnimationRef.current = window.requestAnimationFrame(run);
+      }
+    };
+
+    if (metricAnimationRef.current) {
+      window.cancelAnimationFrame(metricAnimationRef.current);
+    }
+    metricAnimationRef.current = window.requestAnimationFrame(run);
+
+    return () => {
+      if (metricAnimationRef.current) {
+        window.cancelAnimationFrame(metricAnimationRef.current);
+      }
+    };
+  }, [i18n.language, metric1Target, metric2Target]);
 
   useEffect(() => {
     if (!boxRef.current || !canvasRef.current) {
@@ -51,15 +87,15 @@ export function Hero() {
       canvas.style.height = `${height}px`;
       context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
 
-      particlesRef.current = Array.from({ length: 22 }, (_, index) => ({
+      particlesRef.current = Array.from({ length: 24 }, (_, index) => ({
         x: Math.random() * width,
         y: Math.random() * height,
         vx: (Math.random() - 0.5) * 1.4,
         vy: (Math.random() - 0.5) * 1.4,
-        size: 12 + Math.random() * 34,
+        size: 16 + Math.random() * 22,
         rotation: Math.random() * Math.PI * 2,
         vr: (Math.random() - 0.5) * 0.032,
-        shape: SHAPES[index % SHAPES.length],
+        glyph: TOKENS[index % TOKENS.length],
         color: COLORS[index % COLORS.length],
       }));
     };
@@ -69,23 +105,13 @@ export function Hero() {
       context.translate(particle.x, particle.y);
       context.rotate(particle.rotation);
       context.fillStyle = particle.color;
-      context.globalAlpha = 0.88;
-
-      if (particle.shape === 'circle') {
-        context.beginPath();
-        context.arc(0, 0, particle.size * 0.46, 0, Math.PI * 2);
-        context.fill();
-      } else if (particle.shape === 'square') {
-        const edge = particle.size * 0.9;
-        context.fillRect(-edge / 2, -edge / 2, edge, edge);
-      } else {
-        context.beginPath();
-        context.moveTo(0, -particle.size * 0.52);
-        context.lineTo(particle.size * 0.44, particle.size * 0.36);
-        context.lineTo(-particle.size * 0.44, particle.size * 0.36);
-        context.closePath();
-        context.fill();
-      }
+      context.globalAlpha = 0.92;
+      context.font = `700 ${particle.size}px "Satoshi", "Inter", sans-serif`;
+      context.textAlign = 'center';
+      context.textBaseline = 'middle';
+      context.shadowColor = 'rgba(9, 12, 18, 0.45)';
+      context.shadowBlur = 14;
+      context.fillText(particle.glyph, 0, 0);
 
       context.restore();
     };
@@ -179,30 +205,30 @@ export function Hero() {
   };
 
   return (
-    <section className="section-shell section-tone-light reveal reveal-up relative overflow-hidden pt-32 sm:pt-36 lg:pt-40" id="hero">
+    <section className="section-shell section-tone-light reveal reveal-up relative overflow-hidden pt-20 sm:pt-30 lg:pt-36" id="hero">
       <div className="pointer-events-none absolute inset-0" aria-hidden="true">
         <div className="absolute left-[8%] top-[18%] h-48 w-48 rounded-full bg-primary/12 blur-3xl"></div>
         <div className="absolute bottom-[14%] right-[12%] h-56 w-56 rounded-full bg-surface-offset/8 blur-3xl"></div>
       </div>
 
-      <div className="section-frame grid items-center gap-12 lg:grid-cols-[minmax(0,1.04fr)_minmax(420px,0.96fr)] lg:gap-16">
+      <div className="section-frame grid items-center gap-8 sm:gap-12 lg:grid-cols-[minmax(0,1.04fr)_minmax(420px,0.96fr)] lg:gap-16">
         <div className="max-w-[40rem]">
           <div className="eyebrow reveal reveal-left">
             <span className="h-2 w-2 rounded-full bg-primary"></span>
             {t('badge')}
           </div>
-          <h1 className="display-title reveal reveal-up text-balance text-[clamp(4.75rem,2.4rem+9vw,10rem)] leading-[0.86]">
+          <h1 className="display-title reveal reveal-up text-balance text-[clamp(3.2rem,2.15rem+9vw,9.2rem)] leading-[0.86]">
             <span className="gold-gradient bg-clip-text text-transparent">{t('domain_prefix')}</span>
             <span className="text-text-faint">.pl</span>
           </h1>
-          <p className="mt-6 max-w-[36rem] text-balance text-lg leading-8 text-text-muted sm:text-xl reveal reveal-up">
+          <p className="mt-4 max-w-[36rem] text-balance text-base leading-7 text-text-muted sm:mt-6 sm:text-xl sm:leading-8 reveal reveal-up">
             {t('hero_subtitle')}
           </p>
-          <div className="mt-8 flex flex-wrap items-center gap-3 reveal reveal-up">
+          <div className="mt-6 flex flex-col items-stretch gap-3 sm:flex-row sm:flex-wrap sm:items-center reveal reveal-up">
             <a
               href="mailto:domain@hf.pl"
               onClick={() => trackEvent('cta_click', { location: 'hero', target: 'mailto' })}
-              className="action-pill hoverable bg-text text-bg no-underline"
+              className="action-pill hoverable justify-center bg-text text-bg no-underline"
             >
               <Mail size={16} />
               {t('cta_offer')}
@@ -210,17 +236,17 @@ export function Hero() {
             <a
               href="#valuation"
               onClick={() => trackEvent('cta_click', { location: 'hero', target: 'valuation' })}
-              className="action-pill hoverable border border-border bg-surface/90 text-text no-underline"
+              className="action-pill hoverable justify-center border border-border bg-surface/90 text-text no-underline"
             >
               {t('cta_valuation')}
               <ArrowDown size={15} />
             </a>
           </div>
-          <p className="mt-5 max-w-[34rem] text-sm leading-7 text-text-muted reveal reveal-up">{t('hero_note')}</p>
+          <p className="mt-4 max-w-[34rem] text-sm leading-6 text-text-muted sm:mt-5 sm:leading-7 reveal reveal-up">{t('hero_note')}</p>
 
-          <dl className="mt-10 grid gap-4 sm:grid-cols-3">
+          <dl className="mt-8 grid gap-3 sm:mt-10 sm:gap-4 sm:grid-cols-3">
             {proofItems.map((item) => (
-              <div key={item.label} className="interactive-card reveal reveal-up rounded-[1.5rem] border border-border bg-surface/90 p-5">
+              <div key={item.label} className="interactive-card rounded-[1.5rem] border border-border bg-surface/90 p-5">
                 <dt className="text-xs uppercase tracking-[0.18em] text-text-faint">{item.label}</dt>
                 <dd className="stat-value mt-3 text-[clamp(2rem,1.6rem+1.8vw,3rem)] leading-none text-text">{item.value}</dd>
               </div>
@@ -229,7 +255,7 @@ export function Hero() {
         </div>
 
         <div className="relative reveal reveal-right">
-          <div className="hero-shadow parallax-sheen relative overflow-hidden rounded-[2rem] border border-border bg-surface-offset px-6 py-6 text-white sm:px-8">
+          <div className="hero-shadow premium-gradient-surface parallax-sheen relative overflow-hidden rounded-[2rem] border border-border px-6 py-6 text-white sm:px-8">
             <div className="backdrop-grain absolute inset-0 opacity-80"></div>
             <div className="relative z-10">
               <div className="flex items-center justify-between text-[0.72rem] uppercase tracking-[0.22em] text-white/65">
@@ -244,7 +270,7 @@ export function Hero() {
                   onMouseLeave={() => {
                     pointerRef.current.active = false;
                   }}
-                  className="hf-antigravity-box relative mx-auto h-[260px] w-full max-w-[420px] cursor-none overflow-hidden rounded-[1.3rem] border border-white/12"
+                  className="hf-antigravity-box relative mx-auto h-[200px] w-full max-w-[420px] cursor-none overflow-hidden rounded-[1.3rem] border border-white/12 sm:h-[260px]"
                   role="img"
                   aria-label={t('hero_art_alt')}
                 >
@@ -254,7 +280,9 @@ export function Hero() {
               <div className="mt-6 grid gap-3 sm:grid-cols-3">
                 {proofPanelKeys.map(([titleKey, bodyKey]) => (
                   <div key={titleKey} className="interactive-card rounded-[1.25rem] border border-white/10 bg-white/6 p-4">
-                    <p className="text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-white/50">{t(titleKey)}</p>
+                    <p className="text-[0.68rem] font-semibold uppercase tracking-[0.2em]">
+                      <span className="gold-gradient bg-clip-text text-transparent">{t(titleKey)}</span>
+                    </p>
                     <p className="mt-2 text-sm leading-6 text-white/78">{t(bodyKey)}</p>
                   </div>
                 ))}
