@@ -14,9 +14,14 @@ export function Footer() {
           <p className="mt-2">{t('footer_desc')}</p>
         </div>
 
-        <div className="flex flex-wrap items-center gap-4 md:justify-center">
+        <div className="flex flex-wrap items-center gap-x-4 gap-y-2 md:justify-center">
+          <a href="#hero" className="text-white/72 no-underline hover:text-white">hf.pl</a>
+          <a href="#why" className="text-white/72 no-underline hover:text-white">{t('nav_why')}</a>
+          <a href="#usecases" className="text-white/72 no-underline hover:text-white">{t('nav_potential')}</a>
           <a href="#market" className="text-white/72 no-underline hover:text-white">{t('nav_market')}</a>
+          <a href="#scarcity" className="text-white/72 no-underline hover:text-white">{t('scarcity_overline')}</a>
           <a href="#faq" className="text-white/72 no-underline hover:text-white">{t('nav_faq')}</a>
+          <a href="#valuation" className="text-white/72 no-underline hover:text-white">{t('val_overline')}</a>
           <a href="#contact" className="text-white/72 no-underline hover:text-white">{t('footer_btn')}</a>
         </div>
 

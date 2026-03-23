@@ -70,8 +70,8 @@ function App() {
         <UseCases />
         <MarketData />
         <Scarcity />
-        <Valuation />
         <FAQ />
+        <Valuation />
         <Contact />
       </main>
       <Footer />
