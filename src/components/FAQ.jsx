@@ -6,7 +6,7 @@ export function FAQ() {
   const { t } = useTranslation();
 
   return (
-    <section className="section-shell" id="faq">
+    <section className="section-shell section-tone-mid reveal reveal-up" id="faq">
       <div className="section-frame grid gap-10 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] lg:gap-14">
         <div className="max-w-[36rem]">
           <div className="eyebrow">{t('faq_overline')}</div>
@@ -16,7 +16,7 @@ export function FAQ() {
 
         <div className="space-y-4">
           {faqKeys.map((key) => (
-            <details key={key} className="rounded-[1.4rem] border border-border bg-white/78 px-5 py-5 open:border-border-strong open:bg-white/92">
+            <details key={key} className="interactive-card reveal reveal-up rounded-[1.4rem] border border-border bg-surface/90 px-5 py-5 open:border-border-strong open:bg-surface">
               <summary className="cursor-pointer list-none text-base font-semibold tracking-[-0.02em] text-text">
                 {t(`faq${key}_q`)}
               </summary>

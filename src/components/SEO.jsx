@@ -5,7 +5,7 @@ export function SEO() {
   const { t, i18n } = useTranslation();
   const lang = i18n.language || 'pl';
   const baseUrl = 'https://hf.pl';
-  const currentUrl = lang === 'en' ? `${baseUrl}/?lang=en` : `${baseUrl}/`;
+  const currentUrl = lang === 'en' ? `${baseUrl}/en/` : `${baseUrl}/`;
   const title = t('seo_title');
   const description = t('seo_desc');
   const keywords = t('seo_keywords');
@@ -20,7 +20,7 @@ export function SEO() {
       <meta name="theme-color" content="#0f1722" />
       <link rel="canonical" href={currentUrl} />
       <link rel="alternate" hrefLang="pl-PL" href={`${baseUrl}/`} />
-      <link rel="alternate" hrefLang="en" href={`${baseUrl}/?lang=en`} />
+      <link rel="alternate" hrefLang="en" href={`${baseUrl}/en/`} />
       <link rel="alternate" hrefLang="x-default" href={`${baseUrl}/`} />
       <meta property="og:type" content="website" />
       <meta property="og:url" content={currentUrl} />
@@ -66,6 +66,21 @@ export function SEO() {
             highPrice: lang === 'pl' ? '40000' : '9000',
             availability: 'https://schema.org/InStock',
           },
+        })}
+      </script>
+      <script type="application/ld+json">
+        {JSON.stringify({
+          '@context': 'https://schema.org',
+          '@type': 'Organization',
+          name: 'hf.pl',
+          url: baseUrl,
+          contactPoint: {
+            '@type': 'ContactPoint',
+            email: 'domain@hf.pl',
+            contactType: 'sales',
+            availableLanguage: ['pl', 'en'],
+          },
+          sameAs: [baseUrl],
         })}
       </script>
       <script type="application/ld+json">

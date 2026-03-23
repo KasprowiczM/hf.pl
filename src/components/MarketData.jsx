@@ -17,7 +17,7 @@ export function MarketData() {
   const { t } = useTranslation();
 
   return (
-    <section className="section-shell" id="market">
+    <section className="section-shell section-tone-mid reveal reveal-up" id="market">
       <div className="section-frame grid gap-10 lg:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)] lg:gap-14">
         <div className="max-w-[36rem]">
           <div className="eyebrow">{t('market_overline')}</div>
@@ -26,7 +26,7 @@ export function MarketData() {
 
           <div className="mt-10 space-y-5">
             {signals.map((signal) => (
-              <article key={signal.titleKey} className="rounded-[1.4rem] border border-border bg-white/74 px-5 py-5">
+              <article key={signal.titleKey} className="interactive-card reveal reveal-up rounded-[1.4rem] border border-border bg-surface/90 px-5 py-5">
                 <h3 className="text-base font-semibold tracking-[-0.02em] text-text">{t(signal.titleKey)}</h3>
                 <p className="mt-2 text-sm leading-7 text-text-muted">{t(signal.bodyKey)}</p>
               </article>
@@ -35,7 +35,7 @@ export function MarketData() {
         </div>
 
         <div className="grid gap-6">
-          <section className="rounded-[2rem] border border-border bg-surface-offset px-6 py-7 text-white shadow-[0_30px_80px_rgba(15,23,34,0.16)] sm:px-8">
+          <section className="interactive-card reveal reveal-right rounded-[2rem] border border-border bg-surface-offset px-6 py-7 text-white sm:px-8">
             <div className="flex items-center justify-between gap-4">
               <div>
                 <p className="text-xs uppercase tracking-[0.22em] text-white/55">{t('benchmark_overline')}</p>
@@ -56,7 +56,7 @@ export function MarketData() {
             </div>
           </section>
 
-          <section className="soft-panel rounded-[2rem] px-6 py-7 sm:px-8">
+          <section className="soft-panel interactive-card reveal reveal-up rounded-[2rem] px-6 py-7 sm:px-8">
             <p className="text-xs uppercase tracking-[0.22em] text-text-faint">{t('source_title')}</p>
             <p className="mt-3 max-w-[42rem] text-sm leading-7 text-text-muted">{t('source_body')}</p>
             <ul className="mt-5 space-y-3 text-sm text-text">

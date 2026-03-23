@@ -17,14 +17,21 @@ npm install
 npm run dev
 ```
 
-The page supports Polish by default and English through `?lang=en`. Language choice is also persisted locally in the browser.
+The page supports Polish by default and English through `/en/`. Language choice is also persisted locally in the browser.
 
 ## Quality checks
 
 ```bash
 npm run lint
+npm run test -- --run
 npm run build
 npm run check
+```
+
+For a full local CI-equivalent run:
+
+```bash
+npm run ci
 ```
 
 ## Deployment

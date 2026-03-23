@@ -9,7 +9,7 @@ export function WhySection() {
   }));
 
   return (
-    <section className="section-shell" id="why">
+    <section className="section-shell section-tone-mid reveal reveal-up" id="why">
       <div className="section-frame">
         <div className="max-w-[46rem]">
           <div className="eyebrow">{t('why_overline')}</div>
@@ -19,7 +19,7 @@ export function WhySection() {
 
         <div className="mt-14 grid gap-px overflow-hidden rounded-[2rem] border border-border bg-border/60 lg:grid-cols-3">
           {reasons.map((reason) => (
-            <article key={reason.index} className="bg-[rgba(248,244,237,0.92)] px-6 py-8 sm:px-8">
+            <article key={reason.index} className="interactive-card reveal reveal-up bg-surface/92 px-6 py-8 sm:px-8">
               <p className="text-xs uppercase tracking-[0.22em] text-text-faint">{reason.index}</p>
               <h3 className="display-title mt-5 text-[1.85rem] leading-tight text-text">{reason.title}</h3>
               <p className="mt-4 text-base leading-7 text-text-muted">{reason.text}</p>

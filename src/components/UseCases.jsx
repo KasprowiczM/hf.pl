@@ -13,7 +13,7 @@ export function UseCases() {
   const { t } = useTranslation();
 
   return (
-    <section className="section-shell bg-white/35" id="usecases">
+    <section className="section-shell section-tone-light reveal reveal-up" id="usecases">
       <div className="section-frame grid gap-12 lg:grid-cols-[minmax(0,0.72fr)_minmax(0,1fr)] lg:gap-16">
         <div className="max-w-[34rem]">
           <div className="eyebrow">{t('use_overline')}</div>
@@ -25,7 +25,7 @@ export function UseCases() {
           {useCasesList.map((useCase) => (
             <article
               key={useCase.i18nKey}
-              className="rounded-[1.6rem] border border-border bg-white/80 px-5 py-6 shadow-[0_18px_30px_rgba(15,23,34,0.04)]"
+              className="interactive-card reveal reveal-up rounded-[1.6rem] border border-border bg-surface/92 px-5 py-6"
             >
               <p className="text-xs uppercase tracking-[0.18em] text-text-faint">{t('use_case_label')}</p>
               <h3 className="mt-3 text-lg font-semibold tracking-[-0.02em] text-text">

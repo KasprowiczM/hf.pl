@@ -6,6 +6,7 @@ import plTranslations from './locales/pl.json';
 
 const SUPPORTED_LANGUAGES = ['pl', 'en'];
 const STORAGE_KEY = 'hf-pl.language';
+const ENGLISH_PATH_PREFIX = '/en';
 
 function normalizeLanguage(value) {
   if (!value) {
@@ -21,6 +22,10 @@ function detectInitialLanguage() {
     return 'pl';
   }
 
+  if (window.location.pathname === ENGLISH_PATH_PREFIX || window.location.pathname.startsWith(`${ENGLISH_PATH_PREFIX}/`)) {
+    return 'en';
+  }
+
   const urlLanguage = normalizeLanguage(new URLSearchParams(window.location.search).get('lang'));
   if (urlLanguage) {
     return urlLanguage;
@@ -34,6 +39,15 @@ function detectInitialLanguage() {
   return normalizeLanguage(window.navigator.language) || 'pl';
 }
 
+function getLocalizedPathname(currentPathname, language) {
+  const basePath = currentPathname.replace(/^\/en(?=\/|$)/, '') || '/';
+  if (language === 'en') {
+    return basePath === '/' ? '/en/' : `/en${basePath}`;
+  }
+
+  return basePath;
+}
+
 export function persistLanguage(language) {
   if (typeof window === 'undefined') {
     return;
@@ -41,15 +55,12 @@ export function persistLanguage(language) {
 
   const nextLanguage = normalizeLanguage(language) || 'pl';
   const url = new URL(window.location.href);
+  const pathname = getLocalizedPathname(url.pathname, nextLanguage);
 
-  if (nextLanguage === 'pl') {
-    url.searchParams.delete('lang');
-  } else {
-    url.searchParams.set('lang', nextLanguage);
-  }
+  url.searchParams.delete('lang');
 
   window.localStorage.setItem(STORAGE_KEY, nextLanguage);
-  window.history.replaceState({}, '', `${url.pathname}${url.search}${url.hash}`);
+  window.history.replaceState({}, '', `${pathname}${url.search}${url.hash}`);
   document.documentElement.lang = nextLanguage;
 }
 
