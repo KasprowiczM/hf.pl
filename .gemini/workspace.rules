@@ -1,0 +1,21 @@
+<workspace_rules>
+# Workspace Rules dla hf-pl
+
+1. **Model Hierarchy**:
+   - Domyślnie używamy profilu `low-Pro` (tańszy wariant, low reasoning) do standardowych prac.
+   - Do planowania złożonych feature'ów i dekompozycji zadań przełącz się ręcznie na `orchestrator` (Pro 3.1 High).
+   - W przypadku trudnych błędy lub gdy robisz code review korzystaj z roli `advisor` (Pro 3.1 High, read-only).
+   - Zasadniczo zlecaj najmniejsze zmiany i formatowanie subagentom w profilu `flash-worker`.
+
+2. **Progressive Disclosure**:
+   - Wszystkie podstawowe instrukcje i wykaz plików znajdują się w `AGENTS.md`.
+   - Zasady dot. poszczególnych domen są ukryte w małych plikach `docs/agents/*.md`. Czytaj tylko to, co aktualnie potrzebujesz.
+
+3. **Context Control**:
+   - Limituj swój output (są limity nałożone w settings.json).
+   - Regularnie podsumowuj wiedzę. Po osiągnęciu ~200k tokenów kompresuj historię do samej esencji, aktywnego stanu oraz kolejnych zdefiniowanych akcji do skryptów w docs.
+   
+4. **95% Confidence Rule (PLANNING RULE)**:
+   - Zanim zmienisz kod upewnij się, że bardzo dobrze poznałeś codebase i wymagania by posiadać co najmniej **95% pewności** co trzeba zbudować.
+   - Pytaj doprecyzowująco użytkownika o feedback w fazie planowania.
+</workspace_rules>

@@ -1,0 +1,144 @@
+# Project-local Codex configuration for hf-pl.
+# This file is intended to be shared by Codex CLI and Codex app.
+
+model = "gpt-5.3-codex"
+model_provider = "openai"
+model_reasoning_effort = "medium"
+model_reasoning_summary = "auto"
+model_verbosity = "low"
+web_search = "disabled"
+approval_policy = "on-request"
+sandbox_mode = "workspace-write"
+personality = "pragmatic"
+
+[history]
+persistence = "save-all"
+
+[features]
+enable_request_compression = true
+streamable_shell = false
+shell_snapshot = false
+plugins = false
+multi_agent = true
+rmcp_client = false
+
+# Conservative output handling to avoid oversized tool logs in context.
+# If the running Codex build does not support these keys, AGENTS.md defines
+# the mandatory manual fallback procedure for context compaction.
+[tool_output]
+max_lines = 200
+max_bytes = 122880
+truncate_mode = "head_tail"
+include_full_output_in_context = false
+
+[tool_output.bash]
+max_lines = 200
+max_bytes = 122880
+
+[tool_output.mcp]
+max_lines = 120
+max_bytes = 102400
+
+# Start compression/compaction early to preserve context budget.
+[context]
+auto_compaction_threshold = 0.65
+retain_recent_user_turns = 8
+retain_recent_tool_calls = 6
+
+[profiles.default-worker]
+model = "gpt-5.3-codex"
+model_reasoning_effort = "medium"
+model_reasoning_summary = "auto"
+model_verbosity = "low"
+approval_policy = "on-request"
+sandbox_mode = "workspace-write"
+web_search = "disabled"
+
+[profiles.orchestrator]
+model = "gpt-5.3-codex"
+model_reasoning_effort = "high"
+model_reasoning_summary = "detailed"
+model_verbosity = "medium"
+approval_policy = "on-request"
+sandbox_mode = "workspace-write"
+web_search = "disabled"
+
+[profiles.advisor]
+model = "gpt-5.4"
+model_reasoning_effort = "high"
+model_reasoning_summary = "detailed"
+model_verbosity = "medium"
+approval_policy = "untrusted"
+sandbox_mode = "read-only"
+web_search = "disabled"
+
+[profiles.worker-fast]
+model = "gpt-5.4-mini"
+model_reasoning_effort = "low"
+model_reasoning_summary = "concise"
+model_verbosity = "low"
+approval_policy = "on-failure"
+sandbox_mode = "workspace-write"
+web_search = "disabled"
+
+[profiles.worker-tests]
+model = "gpt-5.2"
+model_reasoning_effort = "medium"
+model_reasoning_summary = "auto"
+model_verbosity = "low"
+approval_policy = "on-request"
+sandbox_mode = "workspace-write"
+web_search = "disabled"
+
+[profiles.worker-docs]
+model = "gpt-5.4-mini"
+model_reasoning_effort = "low"
+model_reasoning_summary = "concise"
+model_verbosity = "low"
+approval_policy = "on-failure"
+sandbox_mode = "workspace-write"
+web_search = "disabled"
+
+# Disable unrelated plugin bundles for this repository.
+[plugins."github@openai-curated"]
+enabled = false
+
+[plugins."canva@openai-curated"]
+enabled = false
+
+[plugins."life-science-research@openai-curated"]
+enabled = false
+
+[plugins."build-ios-apps@openai-curated"]
+enabled = false
+
+[plugins."build-macos-apps@openai-curated"]
+enabled = false
+
+[plugins."test-android-apps@openai-curated"]
+enabled = false
+
+[plugins."vercel@openai-curated"]
+enabled = false
+
+[plugins."build-web-apps@openai-curated"]
+enabled = false
+
+[plugins."cloudflare@openai-curated"]
+enabled = false
+
+# Explicitly disable MCP endpoints not needed by this repo.
+[mcp_servers.playwright]
+enabled = false
+
+[mcp_servers.Sanity]
+enabled = false
+
+[mcp_servers.github]
+enabled = false
+
+[mcp_servers.notion]
+enabled = false
+
+[mcp_servers.jira]
+enabled = false

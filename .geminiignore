@@ -1,0 +1,37 @@
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+
+# Node
+node_modules/
+dist/
+dist-ssr/
+build/
+coverage/
+
+# IDE / Gemini
+.vscode/
+!.vscode/extensions.json
+.idea/
+.DS_Store
+**/.DS_Store
+.wrangler/
+.codex/
+.gemini/sandbox/
+
+# Python / Environment
+__pycache__/
+*.pyc
+.env
+.env.*
+secrets/
+*.local
+
+# Dumps & Misc
+dev_sync_logs/
+*.sql.gz
+*.tar.gz
+package-lock.json

@@ -1,0 +1,39 @@
+# Dependencies and build output
+node_modules/
+dist/
+coverage/
+.wrangler/
+
+# Local/system artifacts
+.DS_Store
+*.log
+logs/
+*.tmp
+*.temp
+
+# Python and tooling caches
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Runtime and data dumps
+*.sqlite
+*.sqlite-shm
+*.sqlite-wal
+*.db
+*.dump
+*.sql
+
+# Archives and binaries
+*.zip
+*.tar
+*.tar.gz
+*.tgz
+*.7z
+*.bin
+*.exe
+*.dmg
+
+# Project-specific noisy outputs
+dev_sync_logs/
+dev_sync_demo/

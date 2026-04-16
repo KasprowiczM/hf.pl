@@ -1,0 +1,44 @@
+{
+  "profiles": {
+    "default": {
+      "model": "gemini-3.1-pro",
+      "thinkingLevel": "low",
+      "maxOutputLines": 250,
+      "maxOutputBytes": 150000,
+      "summarizeToolOutput": true,
+      "description": "Default worker. Low cost standard execution without deep reasoning."
+    },
+    "orchestrator": {
+      "model": "gemini-3.1-pro",
+      "thinkingLevel": "high",
+      "maxOutputLines": 250,
+      "maxOutputBytes": 150000,
+      "summarizeToolOutput": true,
+      "description": "High reasoning orchestrator. Use this for planning and complex tasks."
+    },
+    "advisor": {
+      "model": "gemini-3.1-pro",
+      "thinkingLevel": "high",
+      "maxOutputLines": 250,
+      "maxOutputBytes": 150000,
+      "summarizeToolOutput": true,
+      "allowedTools": [
+        "view_file",
+        "list_dir",
+        "grep_search",
+        "read_url_content",
+        "search_web"
+      ],
+      "description": "Read-only advisor. Used strictly for architectural reviews, security audits, and bug analysis."
+    },
+    "flash-worker": {
+      "model": "gemini-3-flash",
+      "thinkingLevel": "none",
+      "maxOutputLines": 250,
+      "maxOutputBytes": 150000,
+      "summarizeToolOutput": true,
+      "description": "Fast subagent for quick formatting, test generation, and simple refactors."
+    }
+  },
+  "defaultProfile": "default"
+}
