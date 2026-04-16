@@ -1,36 +1,44 @@
-# AGENTS.md
+# AGENTS.md – hf.pl
 
-## Project goal
-Build and maintain a high-conversion bilingual (PL/EN) landing page for selling the `hf.pl` domain with reliable Cloudflare deployment.
+## Purpose
+Multi-agent configuration index for Claude Code, Gemini CLI, and Codex.
+See `@CLAUDE.md` for the canonical orchestration rules and model hierarchy.
 
 ## Stack
-React 19 + Vite 8 + Tailwind CSS 4 + Vitest + ESLint + Cloudflare Wrangler.
+React 19 · Vite 8 · Tailwind CSS 4 · Vitest · ESLint · Cloudflare Wrangler
 
-## Minimal commands
-- Install: `npm install`
-- Dev: `npm run dev`
-- Test: `npm run test -- --run`
-- Lint: `npm run lint`
-- Build: `npm run build`
-- Full local CI: `npm run ci`
-- Deploy worker: `npm run deploy:worker`
-- Deploy pages: `npm run deploy:pages`
+## Commands
+| Task | Command |
+|------|---------|
+| Install | `npm install` |
+| Dev server | `npm run dev` |
+| Test (fast) | `npm run test -- --run` |
+| Lint | `npm run lint` |
+| Build | `npm run build` |
+| Full CI | `npm run ci` |
+| Deploy worker | `npm run deploy:worker` |
+| Deploy pages | `npm run deploy:pages` |
 
-## Gemini Models Hierarchy
-- **Domyślnie używaj profilu low-Pro:** Podstawowy, najtańszy profil do pracy ciągłej.
-- **Profil orchestrator (Pro 3.1 High):** Używaj do planowania dużych funkcjonalności i refaktorów.
-- **Profil advisor (Pro 3.1 High):** Read-only. Tylko do złażonej analizy architektury oraz szukania trudnych błędów. Nigdy do edycji.
-- **Profil flash-worker (Gemini 3 Flash):** Szybkie rutynowe zadania poboczne (generowania boilerplate, testów, formatowania).
+## Claude Code Model Hierarchy
+- **Sonnet 4.6** (`sonnet`) – default orchestrator for daily work
+- **Opus 4.7** (`advisor-opus`) – read-only advisor: architecture, audits, analysis
+- **Haiku 4.6** (`worker-haiku`) – fast worker: tests, boilerplate, docs
 
-## Planning rule (non-negotiable)
-> **PLANNING RULE (95% pewności):** Nie wprowadzaj żadnych zmian w kodzie, dopóki nie poznasz kodu i wymagań na tyle, aby mieć co najmniej 95% pewności krok po kroku, co trzeba zbudować. Zawsze zadawaj pytania doprecyzowujące i kilkukrotnie weryfikuj swoje założenia, zanim przejdziesz z trybu planowania do implementacji rzędu plików instalacyjnych/kodowych.
+## Gemini CLI Model Hierarchy
+- **Default** (low-Pro) – standard execution, low cost
+- **Orchestrator** (Pro 3.1 High) – complex planning and refactors
+- **Advisor** (Pro 3.1 High, read-only) – architecture/bug analysis only
+- **Flash Worker** (Gemini 3 Flash) – boilerplate, formatting, simple tasks
+
+## Planning Rule (non-negotiable)
+> **95% CONFIDENCE RULE:** Do not write any code until you have at least 95% confidence in what needs to be built. Explore, ask, verify — then implement.
 
 ## References (Progressive Disclosure)
-- `@README.md` - project overview and local workflows
-- `@CLOUDFLARE.md` - deployment specifics
-- `@.gemini/workspace.rules` - reguły globalne pre-prompt Antigravity
-- `@docs/agents/style_guide.md` - coding style and formatting rules
-- `@docs/agents/testing_rules.md` - test strategy and execution rules
-- `@docs/agents/api_conventions.md` - API and integration conventions
-- `@docs/agents/security.md` - security baseline for code and config changes
-- `@docs/agents/handoff.md` - handoff checklist for multi-step work
+- `@CLAUDE.md` – Claude Code main index
+- `@README.md` – project overview
+- `@CLOUDFLARE.md` – deployment specifics
+- `@docs/agents/style_guide.md` – coding style
+- `@docs/agents/testing_rules.md` – test strategy
+- `@docs/agents/api_conventions.md` – API and Cloudflare conventions
+- `@docs/agents/security.md` – security baseline
+- `@docs/agents/handoff.md` – handoff checklist

@@ -1,0 +1,43 @@
+{
+  "model": "claude-sonnet-4-5",
+  "env": {
+    "MAX_THINKING_TOKENS": "10000",
+    "CLAUDE_CODE_DISABLE_ADAPTIVE_THINKING": "1"
+  },
+  "profiles": {
+    "sonnet": {
+      "model": "claude-sonnet-4-5",
+      "thinkingBudget": 10000,
+      "description": "Default orchestrator. Balanced quality/cost for daily work."
+    },
+    "advisor-opus": {
+      "model": "claude-opus-4-5",
+      "thinkingBudget": 16000,
+      "description": "Read-only architect. Architecture analysis, planning, code review — NO code writing."
+    },
+    "worker-haiku": {
+      "model": "claude-haiku-4-5",
+      "thinkingBudget": 0,
+      "description": "Fast cheap worker. Boilerplate, tests, docs, simple refactors."
+    }
+  },
+  "defaultProfile": "sonnet",
+  "toolOutput": {
+    "maxLines": 200,
+    "maxBytes": 122880,
+    "truncateMode": "head_tail",
+    "summarizeOnOverflow": true
+  },
+  "context": {
+    "autoCompactionThreshold": 0.60,
+    "retainRecentUserTurns": 8
+  },
+  "permissions": {
+    "deny": [
+      "Bash(cat .env*)",
+      "Bash(cat secrets/*)",
+      "Read(.env*)",
+      "Read(**/secrets/**)"
+    ]
+  }
+}

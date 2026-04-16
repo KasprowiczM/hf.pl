@@ -1,0 +1,60 @@
+# .claudeignore – hf.pl
+# Files and directories Claude should not read or include in context
+
+# Dependencies and build artifacts
+node_modules/
+dist/
+coverage/
+.wrangler/
+__pycache__/
+
+# Old and archived content
+_old_site/
+
+# Large generated files
+*.log
+dev_sync_logs/
+package-lock.json
+
+# Secrets and environment
+.env
+.env.*
+.env.local
+secrets/
+*.pem
+*.key
+*.p12
+
+# Git internals
+.git/
+
+# Binary and media assets
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.svg
+*.ico
+*.woff
+*.woff2
+*.ttf
+*.eot
+
+# Archives and dumps
+*.zip
+*.tar
+*.gz
+*.sql.gz
+
+# Dev sync internals (large operational files)
+dev_sync_demo/
+dev-sync-*.sh
+dev_sync_core.py
+dev_sync_export.py
+dev_sync_import.py
+dev_sync_verify_full.py
+dev_sync_verify_git.py
+DEV_SYNC_*.md
+DEV_SYNC_OPERATIONS.md
+IMPLEMENTATION_SUMMARY.md
+update_json*.js
