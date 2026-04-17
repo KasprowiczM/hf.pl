@@ -1,6 +1,6 @@
 ---
 name: worker-haiku
-model: claude-haiku-4-5
+model: claude-haiku-4-6
 description: >
   Fast, cheap execution worker for the hf.pl project.
   Handles boilerplate generation, test scaffolding, formatting, docs, and

@@ -1,6 +1,6 @@
 ---
 name: advisor-opus
-model: claude-opus-4-5
+model: claude-opus-4-7
 description: >
   Read-only architect and senior reviewer for the hf.pl project.
   Used exclusively for architecture analysis, security audits, complex bug hunting,
