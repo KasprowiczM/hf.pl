@@ -15,8 +15,8 @@
     "test:watch": "vitest watch",
     "test:coverage": "vitest run --coverage",
     "cf:whoami": "wrangler whoami",
-    "deploy:pages": "npm run build && wrangler pages deploy dist",
-    "deploy:worker": "npm run build && wrangler deploy"
+    "deploy:pages": "npm run build && wrangler pages deploy dist --project-name hf-pl --branch main",
+    "deploy:worker": "npm run build && wrangler deploy --config wrangler.worker.toml"
   },
   "engines": {
     "node": "^22.16.0"

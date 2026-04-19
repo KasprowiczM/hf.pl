@@ -1,7 +1,7 @@
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
-    const response = await env.ASSETS.fetch(request);
+    const response = await env.STATIC_ASSETS.fetch(request);
     const headers = new Headers(response.headers);
 
     headers.set('X-Content-Type-Options', 'nosniff');
