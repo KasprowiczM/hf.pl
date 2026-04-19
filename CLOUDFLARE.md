@@ -7,9 +7,20 @@ Recommended settings:
 - Framework preset: `Vite`
 - Build command: `npm run build`
 - Build output directory: `dist`
-- Node version: `22.16.0`
+- Node version: `22.16.0` (Pages build image v3 default)
 
-Cloudflare Pages does not infer Node from `package.json` engines, so keep the Pages project aligned with [.node-version](.node-version) or set `NODE_VERSION=22.16.0` in the dashboard.
+Cloudflare Pages build image versions (z dokumentacji):
+
+- v3 (domyślny): Node `22.16.0`
+- v2: Node `18.17.1`
+- v1: Node `12.18.0`
+
+Pages does not infer Node from `package.json` engines. Keep versioning via:
+
+- `[.node-version](/.node-version)` (domyślnie), or
+- `NODE_VERSION` / `.nvmrc` override.
+
+Free plan has `500` deploys per month.
 
 ## Workers static assets
 

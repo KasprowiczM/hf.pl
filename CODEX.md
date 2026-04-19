@@ -12,16 +12,19 @@ React 19 · Vite 8 · Tailwind CSS 4 · Vitest · ESLint · Cloudflare Wrangler
 |------|---------|
 | Install | `npm install` |
 | Dev server | `npm run dev` |
+| Quality check | `npm run check` |
 | Test (fast) | `npm run test -- --run` |
 | Lint | `npm run lint` |
 | Build | `npm run build` |
 | Full CI | `npm run ci` |
 
-## Codex Model Profiles
-- **default-worker** (`gpt-5.3-codex`, effort=medium) – daily orchestration
-- **orchestrator** (`gpt-5.3-codex`, effort=high) – complex planning
-- **advisor** (`gpt-5.4`, effort=high, read-only) – architecture analysis
-- **worker-fast** (`gpt-5.4-mini`, effort=low) – boilerplate, tests, docs
+## Model Profiles
+- **Rola decyzyjna i planistyczna**: `gpt-5.4` (effort `xhigh`) – decyzje, ryzyko, architektura, integracja końcowa.
+- **Rola audytowa (read-only)**: `gpt-5.4` (effort `high`) – review, analiza ryzyk, ciężkie diagnozy.
+- **Rola implementacyjna**: `gpt-5.2-codex` (effort `medium`) – zmiany produkcyjne i refaktory.
+- **Rola testowa i jakościowa**: `gpt-5.1-codex-mini` (effort `low`) – testy, poprawki lint, dokumentacja pomocnicza.
+
+Codex configuration settings are maintained directly in this file for local use; no separate config file is currently required.
 
 ## Planning Rule (non-negotiable)
 > **95% CONFIDENCE RULE:** Do not write any code until you have at least 95% confidence in what needs to be built. Explore, ask, verify — then implement.

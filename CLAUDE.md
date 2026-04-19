@@ -12,6 +12,7 @@ React 19 · Vite 8 · Tailwind CSS 4 · Vitest · ESLint · Cloudflare Wrangler
 |------|---------|
 | Install | `npm install` |
 | Dev server | `npm run dev` |
+| Quality check | `npm run check` |
 | Test (fast) | `npm run test -- --run` |
 | Lint | `npm run lint` |
 | Build | `npm run build` |
@@ -19,15 +20,16 @@ React 19 · Vite 8 · Tailwind CSS 4 · Vitest · ESLint · Cloudflare Wrangler
 | Deploy worker | `npm run deploy:worker` |
 | Deploy pages | `npm run deploy:pages` |
 
-## Model Hierarchy
+## Model Profiles
 
-| Role | Model | Profile | Purpose |
-|------|-------|---------|---------|
-| **Orchestrator** | Sonnet 4.6 | `sonnet` (default) | Daily development, feature implementation |
-| **Advisor** | Opus 4.7 | `advisor-opus` | Architecture, audits, hard bugs — read-only |
-| **Worker** | Haiku 4.6 | `worker-haiku` | Tests, boilerplate, docs, simple refactors |
+| Profile | Model | Code | Purpose |
+|------|-------|------|---------|
+| **Strategiczny** | gpt-5.4 | `gpt-5.4` (xhigh) | Decyzje, planowanie, finalne rozstrzygnięcia |
+| **Analityczny** | gpt-5.4 | `gpt-5.4` (high, read-only) | Analiza architektury, audyty, ciężkie błędy |
+| **Wykonawczy** | gpt-5.2-codex | `gpt-5.2-codex` (medium) | Zmiany produkcyjne i usprawnienia |
+| **Kontrolny** | gpt-5.1-codex-mini | `gpt-5.1-codex-mini` (low) | Testy, boilerplate, dokumentacja pomocnicza |
 
-> **Advisor (Opus) never writes implementation code.** It produces plans and recommendations for Sonnet to execute.
+> **Profil Analityczny nie wprowadza zmian w kodzie.** Dostarcza plan i rekomendacje.
 
 ## Planning Rule (non-negotiable)
 > **95% CONFIDENCE RULE:** Do not write any code until you have explored the codebase and requirements enough to be at least 95% confident in every step. Ask clarifying questions in planning mode. Verify assumptions before implementation.

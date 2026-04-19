@@ -15,20 +15,11 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version-file: .node-version
           cache: npm
 
       - name: Install
         run: npm ci
 
       - name: Lint
-        run: npm run lint
-
-      - name: Test
-        run: npm run test -- --run
-
-      - name: Build
-        run: npm run build
-
-      - name: Dependency Audit (high+)
-        run: npm audit --audit-level=high
+        run: npm run ci

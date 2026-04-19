@@ -30,7 +30,9 @@ vi.mock('../lib/analytics', () => ({
 describe('Navigation', () => {
   beforeEach(() => {
     vi.clearAllMocks();
-    localStorage.clear();
+    localStorage.setItem('language', '');
+    localStorage.setItem('theme', 'system');
+    localStorage.setItem('fontScale', '1');
     document.documentElement.classList.remove('dark');
     document.documentElement.style.removeProperty('--font-scale');
   });

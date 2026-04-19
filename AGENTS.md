@@ -12,6 +12,7 @@ React 19 · Vite 8 · Tailwind CSS 4 · Vitest · ESLint · Cloudflare Wrangler
 |------|---------|
 | Install | `npm install` |
 | Dev server | `npm run dev` |
+| Quality check | `npm run check` |
 | Test (fast) | `npm run test -- --run` |
 | Lint | `npm run lint` |
 | Build | `npm run build` |
@@ -19,10 +20,11 @@ React 19 · Vite 8 · Tailwind CSS 4 · Vitest · ESLint · Cloudflare Wrangler
 | Deploy worker | `npm run deploy:worker` |
 | Deploy pages | `npm run deploy:pages` |
 
-## Claude Code Model Hierarchy
-- **Sonnet 4.6** (`sonnet`) – default orchestrator for daily work
-- **Opus 4.7** (`advisor-opus`) – read-only advisor: architecture, audits, analysis
-- **Haiku 4.6** (`worker-haiku`) – fast worker: tests, boilerplate, docs
+## Model Profiles
+- **Profil kierowniczy i decyzyjny**: `gpt-5.4` (effort `xhigh`) – planowanie, decyzje architektoniczne, integracja końcowa.
+- **Profil audytowo-analityczny**: `gpt-5.4` (effort `high`, read-only) – audyty, analiza ryzyk, trudne decyzje diagnostyczne.
+- **Profil implementacyjny**: `gpt-5.2-codex` (effort `medium`) – routine coding, refaktory, zmiany robocze.
+- **Profil kontrolny (testy/docs)**: `gpt-5.1-codex-mini` (effort `low`) – testy, poprawki lint, dokumentacja pomocnicza.
 
 ## Gemini CLI Model Hierarchy
 - **Default** (low-Pro) – standard execution, low cost
