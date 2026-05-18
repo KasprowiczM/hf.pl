@@ -22,4 +22,15 @@ jobs:
         run: npm ci
 
       - name: Lint
-        run: npm run ci
+        run: npm run lint
+
+      - name: Test with coverage
+        run: npm run test:coverage
+
+      - name: Build
+        run: npm run build
+        env:
+          NODE_ENV: production
+
+      - name: Audit
+        run: npm run audit

@@ -5,41 +5,29 @@ import './index.css'
 import './i18n.js'
 import App from './App.jsx'
 
-// Initialize theme on load
-const initializeTheme = () => {
+const THEME_KEY = 'theme';
+
+function applyTheme(theme) {
   const root = document.documentElement;
-  const savedTheme = localStorage.getItem('theme') || 'system';
-  if (savedTheme === 'dark') {
-    root.classList.add('dark');
-  } else if (savedTheme === 'system') {
-    root.classList.remove('dark');
-    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      root.classList.add('dark');
-    }
-  } else {
-    root.classList.remove('dark');
-  }
-};
+  const isDark =
+    theme === 'dark' ||
+    (theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
 
-const initializeFontScale = () => {
-  const fontScale = Number(localStorage.getItem('fontScale') || '1');
-  document.documentElement.style.setProperty('--font-scale', String(fontScale));
-};
+  root.classList.toggle('dark', isDark);
+  root.style.colorScheme = isDark ? 'dark' : 'light';
+}
 
-// Run on initial load
-initializeTheme();
+function initializeFontScale() {
+  const scale = Number(localStorage.getItem('fontScale') || '1');
+  document.documentElement.style.setProperty('--font-scale', String(scale));
+}
+
+applyTheme(localStorage.getItem(THEME_KEY) || 'system');
 initializeFontScale();
 
-// Also listen for system theme changes
-window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-  const savedTheme = localStorage.getItem('theme') || 'system';
-  if (savedTheme === 'system') {
-    if (e.matches) {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
-  }
+window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+  const saved = localStorage.getItem(THEME_KEY) || 'system';
+  if (saved === 'system') applyTheme('system');
 });
 
 createRoot(document.getElementById('root')).render(

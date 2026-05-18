@@ -1,11 +1,9 @@
 import '@testing-library/jest-dom'
-// Mock next/image if needed, but we're not using it in this project
-// ResizeObserver mock for jsdom
-const localStorageState = new Map()
 
+const localStorageState = new Map()
 Object.defineProperty(window, 'localStorage', {
   value: {
-    getItem: (key) => localStorageState.get(key) || null,
+    getItem: (key) => localStorageState.get(key) ?? null,
     setItem: (key, value) => localStorageState.set(key, String(value)),
     removeItem: (key) => localStorageState.delete(key),
     clear: () => localStorageState.clear(),
@@ -40,6 +38,7 @@ HTMLCanvasElement.prototype.getContext = () => ({
   clearRect: () => {},
   createLinearGradient: () => ({ addColorStop: () => {} }),
   fillRect: () => {},
+  fillText: () => {},
   save: () => {},
   restore: () => {},
   translate: () => {},
@@ -50,4 +49,5 @@ HTMLCanvasElement.prototype.getContext = () => ({
   moveTo: () => {},
   lineTo: () => {},
   closePath: () => {},
+  measureText: () => ({ width: 0 }),
 })

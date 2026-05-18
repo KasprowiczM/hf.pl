@@ -10,13 +10,14 @@
     "preview": "vite preview",
     "check": "npm run lint && npm run build",
     "audit": "npm audit --audit-level=high",
-    "ci": "npm run lint && npm run test -- --run && npm run build && npm run audit",
+    "ci": "npm run lint && npm run test:coverage && npm run build && npm run audit",
     "test": "vitest",
     "test:watch": "vitest watch",
     "test:coverage": "vitest run --coverage",
     "cf:whoami": "wrangler whoami",
     "deploy:pages": "npm run build && wrangler pages deploy dist --project-name hf-pl --branch main",
-    "deploy:worker": "npm run build && wrangler deploy --config wrangler.worker.toml"
+    "deploy:worker": "npm run build && wrangler deploy --config wrangler.worker.toml",
+    "postbuild": "node scripts/postbuild.js"
   },
   "engines": {
     "node": "^22.16.0"
@@ -44,11 +45,13 @@
     "@vitejs/plugin-react": "^6.0.1",
     "@vitest/coverage-v8": "^4.1.4",
     "eslint": "^9.39.4",
+    "eslint-plugin-jsx-a11y": "^6.10.2",
     "eslint-plugin-react-hooks": "^7.1.1",
     "eslint-plugin-react-refresh": "^0.5.2",
     "globals": "^17.5.0",
     "jsdom": "^29.0.2",
     "rollup-plugin-visualizer": "^7.0.1",
+    "sharp": "^0.34.5",
     "vite": "^8.0.8",
     "vitest": "^4.1.4",
     "wrangler": "^4.83.0"

@@ -17,28 +17,17 @@ function App() {
   const { i18n } = useTranslation();
 
   useEffect(() => {
-    document.documentElement.lang = i18n.resolvedLanguage || i18n.language || 'pl';
-  }, [i18n.language, i18n.resolvedLanguage]);
-
-  useEffect(() => {
     trackPageView(i18n.resolvedLanguage || i18n.language || 'pl');
   }, [i18n.language, i18n.resolvedLanguage]);
 
   useEffect(() => {
     const elements = Array.from(document.querySelectorAll('.reveal'));
-    if (!elements.length) {
-      return undefined;
-    }
+    if (!elements.length) return undefined;
 
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          const target = entry.target;
-          if (entry.isIntersecting) {
-            target.classList.add('is-visible');
-          } else {
-            target.classList.remove('is-visible');
-          }
+          entry.target.classList.toggle('is-visible', entry.isIntersecting);
         });
       },
       { threshold: 0.14, rootMargin: '0px 0px -8% 0px' },
@@ -51,10 +40,11 @@ function App() {
   useEffect(() => {
     const onScroll = () => {
       const max = Math.max(document.body.scrollHeight - window.innerHeight, 1);
-      const progress = window.scrollY / max;
-      document.documentElement.style.setProperty('--scroll-progress', progress.toFixed(4));
+      document.documentElement.style.setProperty(
+        '--scroll-progress',
+        (window.scrollY / max).toFixed(4),
+      );
     };
-
     onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);

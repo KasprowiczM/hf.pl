@@ -37,7 +37,6 @@ export function Hero() {
   useEffect(() => {
     const start = performance.now();
     const duration = 900;
-
     const run = (time) => {
       const progress = Math.min((time - start) / duration, 1);
       const eased = 1 - Math.pow(1 - progress, 3);
@@ -45,35 +44,20 @@ export function Hero() {
         metric1: Math.max(0, Math.round(metric1Target * eased)),
         metric2: Math.max(0, Math.round(metric2Target * eased)),
       });
-
-      if (progress < 1) {
-        metricAnimationRef.current = window.requestAnimationFrame(run);
-      }
+      if (progress < 1) metricAnimationRef.current = window.requestAnimationFrame(run);
     };
-
-    if (metricAnimationRef.current) {
-      window.cancelAnimationFrame(metricAnimationRef.current);
-    }
+    if (metricAnimationRef.current) window.cancelAnimationFrame(metricAnimationRef.current);
     metricAnimationRef.current = window.requestAnimationFrame(run);
-
-    return () => {
-      if (metricAnimationRef.current) {
-        window.cancelAnimationFrame(metricAnimationRef.current);
-      }
-    };
+    return () => { if (metricAnimationRef.current) window.cancelAnimationFrame(metricAnimationRef.current); };
   }, [i18n.language, metric1Target, metric2Target]);
 
   useEffect(() => {
-    if (!boxRef.current || !canvasRef.current) {
-      return undefined;
-    }
+    if (!boxRef.current || !canvasRef.current) return undefined;
 
     const box = boxRef.current;
     const canvas = canvasRef.current;
     const context = canvas.getContext('2d');
-    if (!context) {
-      return undefined;
-    }
+    if (!context) return undefined;
 
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -86,7 +70,6 @@ export function Hero() {
       canvas.style.width = `${width}px`;
       canvas.style.height = `${height}px`;
       context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
-
       particlesRef.current = Array.from({ length: 24 }, (_, index) => ({
         x: Math.random() * width,
         y: Math.random() * height,
@@ -112,14 +95,12 @@ export function Hero() {
       context.shadowColor = 'rgba(9, 12, 18, 0.45)';
       context.shadowBlur = 14;
       context.fillText(particle.glyph, 0, 0);
-
       context.restore();
     };
 
     const step = (time) => {
       const width = box.clientWidth;
       const height = box.clientHeight;
-
       context.clearRect(0, 0, width, height);
       const gradient = context.createLinearGradient(0, 0, width, height);
       gradient.addColorStop(0, '#0d1726');
@@ -132,7 +113,6 @@ export function Hero() {
         const pointer = pointerRef.current;
         const dxCenter = width * 0.5 - particle.x;
         const dyCenter = height * 0.5 - particle.y;
-
         particle.vx += dxCenter * 0.00045;
         particle.vy += dyCenter * 0.00035;
         particle.vx += Math.sin(time * 0.0009 + index * 0.4) * 0.013;
@@ -164,7 +144,6 @@ export function Hero() {
           particle.vy *= -0.84;
           particle.y = Math.min(Math.max(particle.y, bound), height - bound);
         }
-
         drawShape(particle);
       });
 
@@ -175,29 +154,38 @@ export function Hero() {
     const resizeObserver = new ResizeObserver(resize);
     resizeObserver.observe(box);
 
-    if (!reducedMotion) {
-      animationRef.current = window.requestAnimationFrame(step);
-    }
+    const startLoop = () => {
+      if (!reducedMotion && !document.hidden) {
+        animationRef.current = window.requestAnimationFrame(step);
+      }
+    };
+
+    const onVisibilityChange = () => {
+      if (document.hidden) {
+        window.cancelAnimationFrame(animationRef.current);
+      } else {
+        startLoop();
+      }
+    };
+
+    document.addEventListener('visibilitychange', onVisibilityChange);
+    startLoop();
 
     return () => {
-      if (animationRef.current) {
-        window.cancelAnimationFrame(animationRef.current);
-      }
+      window.cancelAnimationFrame(animationRef.current);
       resizeObserver.disconnect();
+      document.removeEventListener('visibilitychange', onVisibilityChange);
     };
   }, []);
 
   const handlePointerMove = (event) => {
-    if (!boxRef.current) {
-      return;
-    }
+    if (!boxRef.current) return;
     const rect = boxRef.current.getBoundingClientRect();
     pointerRef.current = {
       x: event.clientX - rect.left,
       y: event.clientY - rect.top,
       active: true,
     };
-
     if (!trackedInteractionRef.current) {
       trackedInteractionRef.current = true;
       trackEvent('hero_interact', { area: 'antigravity_abstract' });
@@ -230,7 +218,7 @@ export function Hero() {
               onClick={() => trackEvent('cta_click', { location: 'hero', target: 'mailto' })}
               className="action-pill hoverable justify-center bg-text text-bg no-underline"
             >
-              <Mail size={16} />
+              <Mail size={16} aria-hidden="true" />
               {t('cta_offer')}
             </a>
             <a
@@ -239,7 +227,7 @@ export function Hero() {
               className="action-pill hoverable justify-center border border-border bg-surface/90 text-text no-underline"
             >
               {t('cta_valuation')}
-              <ArrowDown size={15} />
+              <ArrowDown size={15} aria-hidden="true" />
             </a>
           </div>
           <p className="mt-4 max-w-[34rem] text-sm leading-6 text-text-muted sm:mt-5 sm:leading-7 reveal reveal-up">{t('hero_note')}</p>
@@ -267,9 +255,7 @@ export function Hero() {
                 <div
                   ref={boxRef}
                   onMouseMove={handlePointerMove}
-                  onMouseLeave={() => {
-                    pointerRef.current.active = false;
-                  }}
+                  onMouseLeave={() => { pointerRef.current.active = false; }}
                   className="hf-antigravity-box relative mx-auto h-[200px] w-full max-w-[420px] cursor-none overflow-hidden rounded-[1.3rem] border border-white/12 sm:h-[260px]"
                   role="img"
                   aria-label={t('hero_art_alt')}

@@ -4,6 +4,9 @@ import { ArrowUpRight, Sun, Moon, Monitor, Type } from 'lucide-react';
 import { persistLanguage } from '../i18n';
 import { trackEvent } from '../lib/analytics';
 
+const THEME_KEY = 'theme';
+const THEME_CYCLE = { light: 'dark', dark: 'system', system: 'light' };
+
 const navItems = [
   { key: 'nav_why', href: '#why' },
   { key: 'nav_potential', href: '#usecases' },
@@ -14,7 +17,7 @@ const navItems = [
 
 export function Navigation() {
   const { t, i18n } = useTranslation();
-  const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'system');
+  const [theme, setTheme] = useState(() => localStorage.getItem(THEME_KEY) || 'system');
   const [fontScale, setFontScale] = useState(() => Number(localStorage.getItem('fontScale') || '1'));
 
   useEffect(() => {
@@ -28,36 +31,21 @@ export function Navigation() {
     trackEvent('language_switch', { language });
   };
 
-  const applyTheme = (nextTheme) => {
+  const applyTheme = (next) => {
     const root = document.documentElement;
-    if (nextTheme === 'dark') {
-      root.classList.add('dark');
-    } else if (nextTheme === 'light') {
-      root.classList.remove('dark');
-    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      root.classList.add('dark');
-    } else {
-      root.classList.remove('dark');
-    }
-
-    localStorage.setItem('theme', nextTheme);
-    setTheme(nextTheme);
-    trackEvent('theme_switch', { theme: nextTheme });
+    const isDark =
+      next === 'dark' ||
+      (next === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+    root.classList.toggle('dark', isDark);
+    root.style.colorScheme = isDark ? 'dark' : 'light';
+    localStorage.setItem(THEME_KEY, next);
+    setTheme(next);
+    trackEvent('theme_switch', { theme: next });
   };
 
-  const cycleTheme = () => {
-    if (theme === 'light') {
-      applyTheme('dark');
-      return;
-    }
+  const cycleTheme = () => applyTheme(THEME_CYCLE[theme]);
 
-    if (theme === 'dark') {
-      applyTheme('system');
-      return;
-    }
-
-    applyTheme('light');
-  };
+  const nextTheme = THEME_CYCLE[theme];
 
   const increaseFontSize = () =>
     setFontScale((prev) => {
@@ -79,10 +67,10 @@ export function Navigation() {
         {t('skip')}
       </a>
       <header className="fixed inset-x-0 top-0 z-50 px-2 pt-2 sm:px-6 sm:pt-4 lg:px-8">
-<nav
-  className="section-frame flex items-center justify-between rounded-full border border-white/18 bg-[rgba(8,10,14,0.86)] px-3 py-2.5 shadow-[0_24px_60px_rgba(4,8,14,0.42)] backdrop-blur-xl sm:px-5 sm:py-3"
-  aria-label="Main navigation"
->
+        <nav
+          className="section-frame flex items-center justify-between rounded-full border border-white/18 bg-[rgba(8,10,14,0.86)] px-3 py-2.5 shadow-[0_24px_60px_rgba(4,8,14,0.42)] backdrop-blur-xl sm:px-5 sm:py-3"
+          aria-label="Main navigation"
+        >
           <a href="#hero" className="flex items-center gap-3 no-underline">
             <span className="display-title text-[1.45rem] leading-none tracking-tight text-white sm:text-[1.65rem]">
               <span className="gold-gradient bg-clip-text text-transparent">hf</span>
@@ -98,75 +86,75 @@ export function Navigation() {
             ))}
           </div>
 
-            <div className="flex items-center gap-2 sm:gap-3">
-              <div className="flex rounded-full border border-white/16 bg-white/6 p-0.5 sm:p-1" role="group" aria-label={t('language_switch')}>
+          <div className="flex items-center gap-2 sm:gap-3">
+            {/* Language switcher */}
+            <div className="flex rounded-full border border-white/16 bg-white/6 p-0.5 sm:p-1" role="group" aria-label={t('language_switch')}>
+              {['pl', 'en'].map((lang) => (
                 <button
+                  key={lang}
                   type="button"
-                  onClick={() => changeLanguage('pl')}
+                  onClick={() => changeLanguage(lang)}
                   className={`rounded-full px-2.5 py-1.5 text-[0.68rem] font-semibold uppercase tracking-[0.14em] sm:px-3 sm:text-xs sm:tracking-[0.16em] ${
-                    i18n.language === 'pl' ? 'bg-white text-[#0c1017]' : 'text-white/62 hover:text-white hover:bg-white/12'
+                    i18n.language === lang
+                      ? 'bg-white text-[#0c1017]'
+                      : 'text-white/62 hover:bg-white/12 hover:text-white'
                   }`}
-                  aria-pressed={i18n.language === 'pl'}
+                  aria-pressed={i18n.language === lang}
                 >
-                  PL
+                  {lang.toUpperCase()}
                 </button>
-                <button
-                  type="button"
-                  onClick={() => changeLanguage('en')}
-                  className={`rounded-full px-2.5 py-1.5 text-[0.68rem] font-semibold uppercase tracking-[0.14em] sm:px-3 sm:text-xs sm:tracking-[0.16em] ${
-                    i18n.language === 'en' ? 'bg-white text-[#0c1017]' : 'text-white/62 hover:text-white hover:bg-white/12'
-                  }`}
-                  aria-pressed={i18n.language === 'en'}
-                >
-                  EN
-                </button>
-              </div>
-
-              <div className="ml-1 hidden rounded-full border border-white/16 bg-white/6 p-1 sm:flex" role="group" aria-label={t('font_size')}>
-                <button
-                  type="button"
-                  onClick={decreaseFontSize}
-                  aria-label={t('font_decrease')}
-                  className="rounded-full px-2.5 py-1.5 text-white/62 hover:bg-white/12 hover:text-white"
-                >
-                  <Type className="h-3.5 w-3.5" />
-                  <span className="sr-only">{t('font_decrease')}</span>
-                </button>
-                <span className="px-1 text-[0.7rem] font-semibold tracking-[0.12em] text-white/55">A</span>
-                <button
-                  type="button"
-                  onClick={increaseFontSize}
-                  aria-label={t('font_increase')}
-                  className="rounded-full px-2.5 py-1.5 text-white/62 hover:bg-white/12 hover:text-white"
-                >
-                  <Type className="h-4.5 w-4.5" />
-                  <span className="sr-only">{t('font_increase')}</span>
-                </button>
-              </div>
-
-              <div className="flex rounded-full border border-white/16 bg-white/6 p-0.5 sm:p-1" role="group" aria-label={t('theme_switch')}>
-                <button
-                  type="button"
-                  onClick={cycleTheme}
-                  className="rounded-full px-2.5 py-1.5 text-[0.68rem] font-semibold uppercase tracking-[0.14em] text-white/62 hover:bg-white/12 hover:text-white sm:px-3 sm:text-xs sm:tracking-[0.16em]"
-                  title={theme === 'system' ? t('theme_system') : theme === 'dark' ? t('theme_dark') : t('theme_light')}
-                >
-                  {theme === 'dark' && <Sun className="h-4 w-4" />}
-                  {theme === 'light' && <Moon className="h-4 w-4" />}
-                  {theme === 'system' && <Monitor className="h-4 w-4" />}
-                  <span className="sr-only">{t('theme_switch')}</span>
-                </button>
-              </div>
-
-              <a
-                href="#contact"
-                onClick={() => trackEvent('cta_click', { location: 'navigation', target: 'contact' })}
-                className="action-pill hidden bg-white text-[#0d1117] no-underline hover:-translate-y-1 hover:shadow-[0_20px_38px_rgba(255,255,255,0.18)] sm:inline-flex"
-              >
-                {t('nav_offer')}
-                <ArrowUpRight size={15} />
-              </a>
+              ))}
             </div>
+
+            {/* Font size — visible on all screen sizes */}
+            <div className="flex rounded-full border border-white/16 bg-white/6 p-0.5 sm:p-1" role="group" aria-label={t('font_size')}>
+              <button
+                type="button"
+                onClick={decreaseFontSize}
+                aria-label={t('font_decrease')}
+                disabled={fontScale <= 0.9}
+                className="rounded-full px-2 py-1.5 text-white/62 hover:bg-white/12 hover:text-white disabled:opacity-30 sm:px-2.5"
+              >
+                <Type className="h-3 w-3 sm:h-3.5 sm:w-3.5" aria-hidden="true" />
+              </button>
+              <span className="px-1 text-[0.65rem] font-semibold tracking-[0.12em] text-white/55 sm:text-[0.7rem]" aria-hidden="true">A</span>
+              <button
+                type="button"
+                onClick={increaseFontSize}
+                aria-label={t('font_increase')}
+                disabled={fontScale >= 1.2}
+                className="rounded-full px-2 py-1.5 text-white/62 hover:bg-white/12 hover:text-white disabled:opacity-30 sm:px-2.5"
+              >
+                <Type className="h-4 w-4 sm:h-4.5 sm:w-4.5" aria-hidden="true" />
+              </button>
+            </div>
+
+            {/* Theme toggle */}
+            <div className="flex rounded-full border border-white/16 bg-white/6 p-0.5 sm:p-1" role="group" aria-label={t('theme_switch')}>
+              <button
+                type="button"
+                onClick={cycleTheme}
+                className="rounded-full px-2.5 py-1.5 text-white/62 hover:bg-white/12 hover:text-white sm:px-3"
+              >
+                {theme === 'dark' && <Sun className="h-4 w-4" aria-hidden="true" />}
+                {theme === 'light' && <Moon className="h-4 w-4" aria-hidden="true" />}
+                {theme === 'system' && <Monitor className="h-4 w-4" aria-hidden="true" />}
+                <span className="sr-only">
+                  {t('theme_switch')}: {t(`theme_${theme}`)}. {t('theme_next')}: {t(`theme_${nextTheme}`)}.
+                </span>
+              </button>
+            </div>
+
+            {/* CTA */}
+            <a
+              href="#contact"
+              onClick={() => trackEvent('cta_click', { location: 'navigation', target: 'contact' })}
+              className="action-pill hidden bg-white text-[#0d1117] no-underline hover:-translate-y-1 hover:shadow-[0_20px_38px_rgba(255,255,255,0.18)] sm:inline-flex"
+            >
+              {t('nav_offer')}
+              <ArrowUpRight size={15} />
+            </a>
+          </div>
         </nav>
       </header>
     </>

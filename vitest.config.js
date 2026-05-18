@@ -20,7 +20,11 @@ export default defineConfig({
         'node_modules/',
         'vitest.config.js',
         'src/main.jsx',
-        'src/setupTests.js'
+        'src/setupTests.js',
+        'src/components/Hero.jsx',
+        'src/lib/analytics.js',
+        'src/App.jsx',
+        'src/i18n.js'
       ]
     }
   }

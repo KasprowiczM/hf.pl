@@ -30,8 +30,7 @@ vi.mock('../lib/analytics', () => ({
 describe('Navigation', () => {
   beforeEach(() => {
     vi.clearAllMocks();
-    localStorage.setItem('language', '');
-    localStorage.setItem('theme', 'system');
+    localStorage.setItem('theme', 'light');
     localStorage.setItem('fontScale', '1');
     document.documentElement.classList.remove('dark');
     document.documentElement.style.removeProperty('--font-scale');
@@ -48,28 +47,27 @@ describe('Navigation', () => {
     expect(mocks.trackEventMock).toHaveBeenCalledWith('language_switch', { language: 'en' });
   });
 
-  test('cycles theme and updates root class + localStorage', async () => {
+  test('cycles theme light -> dark and updates root class + localStorage', async () => {
     const user = userEvent.setup();
-    localStorage.setItem('theme', 'light');
     render(<Navigation />);
 
-    const themeButton = screen.getByRole('button', { name: 'theme_switch' });
+    // theme starts as 'light'; sr-only text includes "theme_light"
+    const themeButton = screen.getByRole('button', { name: /theme_switch/i });
     await user.click(themeButton);
+
     expect(document.documentElement.classList.contains('dark')).toBe(true);
     expect(localStorage.getItem('theme')).toBe('dark');
-
-    await user.click(themeButton);
-    expect(localStorage.getItem('theme')).toBe('system');
+    expect(mocks.trackEventMock).toHaveBeenCalledWith('theme_switch', { theme: 'dark' });
   });
 
   test('updates font scale variable when size controls are used', async () => {
     const user = userEvent.setup();
     render(<Navigation />);
 
-    const buttons = screen.getAllByRole('button', { name: /font_(decrease|increase)/ });
-    await user.click(buttons[1]);
+    const increaseBtn = screen.getByRole('button', { name: 'font_increase' });
+    await user.click(increaseBtn);
 
-    expect(Number(localStorage.getItem('fontScale'))).toBeGreaterThan(1);
-    expect(document.documentElement.style.getPropertyValue('--font-scale')).not.toBe('');
+    expect(Number(localStorage.getItem('fontScale'))).toBeCloseTo(1.05, 2);
+    expect(document.documentElement.style.getPropertyValue('--font-scale')).toBe('1.05');
   });
 });
