@@ -1,107 +1,83 @@
 /* eslint-disable no-unused-vars */
 import { useTranslation } from 'react-i18next';
-import { motion, useReducedMotion } from 'framer-motion';
+import { motion, useReducedMotion } from 'motion';
 
 export function WhySection() {
   const { t } = useTranslation();
   const shouldReduceMotion = useReducedMotion();
 
-  const reasons = Array.from({ length: 6 }, (_, index) => ({
-    title: t(`card${index + 1}_title`),
-    text: t(`card${index + 1}_text`),
-    index: `0${index + 1}`,
-  }));
+  const stories = [
+    { num: '01', title: t('card1_title'), text: t('card1_text') },
+    { num: '02', title: t('card2_title'), text: t('card2_text') },
+    { num: '03', title: t('card3_title'), text: t('card3_text') },
+  ];
 
   const container = {
     hidden: {},
-    visible: {
-      transition: { staggerChildren: shouldReduceMotion ? 0 : 0.08, delayChildren: 0.05 },
-    },
+    visible: { transition: { staggerChildren: 0.12, delayChildren: 0.08 } },
   };
-
   const item = {
-    hidden: { opacity: 0, y: shouldReduceMotion ? 0 : 10 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.42, ease: [0.25, 1, 0.5, 1] },
-    },
+    hidden: { opacity: 0, y: 24 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.25, 1, 0.5, 1] } },
   };
 
   return (
     <motion.section
-      className="section-shell hairline-top"
       id="why"
-      style={{ borderTopWidth: '1.5px', borderTopColor: 'var(--color-ink, #080808)' }}
+      className="section-shell hairline-top bg-[var(--color-paper)]"
       initial={shouldReduceMotion ? false : 'hidden'}
       whileInView="visible"
-      viewport={{ once: true, amount: 0.12 }}
+      viewport={{ once: true, amount: 0.2 }}
       variants={container}
     >
       <div className="section-frame">
-        <motion.div variants={shouldReduceMotion ? undefined : item} className="max-w-[46rem]">
-          <div className="eyebrow">{t('why_overline')}</div>
+        <motion.div variants={item} className="gallery-inner text-center">
+          <div className="eyebrow justify-center">{t('why_overline')}</div>
           <h2
-            className="mt-3 font-display leading-[0.85] tracking-[-0.05em] text-ink dark:text-paper"
-            style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(2.4rem, 1.4rem + 3vw, 4.2rem)' }}
+            className="mt-4 font-display text-[var(--color-ink)]"
+            style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(2rem, 1.4rem + 2.6vw, 3.5rem)', letterSpacing: '-0.05em', lineHeight: 0.9 }}
           >
-            JEDEN SKRÓT. <span className="text-[#8b1a1a]">WSZYSTKIE MARKI.</span>
+            Jeden skrót.
+            <br />
+            <span className="serif-italic font-normal text-[var(--color-text-muted)]">Wszystkie marki.</span>
           </h2>
-          <p
-            className="mt-4 max-w-[36rem] font-mono text-[0.78rem] leading-6 text-text-muted"
-            style={{ display: '-webkit-box', WebkitLineClamp: 1, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}
-          >
+          <p className="mx-auto mt-5 max-w-[32rem] text-[15px] leading-7 text-[var(--color-text-muted)] line-clamp-1" style={{ display: '-webkit-box', WebkitLineClamp: 1, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
             {t('why_desc')}
           </p>
+          <div className="mx-auto mt-6 h-px w-12 bg-[var(--color-stone)]" aria-hidden="true" />
         </motion.div>
 
-        <motion.div
-          variants={container}
-          className="mt-10 border-y"
-          style={{ borderColor: 'var(--color-hairline)', borderTopWidth: '1.5px', borderBottomWidth: '1px' }}
-        >
-          {reasons.map((reason) => (
+        {/* single column 3 stories — massive faint numbers behind text */}
+        <motion.div variants={container} className="gallery-inner mt-16 sm:mt-20">
+          {stories.map((story) => (
             <motion.article
-              key={reason.index}
+              key={story.num}
               variants={item}
-              className="evidence-row grid gap-3 px-2 py-6 sm:grid-cols-[200px_1fr] sm:items-center sm:px-3"
-              style={{ borderTop: '1px solid var(--color-hairline)' }}
+              className="relative border-t border-[var(--color-hairline)] px-1 py-10 sm:px-2 sm:py-12 first:border-t-0"
             >
-              <div
-                className="mono pt-1 shrink-0 hidden sm:block"
-                style={{ fontSize: '0.60rem', letterSpacing: '0.14em', color: '#8b1a1a' }}
+              {/* faint 5rem serif number behind */}
+              <span
+                className="pointer-events-none absolute left-0 top-6 select-none font-display leading-none tracking-[-0.05em] text-[var(--color-hairline)] sm:left-1 sm:top-8"
+                style={{ fontFamily: 'var(--font-display)', fontSize: '5rem', opacity: 0.9, color: 'rgba(10,10,10,0.045)' }}
                 aria-hidden="true"
               >
-                {reason.index} — {reason.title.toUpperCase()}
-              </div>
-              <div className="min-w-0 flex flex-col sm:flex-row sm:items-baseline sm:gap-4">
-                <h3
-                  className="font-display leading-none tracking-[-0.04em] text-ink dark:text-paper shrink-0"
-                  style={{ fontFamily: 'Instrument Serif, Georgia, serif', fontSize: '1.8rem', lineHeight: 0.95 }}
-                >
-                  {reason.title}
+                {story.num}
+              </span>
+              <div className="relative ml-0 sm:ml-[4.5rem]">
+                <div className="mono mb-2 !tracking-[0.16em] text-[var(--color-stone-strong)]">{story.num} — {story.title.toUpperCase()}</div>
+                <h3 className="font-display text-[1.55rem] leading-tight tracking-[-0.03em] text-[var(--color-ink)] sm:text-[1.75rem]" style={{ fontFamily: 'var(--font-display)' }}>
+                  {story.title}
                 </h3>
-                <p
-                  className="mt-1 sm:mt-0 max-w-[36rem] text-text-muted"
-                  style={{
-                    fontSize: '0.88rem',
-                    lineHeight: '1.5',
-                    display: '-webkit-box',
-                    WebkitLineClamp: 1,
-                    WebkitBoxOrient: 'vertical',
-                    overflow: 'hidden',
-                  }}
-                >
-                  {reason.text}
+                <p className="mt-3 max-w-[36rem] text-[15px] leading-7 text-[var(--color-text-muted)] line-clamp-1" style={{ display: '-webkit-box', WebkitLineClamp: 1, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
+                  {story.text}
                 </p>
               </div>
             </motion.article>
           ))}
-        </motion.div>
 
-        <motion.div variants={shouldReduceMotion ? undefined : item} className="mono mt-4 flex items-center gap-2">
-          <span className="h-px w-6 bg-[var(--color-ink)] hidden sm:block" aria-hidden="true" style={{ background: '#080808' }} />
-          <span>NASK • 676 • 1996 — {t('provenance_label')}</span>
+          <motion.div variants={item} className="mt-8 flex justify-center">
+            <span className="mono tracking-[0.14em]">NASK • 676 • 1996 — {t('provenance_label')}</span>
+          </motion.div>
         </motion.div>
       </div>
     </motion.section>
