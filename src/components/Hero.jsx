@@ -320,9 +320,9 @@ export function Hero() {
                 <span className="pointer-events-none absolute bottom-2 right-2 h-3 w-3 border-b border-r border-[rgba(10,10,10,0.12)] dark:border-white/12"></span>
 
                 <div className="relative text-center">
-                  <div className="font-display flex items-baseline justify-center gap-[2px] text-[5.2rem] leading-none tracking-[-0.06em] text-[#0a0a0a] dark:text-[#f6f1e8] sm:text-[6.2rem]" style={{ fontFamily: 'Instrument Serif, Georgia, serif' }}>
+                  <div className="font-display flex items-baseline justify-center gap-[1px] text-[5.2rem] leading-none tracking-[-0.06em] text-[#0a0a0a] dark:text-[#f6f1e8] sm:text-[6.2rem]" style={{ fontFamily: 'Instrument Serif, Georgia, serif' }}>
                     <span>hf</span>
-                    <span className="inline-block h-[7px] w-[7px] self-center rounded-full bg-[#e30613] dark:bg-[#ff1a2b]" aria-hidden="true" />
+                    <span className="text-[#e30613] dark:text-[#ff1a2b]" aria-hidden="true">.</span>
                     <span className="font-mono text-[0.9rem] font-normal tracking-[0.14em] text-[#0a0a0a] dark:text-[#f6f1e8]" style={{ verticalAlign: 'baseline' }}>
                       pl
                     </span>
