@@ -1,11 +1,13 @@
+/* eslint-disable no-unused-vars */
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { motion } from 'framer-motion';
 import { ArrowUpRight, Sun, Moon, Monitor, Type } from 'lucide-react';
 import { persistLanguage } from '../i18n';
 import { trackEvent } from '../lib/analytics';
 
 const THEME_KEY = 'theme';
-const THEME_CYCLE = { light: 'dark', dark: 'system', system: 'light' };
+const THEME_CYCLE = { light: 'dark', dark: 'light', system: 'dark' };
 
 const navItems = [
   { key: 'nav_why', href: '#why' },
@@ -15,14 +17,38 @@ const navItems = [
   { key: 'nav_contact', href: '#contact' },
 ];
 
+const brutalistLabels = {
+  nav_why: { pl: 'DLACZEGO', en: 'WHY' },
+  nav_potential: { pl: 'ZASTOSOWANIA', en: 'USE CASES' },
+  nav_market: { pl: 'RYNEK', en: 'MARKET' },
+  nav_faq: { pl: 'FAQ', en: 'FAQ' },
+  nav_contact: { pl: 'KONTAKT', en: 'CONTACT' },
+};
+
 export function Navigation() {
   const { t, i18n } = useTranslation();
-  const [theme, setTheme] = useState(() => localStorage.getItem(THEME_KEY) || 'system');
-  const [fontScale, setFontScale] = useState(() => Number(localStorage.getItem('fontScale') || '1'));
+  const [theme, setTheme] = useState(() => {
+    try {
+      return localStorage.getItem(THEME_KEY) || 'system';
+    } catch {
+      return 'system';
+    }
+  });
+  const [fontScale, setFontScale] = useState(() => {
+    try {
+      return Number(localStorage.getItem('fontScale') || '1');
+    } catch {
+      return 1;
+    }
+  });
 
   useEffect(() => {
     document.documentElement.style.setProperty('--font-scale', String(fontScale));
-    localStorage.setItem('fontScale', String(fontScale));
+    try {
+      localStorage.setItem('fontScale', String(fontScale));
+    } catch {
+      // ignore
+    }
   }, [fontScale]);
 
   const changeLanguage = (language) => {
@@ -38,7 +64,11 @@ export function Navigation() {
       (next === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
     root.classList.toggle('dark', isDark);
     root.style.colorScheme = isDark ? 'dark' : 'light';
-    localStorage.setItem(THEME_KEY, next);
+    try {
+      localStorage.setItem(THEME_KEY, next);
+    } catch {
+      // ignore
+    }
     setTheme(next);
     trackEvent('theme_switch', { theme: next });
   };
@@ -62,76 +92,137 @@ export function Navigation() {
 
   return (
     <>
-      <a href="#main" className="sr-only absolute left-0 top-0 z-[999] bg-ink px-4 py-3 text-paper focus:not-sr-only">
+      <a href="#main" className="sr-only absolute left-0 top-0 z-[999] bg-[#0a0a0a] px-4 py-3 text-[#f6f1e8] focus:not-sr-only">
         {t('skip')}
       </a>
-      <header className="fixed inset-x-0 top-0 z-50 px-2 pt-2 sm:px-4 sm:pt-3 lg:px-8">
+      <motion.header
+        initial={{ y: -12, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ type: 'spring', stiffness: 340, damping: 28, mass: 0.7 }}
+        className="fixed inset-x-0 top-0 z-50 border-b border-[rgba(10,10,10,0.08)] bg-[#f6f1e8]/92 backdrop-blur-[8px] dark:border-[rgba(246,241,232,0.08)] dark:bg-[#07080a]/90"
+      >
         <nav
-          className="section-frame flex items-center justify-between rounded-full border border-line bg-paper/90 px-3 py-2 shadow-nav backdrop-blur-xl sm:px-4 sm:py-2.5 dark:bg-ink/90"
+          className="section-frame flex h-[52px] items-center justify-between gap-4 px-4 sm:px-6 lg:px-10"
           aria-label="Main navigation"
         >
-          <a href="#hero" className="flex items-center gap-3 no-underline">
-            <span className="display-title text-[1.45rem] leading-none tracking-tight sm:text-[1.55rem]">
-              <span className="text-ink dark:text-paper">hf</span>
-              <span className="text-text-faint">.pl</span>
+          {/* left: Swiss wordmark + red dot + PL-676 badge red outline */}
+          <a href="#hero" className="flex items-center gap-3 no-underline shrink-0">
+            <span
+              className="flex items-baseline gap-[1px] font-display leading-none tracking-[-0.04em] text-[#0a0a0a] dark:text-[#f6f1e8]"
+              style={{ fontFamily: 'Instrument Serif, Georgia, serif', fontSize: '1.55rem' }}
+            >
+              <span>hf</span>
+              <span className="mx-[2px] inline-block h-[5px] w-[5px] self-center rounded-full bg-[#e30613] dark:bg-[#ff1a2b]" aria-hidden="true" />
+              <span className="text-[#0a0a0a] dark:text-[#f6f1e8] text-[1.5rem] tracking-[-0.03em]">pl</span>
             </span>
-            <span className="hidden sm:inline-flex provenance-stamp ml-2">PL-676</span>
+            <span className="hidden sm:inline-flex items-center justify-center border border-[#e30613] bg-transparent px-2 py-1 font-mono text-[0.58rem] font-bold tracking-[0.16em] text-[#e30613] dark:border-[#ff1a2b] dark:text-[#ff1a2b]" style={{ borderRadius: '4px' }}>
+              PL-676
+            </span>
           </a>
 
-          <div className="hidden items-center gap-5 lg:flex">
-            {navItems.map(({ key, href }) => (
-              <a key={key} href={href} className="text-[0.82rem] font-medium tracking-[-0.01em] text-text-muted no-underline hover:text-ink dark:hover:text-paper">
-                {t(key)}
-              </a>
-            ))}
+          {/* center: mono caps — Swiss tracking 0.14em */}
+          <div className="hidden items-center gap-6 lg:flex">
+            {navItems.map(({ key, href }) => {
+              const label = brutalistLabels[key]?.[i18n.language] || brutalistLabels[key]?.pl || t(key);
+              return (
+                <a
+                  key={key}
+                  href={href}
+                  className="font-mono text-[0.66rem] font-semibold tracking-[0.14em] uppercase text-[#0a0a0a]/70 no-underline hover:text-[#e30613] dark:text-[#f6f1e8]/65 dark:hover:text-[#ff1a2b]"
+                >
+                  {label}
+                </a>
+              );
+            })}
           </div>
 
-          <div className="flex items-center gap-2 sm:gap-2.5">
-            <div className="flex rounded-full border border-line bg-surface p-0.5 sm:p-1" role="group" aria-label={t('language_switch')}>
-              {['pl', 'en'].map((lang) => (
-                <button
-                  key={lang}
-                  type="button"
-                  onClick={() => changeLanguage(lang)}
-                  className={`rounded-full px-2.5 py-1.5 text-[0.68rem] font-semibold uppercase tracking-[0.14em] sm:px-3 sm:text-xs ${
-                    i18n.language === lang
-                      ? 'bg-ink text-paper dark:bg-paper dark:text-ink'
-                      : 'text-text-faint hover:text-ink dark:hover:text-paper'
-                  }`}
-                  aria-pressed={i18n.language === lang}
-                >
-                  {lang.toUpperCase()}
-                </button>
-              ))}
+          {/* right */}
+          <div className="flex items-center gap-1.5 sm:gap-2">
+            {/* language — PL [x] EN [ ] — Swiss ink border 1px */}
+            <div
+              className="flex items-center gap-2 border border-[rgba(10,10,10,0.14)] bg-transparent px-2 py-1.5 dark:border-[rgba(246,241,232,0.12)]"
+              style={{ borderRadius: '4px' }}
+              role="group"
+              aria-label={t('language_switch')}
+            >
+              {['pl', 'en'].map((lang) => {
+                const active = i18n.language === lang;
+                return (
+                  <button
+                    key={lang}
+                    type="button"
+                    onClick={() => changeLanguage(lang)}
+                    aria-pressed={active}
+                    aria-label={lang.toUpperCase()}
+                    className={`inline-flex items-center font-mono text-[0.66rem] font-bold uppercase tracking-[0.14em] transition-colors ${
+                      active
+                        ? 'text-[#0a0a0a] dark:text-[#f6f1e8]'
+                        : 'text-[#8a8683] hover:text-[#0a0a0a] dark:text-[#f6f1e8]/40 dark:hover:text-[#f6f1e8]'
+                    }`}
+                  >
+                    <span>{lang.toUpperCase()}</span>
+                    <span aria-hidden="true" className="ml-1 hidden sm:inline text-[#0a0a0a]/50 dark:text-white/30">
+                      [
+                    </span>
+                    <span
+                      aria-hidden="true"
+                      className={`hidden sm:inline-flex h-[11px] w-[11px] items-center justify-center border text-[8px] leading-none ${
+                        active
+                          ? 'border-[#e30613] bg-[#e30613] text-white dark:border-[#ff1a2b] dark:bg-[#ff1a2b]'
+                          : 'border-[rgba(10,10,10,0.22)] dark:border-white/20'
+                      }`}
+                    >
+                      {active ? '×' : ''}
+                    </span>
+                    <span aria-hidden="true" className="hidden sm:inline text-[#0a0a0a]/50 dark:text-white/30">
+                      ]
+                    </span>
+                  </button>
+                );
+              })}
             </div>
 
-            <div className="hidden sm:flex rounded-full border border-line bg-surface p-0.5 sm:p-1" role="group" aria-label={t('font_size')}>
+            <div
+              className="hidden sm:flex items-center gap-0.5 border border-[rgba(10,10,10,0.14)] bg-transparent px-1 py-1 dark:border-[rgba(246,241,232,0.12)]"
+              style={{ borderRadius: '4px' }}
+              role="group"
+              aria-label={t('font_size')}
+            >
               <button
                 type="button"
                 onClick={decreaseFontSize}
                 aria-label={t('font_decrease')}
                 disabled={fontScale <= 0.9}
-                className="rounded-full px-2 py-1.5 text-text-faint hover:text-ink disabled:opacity-30 sm:px-2.5 dark:hover:text-paper"
+                className="px-1.5 py-1 text-[#0a0a0a]/55 hover:text-[#0a0a0a] disabled:opacity-30 dark:text-[#f6f1e8]/50 dark:hover:text-[#f6f1e8]"
               >
                 <Type className="h-3 w-3 sm:h-3.5 sm:w-3.5" aria-hidden="true" />
               </button>
-              <span className="px-1 text-[0.65rem] font-semibold tracking-[0.12em] text-text-faint sm:text-[0.7rem]" aria-hidden="true">A</span>
+              <span className="px-1 font-mono text-[0.60rem] font-bold tracking-[0.12em] text-[#0a0a0a]/30 dark:text-white/30" aria-hidden="true">
+                A
+              </span>
               <button
                 type="button"
                 onClick={increaseFontSize}
                 aria-label={t('font_increase')}
                 disabled={fontScale >= 1.2}
-                className="rounded-full px-2 py-1.5 text-text-faint hover:text-ink disabled:opacity-30 sm:px-2.5 dark:hover:text-paper"
+                className="px-1.5 py-1 text-[#0a0a0a]/55 hover:text-[#0a0a0a] disabled:opacity-30 dark:text-[#f6f1e8]/50 dark:hover:text-[#f6f1e8]"
               >
                 <Type className="h-4 w-4 sm:h-4.5 sm:w-4.5" aria-hidden="true" />
               </button>
             </div>
 
-            <div className="flex rounded-full border border-line bg-surface p-0.5 sm:p-1" role="group" aria-label={t('theme_switch')}>
+            <div
+              className="flex items-center border border-[rgba(10,10,10,0.14)] bg-transparent p-0.5 dark:border-[rgba(246,241,232,0.12)]"
+              style={{ borderRadius: '4px' }}
+              role="group"
+              aria-label={t('theme_switch')}
+            >
               <button
                 type="button"
                 onClick={cycleTheme}
-                className="rounded-full px-2.5 py-1.5 text-text-faint hover:text-ink sm:px-3 dark:hover:text-paper"
+                title={`${t(`theme_${theme}`)} → ${t(`theme_${nextTheme}`)}`}
+                aria-label={`${t('theme_switch')}: ${t(`theme_${theme}`)}`}
+                className="px-2 py-1.5 text-[#0a0a0a]/60 hover:text-[#0a0a0a] dark:text-[#f6f1e8]/60 dark:hover:text-[#f6f1e8]"
               >
                 {theme === 'dark' && <Sun className="h-4 w-4" aria-hidden="true" />}
                 {theme === 'light' && <Moon className="h-4 w-4" aria-hidden="true" />}
@@ -142,17 +233,21 @@ export function Navigation() {
               </button>
             </div>
 
-            <a
+            <motion.a
+              whileHover={{ y: -1 }}
+              whileTap={{ y: 0 }}
+              transition={{ type: 'spring', stiffness: 400, damping: 20 }}
               href="#contact"
               onClick={() => trackEvent('cta_click', { location: 'navigation', target: 'contact' })}
-              className="action-pill hidden bg-ink text-paper no-underline hover:bg-[#1a1f2a] sm:inline-flex dark:bg-paper dark:text-ink"
+              className="hidden sm:inline-flex items-center gap-1.5 border border-[#0a0a0a] bg-[#0a0a0a] px-4 py-2 font-mono text-[0.68rem] font-bold uppercase tracking-[0.14em] text-[#f6f1e8] no-underline hover:bg-transparent hover:text-[#0a0a0a] dark:border-[#f6f1e8] dark:bg-[#f6f1e8] dark:text-[#07080a] dark:hover:bg-transparent dark:hover:text-[#f6f1e8]"
+              style={{ borderRadius: '4px' }}
             >
               {t('nav_offer')}
-              <ArrowUpRight size={15} />
-            </a>
+              <ArrowUpRight size={14} aria-hidden="true" />
+            </motion.a>
           </div>
         </nav>
-      </header>
+      </motion.header>
     </>
   );
 }

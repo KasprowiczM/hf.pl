@@ -4,55 +4,96 @@ export function Footer() {
   const { t } = useTranslation();
 
   return (
-    <footer className="hairline-top bg-ink text-paper px-4 py-10 sm:px-6 sm:py-12 lg:px-10">
+    <footer className="px-4 py-10 sm:px-6 sm:py-12 lg:px-10 relative z-[1]" style={{ background: '#07080a', color: '#f6f1e8', borderTop: '1.5px solid #07080a' }}>
       <div className="section-frame">
-        {/* Top provenance rule — editorial hairline */}
-        <div className="flex items-center justify-between border-b border-white/[0.08] pb-6">
-          <span className="mono text-paper/55 tracking-[0.16em]">NASK • 1996 • PL-676</span>
-          <span className="mono hidden text-paper/35 sm:inline">{t('provenance_value')}</span>
+        {/* Top provenance rule — 1px white/10 */}
+        <div className="flex items-center justify-between pb-6" style={{ borderBottom: '1px solid rgba(246,241,232,0.10)' }}>
+          <span className="mono flex items-center gap-2" style={{ color: 'rgba(246,241,232,0.55)', letterSpacing: '0.18em' }}>
+            <span className="signal-dot hidden sm:inline-block" aria-hidden="true" style={{ background: '#e30613' }} />
+            NASK • 1996 • PL-676
+          </span>
+          <span className="mono hidden sm:inline" style={{ color: 'rgba(246,241,232,0.35)' }}>
+            {t('provenance_value')}
+          </span>
         </div>
 
         <div className="grid gap-8 pt-8 md:grid-cols-[1.15fr_1.6fr_0.95fr] md:items-start md:gap-10">
-          {/* Left — brand */}
+          {/* Left — brand stamp square + red dot */}
           <div>
-            <p className="display-title text-[2.2rem] leading-none tracking-[-0.04em] text-paper">
-              hf<span className="font-light text-paper/35">.pl</span>
+            <div className="flex items-start gap-3">
+              <p
+                className="display-title leading-none tracking-[-0.06em]"
+                style={{ fontSize: '2.4rem', lineHeight: 0.85, color: '#f6f1e8', fontFamily: 'Instrument Serif, Georgia, serif' }}
+              >
+                hf<span className="mx-[2px] inline-block h-[5px] w-[5px] self-center rounded-full bg-[#e30613]" aria-hidden="true" /><span style={{ fontWeight: 300, color: '#0a0a0a' }} className="dark:!text-[#f6f1e8]">pl</span>
+              </p>
+              <span
+                className="mono hidden sm:inline-flex items-center justify-center shrink-0 mt-1"
+                aria-hidden="true"
+                style={{
+                  width: '34px',
+                  height: '34px',
+                  border: '1px solid rgba(246,241,232,0.18)',
+                  color: 'rgba(246,241,232,0.55)',
+                  fontSize: '0.52rem',
+                  letterSpacing: '0.14em',
+                  borderRadius: '4px',
+                }}
+              >
+                676
+              </span>
+            </div>
+            <p className="mt-3 max-w-[22rem] text-[15px] leading-6" style={{ color: 'rgba(246,241,232,0.6)' }}>
+              {t('footer_desc')}
             </p>
-            <p className="mt-3 max-w-[22rem] text-sm leading-6 text-paper/60">{t('footer_desc')}</p>
+            <a
+              href="mailto:domain@hf.pl"
+              className="mono mt-3 inline-flex sr-only focus:not-sr-only focus:mt-3 focus:px-2 focus:py-1 focus:bg-white focus:text-black"
+              style={{ letterSpacing: '0.12em' }}
+            >
+              {t('contact_email_label')}
+            </a>
           </div>
 
-          {/* Middle — navigation as mono small caps */}
+          {/* Middle — navigation as mono small caps, paper/60 */}
           <nav className="grid grid-cols-2 gap-x-6 gap-y-3 md:justify-self-center" aria-label="Footer navigation">
-            <a href="#hero" className="mono text-paper/60 no-underline transition-colors hover:text-paper">
+            <a href="#hero" className="mono no-underline transition-colors hover:!text-white" style={{ color: 'rgba(246,241,232,0.6)' }}>
               hf.pl
             </a>
-            <a href="#scarcity" className="mono text-paper/60 no-underline transition-colors hover:text-paper">
+            <a href="#scarcity" className="mono no-underline transition-colors hover:!text-white" style={{ color: 'rgba(246,241,232,0.6)' }}>
               {t('scarcity_overline')}
             </a>
-            <a href="#why" className="mono text-paper/60 no-underline transition-colors hover:text-paper">
+            <a href="#why" className="mono no-underline transition-colors hover:!text-white" style={{ color: 'rgba(246,241,232,0.6)' }}>
               {t('nav_why')}
             </a>
-            <a href="#faq" className="mono text-paper/60 no-underline transition-colors hover:text-paper">
+            <a href="#faq" className="mono no-underline transition-colors hover:!text-white" style={{ color: 'rgba(246,241,232,0.6)' }}>
               {t('nav_faq')}
             </a>
-            <a href="#usecases" className="mono text-paper/60 no-underline transition-colors hover:text-paper">
+            <a href="#usecases" className="mono no-underline transition-colors hover:!text-white" style={{ color: 'rgba(246,241,232,0.6)' }}>
               {t('nav_potential')}
             </a>
-            <a href="#valuation" className="mono text-paper/60 no-underline transition-colors hover:text-paper">
+            <a href="#valuation" className="mono no-underline transition-colors hover:!text-white" style={{ color: 'rgba(246,241,232,0.6)' }}>
               {t('val_overline')}
             </a>
-            <a href="#market" className="mono text-paper/60 no-underline transition-colors hover:text-paper">
+            <a href="#market" className="mono no-underline transition-colors hover:!text-white" style={{ color: 'rgba(246,241,232,0.6)' }}>
               {t('nav_market')}
             </a>
-            <a href="#contact" className="mono text-paper/60 no-underline transition-colors hover:text-paper">
+            <a href="#contact" className="mono no-underline transition-colors hover:!text-white" style={{ color: 'rgba(246,241,232,0.6)' }}>
               {t('footer_btn')}
             </a>
           </nav>
 
-          {/* Right — year & rights */}
+          {/* Right — year & rights — Swiss mono */}
           <div className="md:text-right">
-            <p className="mono text-paper/55">&copy; {new Date().getFullYear()} hf.pl</p>
-            <p className="mt-2 text-sm leading-6 text-paper/50">{t('footer_rights')}</p>
+            <p className="mono" style={{ color: 'rgba(246,241,232,0.55)' }}>
+              &copy; {new Date().getFullYear()} hf.pl
+            </p>
+            <p className="mt-2 text-[15px] leading-6" style={{ color: 'rgba(246,241,232,0.5)' }}>
+              {t('footer_rights')}
+            </p>
+            <div className="mt-4 hidden md:flex justify-end">
+              <span className="h-[2px] w-12 bg-[#e30613]" aria-hidden="true" />
+            </div>
           </div>
         </div>
       </div>
