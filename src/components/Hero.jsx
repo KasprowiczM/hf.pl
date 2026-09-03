@@ -1,77 +1,12 @@
 /* eslint-disable no-unused-vars */
 import { useTranslation } from 'react-i18next';
 import { motion, useReducedMotion } from 'framer-motion';
-import { Canvas, useFrame } from '@react-three/fiber';
-import { useRef, useState, Suspense, useEffect } from 'react';
 import { ArrowRight } from 'lucide-react';
 import { trackEvent } from '../lib/analytics';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
-function SealMesh({ hovered }) {
-  const ref = useRef(null);
-  useFrame((_, delta) => {
-    if (ref.current) {
-      ref.current.rotation.y += delta * (hovered ? 1.1 : 0.28);
-    }
-  });
-  return (
-    <group>
-      <mesh ref={ref} rotation={[-Math.PI / 2, 0, 0]} position={[0, 0, 0]}>
-        <cylinderGeometry args={[1.18, 1.18, 0.16, 64]} />
-        <meshStandardMaterial color="#8b1a1a" roughness={0.42} metalness={0.12} />
-      </mesh>
-      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.09, 0]}>
-        <cylinderGeometry args={[0.98, 0.98, 0.02, 64]} />
-        <meshStandardMaterial color="#efebe3" roughness={0.85} />
-      </mesh>
-      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.1, 0]}>
-        <ringGeometry args={[0.82, 0.84, 64]} />
-        <meshBasicMaterial color="#8b1a1a" transparent opacity={0.9} side={2} />
-      </mesh>
-    </group>
-  );
-}
-
-function SealCanvas({ hovered }) {
-  const [hasWebGL, setHasWebGL] = useState(() => {
-    if (typeof window === 'undefined') return false;
-    try {
-      const canvas = document.createElement('canvas');
-      return !!(window.WebGLRenderingContext && (canvas.getContext('webgl') || canvas.getContext('experimental-webgl')));
-    } catch {
-      return false;
-    }
-  });
-  if (!hasWebGL) return null;
-  return (
-    <Canvas
-      frameloop="demand"
-      dpr={[1, 1.6]}
-      camera={{ position: [0, 1.9, 3.2], fov: 38 }}
-      gl={{ antialias: true, alpha: true }}
-      onCreated={({ gl }) => {
-        gl.setClearColor('#000000', 0);
-      }}
-      style={{ background: 'transparent' }}
-    >
-      <ambientLight intensity={0.95} />
-      <directionalLight position={[2.5, 4, 2]} intensity={1.15} />
-      <directionalLight position={[-2, 1, -1.5]} intensity={0.35} />
-      <Suspense fallback={null}>
-        <SealMesh hovered={hovered} />
-      </Suspense>
-    </Canvas>
-  );
-}
 
 export function Hero() {
   const { t } = useTranslation();
   const shouldReduceMotion = useReducedMotion();
-  const [sealHovered, setSealHovered] = useState(false);
-  const sectionRef = useRef(null);
-  const leftColRef = useRef(null);
-  const sealWrapRef = useRef(null);
 
   const proofItems = [
     { value: t('metric_1_value'), label: t('metric_1_label'), sub: t('metric_1_sub') },
@@ -79,146 +14,79 @@ export function Hero() {
     { value: t('metric_3_value'), label: t('metric_3_label'), sub: t('metric_3_sub') },
   ];
 
-  useEffect(() => {
-    if (shouldReduceMotion) return;
-    if (typeof window === 'undefined') return;
-    // jsdom / test guard — ScrollTrigger needs layout
-    const isTestEnv = typeof navigator !== 'undefined' && /jsdom/i.test(navigator.userAgent || '');
-    if (isTestEnv) return;
-    let ctx;
-    try {
-      gsap.registerPlugin(ScrollTrigger);
-      ctx = gsap.context(() => {
-        // split word reveal — each line slides up with scrub
-        const lines = gsap.utils.toArray('.hero-slogan-line-inner');
-        lines.forEach((el, i) => {
-          gsap.fromTo(
-            el,
-            { yPercent: 110 },
-            {
-              yPercent: 0,
-              ease: 'power3.out',
-              scrollTrigger: {
-                trigger: sectionRef.current,
-                start: 'top 85%',
-                end: 'top 30%',
-                scrub: 0.9,
-              },
-            }
-          );
-        });
-
-        // pin left col for 800px scrub — right artifact stays in flow
-        if (leftColRef.current && sectionRef.current) {
-          ScrollTrigger.create({
-            trigger: sectionRef.current,
-            start: 'top top',
-            end: '+=800',
-            pin: leftColRef.current,
-            pinSpacing: false,
-            anticipatePin: 1,
-          });
-        }
-
-        // seal rotate on scroll scrub
-        if (sealWrapRef.current) {
-          gsap.to(sealWrapRef.current, {
-            rotation: 180,
-            ease: 'none',
-            scrollTrigger: {
-              trigger: sectionRef.current,
-              start: 'top top',
-              end: '+=800',
-              scrub: 1.4,
-            },
-          });
-        }
-      }, sectionRef);
-    } catch {
-      // ignore gsap failures in non-browser env
-    }
-    return () => {
-      if (ctx) ctx.revert();
-    };
-  }, [shouldReduceMotion]);
-
   const containerVariants = {
     hidden: {},
     visible: { transition: { staggerChildren: 0.06, delayChildren: 0.08 } },
   };
   const itemVariants = {
-    hidden: { opacity: 0, y: 10 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.44, ease: 'easeOut' } },
+    hidden: { opacity: 0, y: 12 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: 'easeOut' } },
   };
 
   return (
     <section
-      ref={sectionRef}
-      className="section-shell relative overflow-hidden bg-[#efebe3] pt-[64px] hairline-bottom dark:bg-[#080808]"
+      className="section-shell relative overflow-visible bg-[#070a12] pt-[64px]"
       id="hero"
-      style={{ borderBottom: '1px solid rgba(8,8,8,0.12)' }}
+      style={{ borderBottom: '1px solid rgba(230,237,243,0.08)', zIndex: 2 }}
     >
-      {/* Top provenance bar — rejestr */}
-      <div className="border-b border-[#080808] bg-[#efebe3] dark:border-[#efebe3] dark:bg-[#080808]">
+      {/* ticker tape — Bloomberg style */}
+      <div className="absolute inset-x-0 top-[56px] border-y bg-[#0e1422]/80 backdrop-blur-[8px]" style={{ borderColor: 'rgba(230,237,243,0.08)' }}>
         <div className="section-frame flex flex-wrap items-center justify-between gap-2 px-4 py-2 sm:px-6 lg:px-10">
-          <span className="font-mono text-[0.58rem] uppercase tracking-[0.16em] text-[#080808] dark:text-[#efebe3] sm:text-[0.62rem]">
-            NASK • ARCHIWUM PL-676 • 1996 — Nr 676/1996 • PROTOKÓŁ PRZEKAZANIA
+          <span className="inline-flex items-center gap-2 font-mono text-[0.62rem] uppercase tracking-[0.14em] text-[#8a97a8]">
+            <span className="ticker-dot--live inline-block h-[6px] w-[6px] rounded-full bg-[#ff3344]" style={{ boxShadow: '0 0 8px rgba(255,51,68,0.6)' }} aria-hidden="true" />
+            HF.PL <span className="text-[#5a6575]">●</span> <span className="text-[#00e5ff]">LIVE</span> <span className="text-[#5a6575]">●</span> NASK 1996 <span className="hidden sm:inline text-[#5a6575]">●</span> <span className="hidden sm:inline">PL-676</span> <span className="hidden sm:inline text-[#5a6575]">●</span> <span className="hidden sm:inline text-[#ffb700]">LAST 676</span>
           </span>
-          <span className="hidden sm:inline-flex items-center gap-2 font-mono text-[0.58rem] uppercase tracking-[0.16em] text-[#080808]/50 dark:text-[#efebe3]/50">
-            <span className="h-px w-6 bg-[#8b1a1a]"></span> REJESTR NASK
+          <span className="hidden sm:inline-flex items-center gap-2 font-mono text-[0.58rem] uppercase tracking-[0.14em] text-[#5a6575]">
+            <span className="h-px w-6 bg-[rgba(230,237,243,0.15)]" aria-hidden="true" />
+            REJESTR NASK • 1996 — 676 / 1996
           </span>
         </div>
       </div>
 
       <div className="section-frame px-4 sm:px-6 lg:px-10">
-        <div className="grid items-start gap-10 pt-8 sm:pt-10 lg:grid-cols-[minmax(0,1.05fr)_minmax(380px,0.95fr)] lg:gap-12 lg:pt-12">
-          {/* Left: punchy slogan — pinned on scrub */}
+        <div className="grid items-start gap-10 pt-10 sm:pt-10 lg:grid-cols-[minmax(0,1.05fr)_minmax(380px,0.95fr)] lg:gap-12 lg:pt-12">
+          {/* Left: terminal punch — NO PIN, no overlap */}
           <motion.div
-            ref={leftColRef}
-            className="max-w-[40rem] will-change-transform"
+            className="max-w-[44rem]"
             initial="hidden"
             animate="visible"
             variants={containerVariants}
           >
-            <motion.div variants={itemVariants} className="font-mono text-[0.68rem] uppercase tracking-[0.16em] text-[#080808] dark:text-[#efebe3]">
-              — ARCHIWUM NASK 1 Z 676
+            <motion.div variants={itemVariants} className="inline-flex items-center gap-2 border px-2.5 py-1.5 font-mono text-[0.62rem] uppercase tracking-[0.14em] text-[#8a97a8]" style={{ borderColor: 'rgba(230,237,243,0.08)', background: 'rgba(14,20,34,0.9)', borderRadius: 4 }}>
+              <span className="h-1.5 w-1.5 rounded-full bg-[#00e5ff]" aria-hidden="true" style={{ boxShadow: '0 0 6px rgba(0,229,255,0.6)' }} />
+              ARCHIWUM NASK — 1 Z 676 — TERMINAL
             </motion.div>
 
-            {/* SLOGAN — huge brutalist split */}
+            {/* HERO H1 — mono 7rem tracking -0.04, NOT serif */}
             <motion.h1
               variants={itemVariants}
-              className="mt-3 font-display leading-[0.82] tracking-[-0.06em] text-[#080808] dark:text-[#efebe3]"
-              style={{ fontFamily: 'Instrument Serif, Georgia, serif', fontSize: 'clamp(3.4rem, 1.8rem + 7vw, 7.8rem)' }}
+              className="mt-4 font-mono font-extrabold uppercase leading-[0.84] tracking-[-0.04em] text-[#e6edf3]"
+              style={{ fontSize: 'clamp(3rem, 1rem + 6.5vw, 7rem)', fontFamily: 'var(--font-mono)' }}
               aria-label="2 LITERY. 0 KONKURENCJI."
             >
-              <span className="hero-slogan-line block overflow-hidden leading-[0.82]">
-                <span className="hero-slogan-line-inner block will-change-transform">2 LITERY.</span>
-              </span>
-              <span className="hero-slogan-line block overflow-hidden leading-[0.82] text-[#8b1a1a]">
-                <span className="hero-slogan-line-inner block will-change-transform">0 KONKURENCJI.</span>
-              </span>
+              <span className="block">2 LITERY.</span>
+              <span className="block text-[#00e5ff]">0 KONKURENCJI.</span>
             </motion.h1>
 
             <motion.div
               initial={{ scaleX: 0 }}
               animate={{ scaleX: 1 }}
-              transition={{ duration: 0.62, ease: 'easeOut', delay: 0.45 }}
-              className="mt-3 h-[2px] w-full max-w-[28rem] origin-left bg-[#080808] dark:bg-[#efebe3]"
+              transition={{ duration: 0.6, ease: 'easeOut', delay: 0.45 }}
+              className="mt-4 h-[2px] w-full max-w-[28rem] origin-left bg-[#00e5ff]"
+              style={{ boxShadow: '0 0 8px rgba(0,229,255,0.5)' }}
               aria-hidden="true"
             />
 
-            {/* Cut 60% — 1 line each */}
             <motion.p
               variants={itemVariants}
-              className="mt-5 max-w-[34rem] border-l-2 border-[#8b1a1a] pl-4 text-[1.02rem] font-bold leading-6 text-[#080808] dark:text-[#efebe3] sm:text-[1.08rem]"
-              style={{ display: '-webkit-box', WebkitLineClamp: 1, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}
+              className="mt-5 max-w-[34rem] border-l-2 pl-4 text-[1.02rem] font-bold leading-6 text-[#e6edf3]"
+              style={{ borderColor: '#ff3344' }}
             >
               DŁUGIE NAZWY GINĄ.
             </motion.p>
             <motion.p
               variants={itemVariants}
-              className="max-w-[34rem] pl-4 font-mono text-[0.74rem] leading-5 text-[#080808]/60 dark:text-[#efebe3]/60"
-              style={{ display: '-webkit-box', WebkitLineClamp: 1, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}
+              className="max-w-[34rem] pl-4 font-mono text-[0.74rem] leading-5 text-[#8a97a8]"
             >
               {t('hero_subtitle_accent')}
             </motion.p>
@@ -227,7 +95,8 @@ export function Hero() {
               <a
                 href="mailto:domain@hf.pl"
                 onClick={() => trackEvent('cta_click', { location: 'hero', target: 'mailto' })}
-                className="inline-flex items-center justify-center gap-2 border border-[#080808] bg-[#080808] px-6 py-3 font-mono text-[0.76rem] font-semibold uppercase tracking-[0.12em] text-[#efebe3] no-underline hover:bg-transparent hover:text-[#080808] dark:border-[#efebe3] dark:bg-[#efebe3] dark:text-[#080808] dark:hover:bg-transparent dark:hover:text-[#efebe3]"
+                className="inline-flex items-center justify-center gap-2 border bg-[#00e5ff] px-6 py-3 font-mono text-[0.74rem] font-bold uppercase tracking-[0.12em] text-[#070a12] no-underline hover:bg-transparent hover:text-[#00e5ff] transition-colors"
+                style={{ borderColor: '#00e5ff', borderRadius: 4 }}
               >
                 SPRAWDŹ DOSTĘPNOŚĆ W 24H
                 <ArrowRight size={15} aria-hidden="true" />
@@ -235,27 +104,28 @@ export function Hero() {
               <a
                 href="#valuation"
                 onClick={() => trackEvent('cta_click', { location: 'hero', target: 'valuation' })}
-                className="inline-flex items-center justify-center gap-2 border border-[#080808] bg-transparent px-6 py-3 font-mono text-[0.72rem] font-semibold uppercase tracking-[0.12em] text-[#080808] no-underline hover:bg-[#080808] hover:text-[#efebe3] dark:border-[#efebe3] dark:text-[#efebe3] dark:hover:bg-[#efebe3] dark:hover:text-[#080808]"
+                className="inline-flex items-center justify-center gap-2 border bg-transparent px-6 py-3 font-mono text-[0.70rem] font-semibold uppercase tracking-[0.12em] text-[#e6edf3] no-underline hover:bg-[#141e30] hover:border-[#00e5ff]/40 transition-colors"
+                style={{ borderColor: 'rgba(230,237,243,0.14)', borderRadius: 4 }}
               >
                 ZOBACZ WYCENĘ
               </a>
             </motion.div>
-            <motion.p variants={itemVariants} className="mt-3 font-mono text-[0.62rem] uppercase tracking-[0.14em] text-[#080808]/50 dark:text-[#efebe3]/50">
+            <motion.p variants={itemVariants} className="mt-3 font-mono text-[0.62rem] uppercase tracking-[0.14em] text-[#5a6575]">
               {t('cta_offer_sub')}
             </motion.p>
 
-            {/* Brutalist proof bar — 1.5px top */}
-            <motion.div variants={itemVariants} className="mt-9 grid grid-cols-3 border-t-[1.5px] border-[#080808] dark:border-[#efebe3]">
+            {/* proof bar — terminal grid 3 metrics, surface + line */}
+            <motion.div variants={itemVariants} className="mt-9 grid grid-cols-3 overflow-hidden border" style={{ borderColor: 'rgba(230,237,243,0.08)', borderRadius: 4 }}>
               {proofItems.map((item) => (
-                <div key={item.label} className="border-r border-[#080808]/15 px-3 py-5 text-center last:border-r-0 dark:border-white/15 sm:px-4 sm:text-left">
+                <div key={item.label} className="border-r px-3 py-5 text-center last:border-r-0 sm:px-4 sm:text-left" style={{ borderColor: 'rgba(230,237,243,0.06)', background: 'rgba(14,20,34,0.6)' }}>
                   <div
-                    className="font-display text-[2rem] leading-none tracking-[-0.04em] text-[#080808] dark:text-[#efebe3] sm:text-[2.55rem]"
-                    style={{ fontFamily: 'Instrument Serif, Georgia, serif' }}
+                    className="font-mono text-[1.9rem] leading-none tracking-[-0.04em] text-[#e6edf3] sm:text-[2.2rem]"
+                    style={{ fontFamily: 'var(--font-mono)', fontWeight: 800 }}
                   >
                     {item.value}
                   </div>
-                  <div className="mt-2 font-mono text-[0.62rem] uppercase tracking-[0.14em] text-[#080808] dark:text-[#efebe3]">{item.label}</div>
-                  <div className="mt-1 font-mono text-[0.66rem] leading-4 text-[#080808]/50 dark:text-[#efebe3]/50 line-clamp-1">{item.sub}</div>
+                  <div className="mt-2 font-mono text-[0.62rem] uppercase tracking-[0.14em] text-[#00e5ff]">{item.label}</div>
+                  <div className="mt-1 font-mono text-[0.66rem] leading-4 text-[#5a6575] line-clamp-1">{item.sub}</div>
                 </div>
               ))}
             </motion.div>
@@ -263,13 +133,14 @@ export function Hero() {
             <motion.div
               variants={itemVariants}
               id="tldr"
-              className="mt-6 border border-[#080808] bg-[#efebe3] p-4 dark:border-white/20 dark:bg-transparent sm:p-5"
+              className="mt-6 border p-4 sm:p-5"
+              style={{ borderColor: 'rgba(230,237,243,0.08)', background: 'rgba(14,20,34,0.9)', borderRadius: 4 }}
             >
-              <div className="font-mono text-[0.62rem] uppercase tracking-[0.16em] text-[#080808] dark:text-[#efebe3]">{t('tldr_title')}</div>
+              <div className="font-mono text-[0.62rem] uppercase tracking-[0.16em] text-[#ffb700]">{t('tldr_title')}</div>
               <ul className="mt-3 space-y-1.5">
                 {['tldr_b1', 'tldr_b2', 'tldr_b3', 'tldr_b4', 'tldr_b5'].map((k) => (
-                  <li key={k} className="flex gap-2 font-mono text-[0.74rem] leading-6 text-[#080808]/75 dark:text-[#efebe3]/75">
-                    <span className="shrink-0 text-[#8b1a1a]">—</span>
+                  <li key={k} className="flex gap-2 font-mono text-[0.74rem] leading-6 text-[#8a97a8]">
+                    <span className="shrink-0 text-[#00e5ff]">—</span>
                     <span className="line-clamp-1">{t(k)}</span>
                   </li>
                 ))}
@@ -277,114 +148,106 @@ export function Hero() {
             </motion.div>
           </motion.div>
 
-          {/* Right: protocol-card with r3f seal + gsap rotate */}
+          {/* Right: terminal execution card — depth REF/NASK/STATUS */}
           <motion.div
             initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: 'easeOut', delay: 0.25 }}
             className="relative lg:sticky lg:top-[72px]"
-            onHoverStart={() => setSealHovered(true)}
-            onHoverEnd={() => setSealHovered(false)}
           >
-            <div className="artifact-card protocol-card overflow-hidden border border-[#080808] bg-[#efebe3] dark:border-white/15 dark:bg-[#111318]">
-              <div className="flex items-center justify-between border-b border-[#080808] bg-[#efebe3] px-5 py-3 dark:border-white/15 dark:bg-[#080808]">
-                <span className="font-mono text-[0.62rem] uppercase tracking-[0.16em] text-[#080808] dark:text-[#efebe3]/70">{t('hero_visual_label')}</span>
-                <span className="inline-flex items-center border border-[#080808] bg-transparent px-2 py-1 font-mono text-[0.58rem] uppercase tracking-[0.14em] text-[#080808] dark:border-white/20 dark:text-[#efebe3]/60">
+            <div className="artifact-card protocol-card overflow-hidden" style={{ borderColor: 'rgba(230,237,243,0.10)', background: '#0e1422', borderRadius: 4 }}>
+              <div className="flex items-center justify-between border-b px-5 py-3" style={{ borderColor: 'rgba(230,237,243,0.08)', background: '#141e30' }}>
+                <span className="font-mono text-[0.60rem] uppercase tracking-[0.16em] text-[#8a97a8]">{t('hero_visual_label')}</span>
+                <span className="inline-flex items-center gap-1.5 border px-2 py-1 font-mono text-[0.58rem] uppercase tracking-[0.14em] text-[#ffb700]" style={{ borderColor: 'rgba(255,183,0,0.25)', background: 'rgba(255,183,0,0.08)', borderRadius: 4 }}>
+                  <span className="h-1.5 w-1.5 rounded-full bg-[#ffb700]" aria-hidden="true" />
                   {t('hero_visual_tag')}
                 </span>
               </div>
 
-              <div className="relative bg-[#efebe3] px-6 py-8 dark:bg-[#111318] sm:px-8 sm:py-9">
-                <div className="pointer-events-none absolute left-1/2 top-0 h-full w-px bg-[#080808]/10 dark:bg-white/10"></div>
-                <div className="pointer-events-none absolute left-0 top-1/2 h-px w-full bg-[#080808]/10 dark:bg-white/10"></div>
-                <span className="pointer-events-none absolute left-2 top-2 h-3 w-3 border-l border-t border-[#080808]/30 dark:border-white/20"></span>
-                <span className="pointer-events-none absolute right-2 top-2 h-3 w-3 border-r border-t border-[#080808]/30 dark:border-white/20"></span>
-                <span className="pointer-events-none absolute bottom-2 left-2 h-3 w-3 border-b border-l border-[#080808]/30 dark:border-white/20"></span>
-                <span className="pointer-events-none absolute bottom-2 right-2 h-3 w-3 border-b border-r border-[#080808]/30 dark:border-white/20"></span>
+              <div className="relative bg-[#0e1422] px-6 py-8 sm:px-8 sm:py-9">
+                {/* terminal crosshairs */}
+                <div className="pointer-events-none absolute left-1/2 top-0 h-full w-px bg-[rgba(230,237,243,0.04)]" />
+                <div className="pointer-events-none absolute left-0 top-1/2 h-px w-full bg-[rgba(230,237,243,0.04)]" />
+                <span className="pointer-events-none absolute left-2 top-2 h-3 w-3 border-l border-t" style={{ borderColor: 'rgba(230,237,243,0.12)' }} />
+                <span className="pointer-events-none absolute right-2 top-2 h-3 w-3 border-r border-t" style={{ borderColor: 'rgba(230,237,243,0.12)' }} />
+                <span className="pointer-events-none absolute bottom-2 left-2 h-3 w-3 border-b border-l" style={{ borderColor: 'rgba(230,237,243,0.12)' }} />
+                <span className="pointer-events-none absolute bottom-2 right-2 h-3 w-3 border-b border-r" style={{ borderColor: 'rgba(230,237,243,0.12)' }} />
 
                 <div className="relative text-center">
-                  <div className="font-display text-[5.2rem] leading-none tracking-[-0.06em] text-[#080808] dark:text-[#efebe3] sm:text-[6.2rem]" style={{ fontFamily: 'Instrument Serif, Georgia, serif' }}>
+                  <div className="font-mono text-[4.8rem] leading-none tracking-[-0.06em] text-[#e6edf3] sm:text-[5.6rem]" style={{ fontWeight: 800, fontFamily: 'var(--font-mono)' }}>
                     <span>hf</span>
-                    <span className="font-mono text-[0.9rem] font-normal tracking-[0.14em] text-[#080808]/45 dark:text-[#efebe3]/45" style={{ verticalAlign: 'super', marginLeft: '2px' }}>
+                    <span className="font-mono text-[0.9rem] font-normal tracking-[0.14em] text-[#5a6575]" style={{ verticalAlign: 'super', marginLeft: '2px' }}>
                       .pl
                     </span>
                   </div>
-                  <div className="mx-auto mt-3 h-px w-16 bg-[#8b1a1a]"></div>
-                  <div className="mt-3 font-mono text-[0.62rem] uppercase tracking-[0.18em] text-[#080808]/60 dark:text-[#efebe3]/50">PL-676 • ARCHIVAL • 1996</div>
-                  <div className="mx-auto mt-4 max-w-[18rem] font-mono text-[0.74rem] leading-6 text-[#080808]/60 dark:text-[#efebe3]/60 line-clamp-1">{t('hero_panel_status_body')}</div>
+                  <div className="mx-auto mt-3 h-px w-16 bg-[#00e5ff]" style={{ boxShadow: '0 0 8px rgba(0,229,255,0.6)' }} />
+                  <div className="mt-3 font-mono text-[0.62rem] uppercase tracking-[0.18em] text-[#5a6575]">PL-676 • ARCHIVAL • 1996 • HF.PL</div>
+                  <div className="mx-auto mt-4 max-w-[18rem] font-mono text-[0.74rem] leading-6 text-[#8a97a8] line-clamp-1">{t('hero_panel_status_body')}</div>
 
-                  <div
-                    className="relative mx-auto mt-6 h-[148px] w-[148px]"
-                    onMouseEnter={() => setSealHovered(true)}
-                    onMouseLeave={() => setSealHovered(false)}
-                  >
-                    <div className="absolute inset-0">
-                      <SealCanvas hovered={sealHovered} />
+                  {/* CSS seal — lightweight, no r3f, square 4px */}
+                  <div className="relative mx-auto mt-6 flex h-[128px] w-[128px] items-center justify-center">
+                    <div className="absolute inset-0 rounded-[12px] bg-[rgba(0,229,255,0.04)] blur-2xl" aria-hidden="true" />
+                    <div className="relative flex h-[110px] w-[110px] items-center justify-center rounded-full border-[1.6px] bg-[rgba(14,20,34,0.9)]" style={{ borderColor: '#ff3344', boxShadow: '0 0 24px rgba(255,51,68,0.18)' }}>
+                      <div className="absolute inset-[5px] rounded-full border" style={{ borderColor: 'rgba(255,51,68,0.35)' }} />
+                      <div className="absolute inset-[10px] rounded-full border border-dashed" style={{ borderColor: 'rgba(255,51,68,0.18)' }} />
+                      <span className="relative z-10 font-mono text-[1.05rem] font-extrabold tracking-[-0.02em] text-[#ff3344]" style={{ fontFamily: 'var(--font-mono)' }}>
+                        hf
+                      </span>
+                      <svg className="absolute inset-0 h-full w-full" viewBox="0 0 100 100" aria-hidden="true">
+                        <defs>
+                          <path id="heroSealCircleTerminal" d="M 50,50 m -37,0 a 37,37 0 1,1 74,0 a 37,37 0 1,1 -74,0" />
+                        </defs>
+                        <text fontSize="5.6" letterSpacing="0.85" fill="#ff3344" fontFamily="JetBrains Mono, monospace">
+                          <textPath href="#heroSealCircleTerminal" startOffset="0%">
+                            ARCHIWUM • NASK • 1996 • PL-676 •
+                          </textPath>
+                        </text>
+                      </svg>
+                      <span className="absolute -top-1 left-1/2 h-1.5 w-1.5 -translate-x-1/2 rounded-full bg-[#ff3344]" style={{ boxShadow: '0 0 6px rgba(255,51,68,0.6)' }} />
+                      <span className="absolute -bottom-1 left-1/2 h-1.5 w-1.5 -translate-x-1/2 rounded-full bg-[#ff3344]" />
                     </div>
-                    <motion.div
-                      ref={sealWrapRef}
-                      animate={{ rotate: sealHovered ? 8 : 0 }}
-                      transition={{ type: 'spring', stiffness: 180, damping: 18 }}
-                      className="absolute inset-0 flex items-center justify-center pointer-events-none will-change-transform"
-                    >
-                      <div className="relative flex h-[112px] w-[112px] items-center justify-center rounded-full border-[1.8px] border-[#8b1a1a] bg-[#efebe3]/10 backdrop-blur-[0.5px] dark:bg-[#080808]/20">
-                        <div className="absolute inset-[5px] rounded-full border border-[#8b1a1a]/45"></div>
-                        <div className="absolute inset-[10px] rounded-full border border-dashed border-[#8b1a1a]/20"></div>
-                        <span className="relative z-10 font-display text-[1.05rem] font-bold tracking-[-0.02em] text-[#8b1a1a]" style={{ fontFamily: 'Instrument Serif, Georgia, serif' }}>
-                          hf
-                        </span>
-                        <svg className="absolute inset-0 h-full w-full" viewBox="0 0 100 100" aria-hidden="true">
-                          <defs>
-                            <path id="heroSealCircle" d="M 50,50 m -38,0 a 38,38 0 1,1 76,0 a 38,38 0 1,1 -76,0" />
-                          </defs>
-                          <text fontSize="6.2" letterSpacing="0.9" fill="#8b1a1a" fontFamily="monospace">
-                            <textPath href="#heroSealCircle" startOffset="0%">
-                              ARCHIWUM • NASK • 1996 • PL-676 •
-                            </textPath>
-                          </text>
-                        </svg>
-                        <span className="absolute -top-1 left-1/2 h-1 w-1 -translate-x-1/2 rounded-full bg-[#8b1a1a]"></span>
-                        <span className="absolute -bottom-1 left-1/2 h-1 w-1 -translate-x-1/2 rounded-full bg-[#8b1a1a]"></span>
-                      </div>
-                    </motion.div>
                   </div>
 
-                  <div className="mt-2 font-mono text-[0.58rem] uppercase tracking-[0.14em] text-[#8b1a1a]">— PIECZĘĆ ARCHIWALNA —</div>
+                  <div className="mt-3 font-mono text-[0.58rem] uppercase tracking-[0.14em] text-[#ff3344]">— PIECZĘĆ ARCHIWALNA —</div>
                 </div>
 
-                <div className="mt-7 grid grid-cols-3 overflow-hidden border border-[#080808] text-center dark:border-white/15">
-                  <div className="border-r border-[#080808] px-3 py-3 dark:border-white/15">
-                    <div className="font-mono text-[0.58rem] uppercase tracking-[0.14em] text-[#080808]/45 dark:text-[#efebe3]/40">REF</div>
-                    <div className="mt-1 font-mono text-[0.82rem] font-semibold tracking-[0.02em] text-[#080808] dark:text-[#efebe3]">PL-676</div>
+                {/* terminal cells: REF / NASK / STATUS */}
+                <div className="mt-7 grid grid-cols-3 overflow-hidden border text-center" style={{ borderColor: 'rgba(230,237,243,0.08)', borderRadius: 4 }}>
+                  <div className="border-r px-3 py-3" style={{ borderColor: 'rgba(230,237,243,0.08)', background: 'rgba(20,30,48,0.6)' }}>
+                    <div className="font-mono text-[0.58rem] uppercase tracking-[0.14em] text-[#5a6575]">REF</div>
+                    <div className="mt-1 font-mono text-[0.82rem] font-bold tracking-[0.02em] text-[#e6edf3]">PL-676</div>
                   </div>
-                  <div className="border-r border-[#080808] px-3 py-3 dark:border-white/15">
-                    <div className="font-mono text-[0.58rem] uppercase tracking-[0.14em] text-[#080808]/45 dark:text-[#efebe3]/40">REJESTR</div>
-                    <div className="mt-1 font-mono text-[0.82rem] font-semibold text-[#080808] dark:text-[#efebe3]">NASK</div>
+                  <div className="border-r px-3 py-3" style={{ borderColor: 'rgba(230,237,243,0.08)', background: 'rgba(20,30,48,0.6)' }}>
+                    <div className="font-mono text-[0.58rem] uppercase tracking-[0.14em] text-[#5a6575]">REJESTR</div>
+                    <div className="mt-1 font-mono text-[0.82rem] font-bold text-[#e6edf3]">NASK</div>
                   </div>
-                  <div className="px-3 py-3">
-                    <div className="font-mono text-[0.58rem] uppercase tracking-[0.14em] text-[#080808]/45 dark:text-[#efebe3]/40">STATUS</div>
-                    <div className="mt-1 font-mono text-[0.82rem] font-semibold text-[#0a7a3a]">{t('badge_live')}</div>
+                  <div className="px-3 py-3" style={{ background: 'rgba(0,229,255,0.08)' }}>
+                    <div className="font-mono text-[0.58rem] uppercase tracking-[0.14em] text-[#5a6575]">STATUS</div>
+                    <div className="mt-1 inline-flex items-center gap-1 font-mono text-[0.78rem] font-bold text-[#00e5ff]">
+                      <span className="h-1.5 w-1.5 rounded-full bg-[#00e5ff] animate-pulse" aria-hidden="true" />
+                      {t('badge_live')}
+                    </div>
                   </div>
                 </div>
               </div>
 
-              <div className="grid border-t border-[#080808] dark:border-white/15 sm:grid-cols-3">
+              <div className="grid border-t sm:grid-cols-3" style={{ borderColor: 'rgba(230,237,243,0.08)' }}>
                 {[
                   ['hero_panel_status_title', 'hero_panel_status_body'],
                   ['hero_panel_flex_title', 'hero_panel_flex_body'],
                   ['hero_panel_transfer_title', 'hero_panel_transfer_body'],
                 ].map(([tk, bk]) => (
-                  <div key={tk} className="border-r border-[#080808]/15 px-4 py-4 last:border-r-0 dark:border-white/10">
-                    <div className="font-mono text-[0.60rem] uppercase tracking-[0.12em] text-[#8b1a1a]">{t(tk)}</div>
-                    <div className="mt-2 font-mono text-[0.74rem] leading-6 text-[#080808]/65 dark:text-[#efebe3]/65 line-clamp-1">{t(bk)}</div>
+                  <div key={tk} className="border-r px-4 py-4 last:border-r-0" style={{ borderColor: 'rgba(230,237,243,0.06)' }}>
+                    <div className="font-mono text-[0.60rem] uppercase tracking-[0.12em] text-[#00e5ff]">{t(tk)}</div>
+                    <div className="mt-2 font-mono text-[0.72rem] leading-5 text-[#8a97a8] line-clamp-1">{t(bk)}</div>
                   </div>
                 ))}
               </div>
             </div>
 
             <div className="mt-3 flex items-center justify-between px-1">
-              <span className="font-mono text-[0.60rem] uppercase tracking-[0.12em] text-[#080808]/45 dark:text-[#efebe3]/40">NASK • 1996 • PL-676 — {t('provenance_label')}</span>
-              <span className="hidden sm:inline font-mono text-[0.60rem] uppercase tracking-[0.12em] text-[#080808]/45 dark:text-[#efebe3]/40">{t('hero_status_value')}</span>
+              <span className="font-mono text-[0.60rem] uppercase tracking-[0.12em] text-[#5a6575]">NASK • 1996 • PL-676 — {t('provenance_label')}</span>
+              <span className="hidden sm:inline font-mono text-[0.60rem] uppercase tracking-[0.12em] text-[#5a6575]">{t('hero_status_value')}</span>
             </div>
           </motion.div>
         </div>

@@ -20,11 +20,11 @@ export function WhySection() {
   };
 
   const item = {
-    hidden: { opacity: 0, y: shouldReduceMotion ? 0 : 10 },
+    hidden: { opacity: 0, y: shouldReduceMotion ? 0 : 12 },
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.42, ease: [0.25, 1, 0.5, 1] },
+      transition: { duration: 0.5, ease: [0.25, 1, 0.5, 1] },
     },
   };
 
@@ -32,7 +32,7 @@ export function WhySection() {
     <motion.section
       className="section-shell hairline-top"
       id="why"
-      style={{ borderTopWidth: '1.5px', borderTopColor: 'var(--color-ink, #080808)' }}
+      style={{ borderTopColor: 'rgba(230,237,243,0.08)', background: '#070a12' }}
       initial={shouldReduceMotion ? false : 'hidden'}
       whileInView="visible"
       viewport={{ once: true, amount: 0.12 }}
@@ -42,49 +42,50 @@ export function WhySection() {
         <motion.div variants={shouldReduceMotion ? undefined : item} className="max-w-[46rem]">
           <div className="eyebrow">{t('why_overline')}</div>
           <h2
-            className="mt-3 font-display leading-[0.85] tracking-[-0.05em] text-ink dark:text-paper"
-            style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(2.4rem, 1.4rem + 3vw, 4.2rem)' }}
+            className="mt-3 font-mono font-extrabold uppercase leading-[0.85] tracking-[-0.04em] text-[#e6edf3]"
+            style={{ fontFamily: 'var(--font-mono)', fontSize: 'clamp(2.2rem, 1.2rem + 3vw, 3.8rem)' }}
           >
-            JEDEN SKRÓT. <span className="text-[#8b1a1a]">WSZYSTKIE MARKI.</span>
+            JEDEN SKRÓT. <span className="text-[#00e5ff]">WSZYSTKIE MARKI.</span>
           </h2>
           <p
-            className="mt-4 max-w-[36rem] font-mono text-[0.78rem] leading-6 text-text-muted"
-            style={{ display: '-webkit-box', WebkitLineClamp: 1, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}
+            className="mt-4 max-w-[36rem] font-mono leading-6 text-[#8a97a8]"
+            style={{ fontSize: '0.76rem', display: '-webkit-box', WebkitLineClamp: 1, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}
           >
             {t('why_desc')}
           </p>
         </motion.div>
 
+        {/* terminal data-dense grid — evidence-row hairline rows */}
         <motion.div
           variants={container}
-          className="mt-10 border-y"
-          style={{ borderColor: 'var(--color-hairline)', borderTopWidth: '1.5px', borderBottomWidth: '1px' }}
+          className="mt-10 overflow-hidden border"
+          style={{ borderColor: 'rgba(230,237,243,0.08)', borderRadius: 4, background: '#0e1422' }}
         >
           {reasons.map((reason) => (
             <motion.article
               key={reason.index}
               variants={item}
-              className="evidence-row grid gap-3 px-2 py-6 sm:grid-cols-[200px_1fr] sm:items-center sm:px-3"
-              style={{ borderTop: '1px solid var(--color-hairline)' }}
+              className="evidence-row grid gap-3 px-4 py-5 sm:grid-cols-[200px_1fr] sm:items-center"
+              style={{ borderTop: '1px solid rgba(230,237,243,0.08)' }}
             >
               <div
-                className="mono pt-1 shrink-0 hidden sm:block"
-                style={{ fontSize: '0.60rem', letterSpacing: '0.14em', color: '#8b1a1a' }}
+                className="font-mono pt-1 shrink-0 hidden sm:block"
+                style={{ fontSize: '0.60rem', letterSpacing: '0.14em', color: '#00e5ff', fontWeight: 600 }}
                 aria-hidden="true"
               >
                 {reason.index} — {reason.title.toUpperCase()}
               </div>
               <div className="min-w-0 flex flex-col sm:flex-row sm:items-baseline sm:gap-4">
                 <h3
-                  className="font-display leading-none tracking-[-0.04em] text-ink dark:text-paper shrink-0"
-                  style={{ fontFamily: 'Instrument Serif, Georgia, serif', fontSize: '1.8rem', lineHeight: 0.95 }}
+                  className="shrink-0 font-mono font-bold uppercase leading-none tracking-[-0.03em] text-[#e6edf3]"
+                  style={{ fontFamily: 'var(--font-mono)', fontSize: '1.05rem', lineHeight: 1 }}
                 >
                   {reason.title}
                 </h3>
                 <p
-                  className="mt-1 sm:mt-0 max-w-[36rem] text-text-muted"
+                  className="mt-1 sm:mt-0 max-w-[36rem] font-mono text-[#8a97a8]"
                   style={{
-                    fontSize: '0.88rem',
+                    fontSize: '0.78rem',
                     lineHeight: '1.5',
                     display: '-webkit-box',
                     WebkitLineClamp: 1,
@@ -99,8 +100,8 @@ export function WhySection() {
           ))}
         </motion.div>
 
-        <motion.div variants={shouldReduceMotion ? undefined : item} className="mono mt-4 flex items-center gap-2">
-          <span className="h-px w-6 bg-[var(--color-ink)] hidden sm:block" aria-hidden="true" style={{ background: '#080808' }} />
+        <motion.div variants={shouldReduceMotion ? undefined : item} className="mono mt-4 flex items-center gap-2 text-[#5a6575]">
+          <span className="h-px w-6 hidden sm:block" aria-hidden="true" style={{ background: 'rgba(230,237,243,0.12)' }} />
           <span>NASK • 676 • 1996 — {t('provenance_label')}</span>
         </motion.div>
       </div>

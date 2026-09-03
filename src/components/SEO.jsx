@@ -20,7 +20,7 @@ export function SEO() {
       <meta name="description" content={description} />
       <meta name="keywords" content={keywords} />
       <meta name="robots" content="index,follow,max-image-preview:large" />
-      <meta name="theme-color" content="#0f1722" />
+      <meta name="theme-color" content="#070a12" />
       <link rel="canonical" href={currentUrl} />
       <link rel="alternate" hrefLang="pl-PL" href={`${baseUrl}/`} />
       <link rel="alternate" hrefLang="en" href={`${baseUrl}/en/`} />
