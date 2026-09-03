@@ -158,7 +158,7 @@ export function Hero() {
       ref={sectionRef}
       className="section-shell relative overflow-hidden bg-[#f6f1e8] dark:bg-[#07080a] pt-[52px] hairline-bottom"
       id="hero"
-      style={{ borderBottom: '1px solid rgba(10,10,10,0.08)', minHeight: '110vh' }}
+      style={{ borderBottom: '1px solid rgba(10,10,10,0.08)', minHeight: 'auto' }}
     >
       {/* Swiss provenance top rule — paper */}
       <div className="border-b border-[rgba(10,10,10,0.08)] bg-[#f6f1e8] dark:border-white/10 dark:bg-[#07080a]">
@@ -299,7 +299,7 @@ export function Hero() {
             initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: 'easeOut', delay: 0.25 }}
-            className="relative col-span-12 mt-8 lg:col-span-5 lg:mt-0 lg:sticky lg:top-[64px]"
+            className="relative col-span-12 mt-8 lg:col-span-5 lg:mt-0 lg:relative"
             onHoverStart={() => setSealHovered(true)}
             onHoverEnd={() => setSealHovered(false)}
           >
