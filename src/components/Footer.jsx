@@ -4,7 +4,7 @@ export function Footer() {
   const { t } = useTranslation();
 
   return (
-    <footer className="px-4 py-10 sm:px-6 sm:py-12 lg:px-10 relative z-[1]" style={{ background: '#0a0a0a', color: '#f6f1e8', borderTop: '1.5px solid #0a0a0a' }}>
+    <footer className="px-4 py-10 sm:px-6 sm:py-12 lg:px-10 relative z-[1]" style={{ background: '#07080a', color: '#f6f1e8', borderTop: '1.5px solid #07080a' }}>
       <div className="section-frame">
         {/* Top provenance rule — 1px white/10 */}
         <div className="flex items-center justify-between pb-6" style={{ borderBottom: '1px solid rgba(246,241,232,0.10)' }}>

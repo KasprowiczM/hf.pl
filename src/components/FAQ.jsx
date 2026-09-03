@@ -24,7 +24,7 @@ export function FAQ() {
 
   return (
     <motion.section
-      className="section-shell hairline-top bg-[#f6f1e8] dark:bg-[#0a0a0a]"
+      className="section-shell hairline-top bg-[#f6f1e8] dark:bg-[#07080a]"
       id="faq"
       style={{ borderTopWidth: '1.5px', borderTopColor: 'var(--color-ink, #0a0a0a)' }}
       initial={shouldReduceMotion ? false : 'hidden'}
@@ -35,8 +35,8 @@ export function FAQ() {
       <div className="section-frame swiss-grid gap-8 lg:gap-14">
         <motion.div variants={shouldReduceMotion ? undefined : row} className="col-span-12 max-w-[36rem] lg:col-span-4">
           <div className="eyebrow">{t('faq_overline')}</div>
-          <h2 className="section-title text-balance mt-3 text-[#0a0a0a] dark:text-[#fdf8ef]">{t('faq_title')}</h2>
-          <p className="section-lead mt-5 text-[#4a4642] dark:text-[#fdf8ef]/60">{t('faq_desc')}</p>
+          <h2 className="section-title text-balance mt-3 text-[#0a0a0a] dark:text-[#f6f1e8]">{t('faq_title')}</h2>
+          <p className="section-lead mt-5 text-[#4a4642] dark:text-[#f6f1e8]/60">{t('faq_desc')}</p>
           <div className="mt-5 h-[2px] w-16 bg-[#e30613] dark:bg-[#ff1a2b] hidden lg:block" aria-hidden="true" />
           <p className="mono mt-6 hidden lg:flex items-center gap-2">
             <span className="h-px w-6 bg-[rgba(10,10,10,0.12)] dark:bg-white/15" aria-hidden="true" />
@@ -76,14 +76,14 @@ export function FAQ() {
                       {qNum}
                     </span>
                     <span
-                      className="text-[15px] font-semibold leading-6 tracking-[-0.01em] text-[#0a0a0a] dark:text-[#fdf8ef]"
+                      className="text-[15px] font-semibold leading-6 tracking-[-0.01em] text-[#0a0a0a] dark:text-[#f6f1e8]"
                       style={{ fontFamily: 'Instrument Serif, Georgia, serif', fontWeight: 600, letterSpacing: '-0.015em' }}
                     >
                       {t(`faq${key}_q`)}
                     </span>
                   </span>
                   <span
-                    className="ml-2 flex h-7 w-7 shrink-0 items-center justify-center border bg-[#fdf8ef] dark:bg-[#141414] transition-colors group-hover:border-[rgba(10,10,10,0.14)]"
+                    className="ml-2 flex h-7 w-7 shrink-0 items-center justify-center border bg-[#fdf8ef] dark:bg-[#111418] transition-colors group-hover:border-[rgba(10,10,10,0.14)]"
                     style={{ borderColor: 'var(--color-hairline)', borderRadius: '4px' }}
                   >
                     <motion.span
@@ -119,7 +119,7 @@ export function FAQ() {
                             aria-hidden="true"
                             style={{ background: '#e30613', opacity: 0.9 }}
                           />
-                          <p className="text-[15px] leading-7 text-[#4a4642] dark:text-[#fdf8ef]/65">{t(`faq${key}_a`)}</p>
+                          <p className="text-[15px] leading-7 text-[#4a4642] dark:text-[#f6f1e8]/65">{t(`faq${key}_a`)}</p>
                         </motion.div>
                       )}
                     </AnimatePresence>

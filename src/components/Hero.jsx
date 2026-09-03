@@ -156,17 +156,17 @@ export function Hero() {
   return (
     <section
       ref={sectionRef}
-      className="section-shell relative overflow-hidden bg-[#f6f1e8] dark:bg-[#0a0a0a] pt-[52px] hairline-bottom"
+      className="section-shell relative overflow-hidden bg-[#f6f1e8] dark:bg-[#07080a] pt-[52px] hairline-bottom"
       id="hero"
       style={{ borderBottom: '1px solid rgba(10,10,10,0.08)', minHeight: '110vh' }}
     >
       {/* Swiss provenance top rule — paper */}
-      <div className="border-b border-[rgba(10,10,10,0.08)] bg-[#f6f1e8] dark:border-white/10 dark:bg-[#0a0a0a]">
+      <div className="border-b border-[rgba(10,10,10,0.08)] bg-[#f6f1e8] dark:border-white/10 dark:bg-[#07080a]">
         <div className="section-frame flex flex-wrap items-center justify-between gap-2 px-4 py-2 sm:px-6 lg:px-10">
-          <span className="font-mono text-[0.58rem] uppercase tracking-[0.16em] text-[#4a4642] dark:text-[#fdf8ef]/60 sm:text-[0.60rem]">
+          <span className="font-mono text-[0.58rem] uppercase tracking-[0.16em] text-[#4a4642] dark:text-[#f6f1e8]/60 sm:text-[0.60rem]">
             NASK • ARCHIWUM PL-676 • 1996 — Nr 676/1996 • PROTOKÓŁ PRZEKAZANIA — SYSTEM REJESTRU DN
           </span>
-          <span className="hidden sm:inline-flex items-center gap-2 font-mono text-[0.58rem] uppercase tracking-[0.16em] text-[#0a0a0a]/55 dark:text-[#fdf8ef]/45">
+          <span className="hidden sm:inline-flex items-center gap-2 font-mono text-[0.58rem] uppercase tracking-[0.16em] text-[#0a0a0a]/55 dark:text-[#f6f1e8]/45">
             <span className="h-px w-6 bg-[#e30613] dark:bg-[#ff1a2b]" aria-hidden="true" />
             REJESTR NASK
           </span>
@@ -195,7 +195,7 @@ export function Hero() {
             {/* H1 — 2 LITERY. (ink + red dot) / 0 KONKURENCJI. (red) — Instrument Serif 8rem -0.06 */}
             <motion.h1
               variants={itemVariants}
-              className="mt-3 font-display leading-[0.82] tracking-[-0.06em] text-[#0a0a0a] dark:text-[#fdf8ef]"
+              className="mt-3 font-display leading-[0.82] tracking-[-0.06em] text-[#0a0a0a] dark:text-[#f6f1e8]"
               style={{ fontFamily: 'Instrument Serif, Georgia, serif', fontSize: 'clamp(3.4rem, 1.8rem + 7vw, 8rem)' }}
               aria-label="2 LITERY. 0 KONKURENCJI."
             >
@@ -221,13 +221,13 @@ export function Hero() {
             {/* signal slogan — Swiss caps : DŁUGIE GINĄ. KRÓTKIE ZOSTAJĄ. */}
             <motion.p
               variants={itemVariants}
-              className="mt-5 max-w-[34rem] border-l-2 border-[#e30613] dark:border-[#ff1a2b] pl-4 text-[1.02rem] font-bold leading-6 tracking-[-0.015em] text-[#0a0a0a] dark:text-[#fdf8ef] sm:text-[1.06rem]"
+              className="mt-5 max-w-[34rem] border-l-2 border-[#e30613] dark:border-[#ff1a2b] pl-4 text-[1.02rem] font-bold leading-6 tracking-[-0.015em] text-[#0a0a0a] dark:text-[#f6f1e8] sm:text-[1.06rem]"
             >
               DŁUGIE GINĄ. KRÓTKIE ZOSTAJĄ.
             </motion.p>
             <motion.p
               variants={itemVariants}
-              className="max-w-[34rem] pl-4 font-mono text-[0.72rem] leading-5 tracking-[0.08em] text-[#4a4642] dark:text-[#fdf8ef]/60"
+              className="max-w-[34rem] pl-4 font-mono text-[0.72rem] leading-5 tracking-[0.08em] text-[#4a4642] dark:text-[#f6f1e8]/60"
             >
               {t('hero_subtitle_accent')}
             </motion.p>
@@ -238,7 +238,7 @@ export function Hero() {
                 whileTap={shouldReduceMotion ? undefined : { y: 0 }}
                 href="mailto:domain@hf.pl"
                 onClick={() => trackEvent('cta_click', { location: 'hero', target: 'mailto' })}
-                className="inline-flex items-center justify-center gap-2 border border-[#0a0a0a] bg-[#0a0a0a] px-6 py-3 font-mono text-[0.72rem] font-bold uppercase tracking-[0.12em] text-[#f6f1e8] no-underline hover:bg-transparent hover:text-[#0a0a0a] dark:border-[#fdf8ef] dark:bg-[#fdf8ef] dark:text-[#0a0a0a] dark:hover:bg-transparent dark:hover:text-[#fdf8ef]"
+                className="inline-flex items-center justify-center gap-2 border border-[#0a0a0a] bg-[#0a0a0a] px-6 py-3 font-mono text-[0.72rem] font-bold uppercase tracking-[0.12em] text-[#f6f1e8] no-underline hover:bg-transparent hover:text-[#0a0a0a] dark:border-[#f6f1e8] dark:bg-[#f6f1e8] dark:text-[#07080a] dark:hover:bg-transparent dark:hover:text-[#f6f1e8]"
                 style={{ borderRadius: '4px' }}
               >
                 SPRAWDŹ DOSTĘPNOŚĆ W 24H
@@ -249,7 +249,7 @@ export function Hero() {
                 whileTap={shouldReduceMotion ? undefined : { y: 0 }}
                 href="#valuation"
                 onClick={() => trackEvent('cta_click', { location: 'hero', target: 'valuation' })}
-                className="inline-flex items-center justify-center gap-2 border border-[rgba(10,10,10,0.14)] bg-transparent px-6 py-3 font-mono text-[0.70rem] font-bold uppercase tracking-[0.12em] text-[#0a0a0a] no-underline hover:border-[#0a0a0a] hover:bg-[#0a0a0a] hover:text-[#f6f1e8] dark:border-white/18 dark:text-[#fdf8ef] dark:hover:bg-[#fdf8ef] dark:hover:text-[#0a0a0a]"
+                className="inline-flex items-center justify-center gap-2 border border-[rgba(10,10,10,0.14)] bg-transparent px-6 py-3 font-mono text-[0.70rem] font-bold uppercase tracking-[0.12em] text-[#0a0a0a] no-underline hover:border-[#0a0a0a] hover:bg-[#0a0a0a] hover:text-[#f6f1e8] dark:border-white/18 dark:text-[#f6f1e8] dark:hover:bg-[#f6f1e8] dark:hover:text-[#07080a]"
                 style={{ borderRadius: '4px' }}
               >
                 ZOBACZ WYCENĘ
@@ -260,16 +260,16 @@ export function Hero() {
             </motion.p>
 
             {/* proof bar — 1.5px ink top, hairline dividers — Swiss */}
-            <motion.div variants={itemVariants} className="mt-9 grid grid-cols-3 border-t-[1.5px] border-[#0a0a0a] dark:border-[#fdf8ef]/18">
+            <motion.div variants={itemVariants} className="mt-9 grid grid-cols-3 border-t-[1.5px] border-[#0a0a0a] dark:border-[#f6f1e8]/18">
               {proofItems.map((item) => (
                 <div key={item.label} className="border-r border-[rgba(10,10,10,0.08)] px-3 py-5 text-center last:border-r-0 dark:border-white/10 sm:px-4 sm:text-left">
                   <div
-                    className="font-display text-[2rem] leading-none tracking-[-0.06em] text-[#0a0a0a] dark:text-[#fdf8ef] sm:text-[2.55rem]"
+                    className="font-display text-[2rem] leading-none tracking-[-0.06em] text-[#0a0a0a] dark:text-[#f6f1e8] sm:text-[2.55rem]"
                     style={{ fontFamily: 'Instrument Serif, Georgia, serif' }}
                   >
                     {item.value}
                   </div>
-                  <div className="mt-2 font-mono text-[0.62rem] uppercase tracking-[0.14em] text-[#0a0a0a] dark:text-[#fdf8ef]">{item.label}</div>
+                  <div className="mt-2 font-mono text-[0.62rem] uppercase tracking-[0.14em] text-[#0a0a0a] dark:text-[#f6f1e8]">{item.label}</div>
                   <div className="mt-1 font-mono text-[0.66rem] leading-4 text-[#8a8683] line-clamp-1">{item.sub}</div>
                 </div>
               ))}
@@ -278,13 +278,13 @@ export function Hero() {
             <motion.div
               variants={itemVariants}
               id="tldr"
-              className="mt-6 border border-[rgba(10,10,10,0.08)] bg-[#fdf8ef] p-4 dark:border-white/12 dark:bg-[#141414] sm:p-5"
+              className="mt-6 border border-[rgba(10,10,10,0.08)] bg-[#fdf8ef] p-4 dark:border-white/12 dark:bg-[#111418] sm:p-5"
               style={{ borderRadius: '4px' }}
             >
               <div className="font-mono text-[10px] uppercase tracking-[0.18em] text-[#e30613] dark:text-[#ff1a2b]">{t('tldr_title')}</div>
               <ul className="mt-3 space-y-1.5">
                 {['tldr_b1', 'tldr_b2', 'tldr_b3', 'tldr_b4', 'tldr_b5'].map((k) => (
-                  <li key={k} className="flex gap-2 font-mono text-[0.74rem] leading-6 text-[#4a4642] dark:text-[#fdf8ef]/75">
+                  <li key={k} className="flex gap-2 font-mono text-[0.74rem] leading-6 text-[#4a4642] dark:text-[#f6f1e8]/75">
                     <span className="shrink-0 text-[#e30613] dark:text-[#ff1a2b]">—</span>
                     <span className="line-clamp-1">{t(k)}</span>
                   </li>
@@ -303,15 +303,15 @@ export function Hero() {
             onHoverStart={() => setSealHovered(true)}
             onHoverEnd={() => setSealHovered(false)}
           >
-            <div className="artifact-card swiss-card--ink overflow-hidden border border-[#0a0a0a] bg-[#fdf8ef] dark:border-white/14 dark:bg-[#141414]" style={{ borderRadius: '4px' }}>
-              <div className="flex items-center justify-between border-b border-[rgba(10,10,10,0.08)] bg-[#fdf8ef] px-5 py-3 dark:border-white/10 dark:bg-[#141414]">
+            <div className="artifact-card swiss-card--ink overflow-hidden border border-[#0a0a0a] bg-[#fdf8ef] dark:border-white/14 dark:bg-[#111418]" style={{ borderRadius: '4px' }}>
+              <div className="flex items-center justify-between border-b border-[rgba(10,10,10,0.08)] bg-[#fdf8ef] px-5 py-3 dark:border-white/10 dark:bg-[#111418]">
                 <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-[#8a8683]">{t('hero_visual_label')}</span>
                 <span className="inline-flex items-center border border-[#e30613] bg-transparent px-2 py-1 font-mono text-[0.56rem] uppercase tracking-[0.14em] text-[#e30613] dark:border-[#ff1a2b] dark:text-[#ff1a2b]" style={{ borderRadius: '4px' }}>
                   {t('hero_visual_tag')}
                 </span>
               </div>
 
-              <div className="relative bg-[#fdf8ef] px-6 py-8 dark:bg-[#141414] sm:px-8 sm:py-9">
+              <div className="relative bg-[#fdf8ef] px-6 py-8 dark:bg-[#111418] sm:px-8 sm:py-9">
                 <div className="pointer-events-none absolute left-1/2 top-0 h-full w-px bg-[rgba(10,10,10,0.06)] dark:bg-white/10"></div>
                 <div className="pointer-events-none absolute left-0 top-1/2 h-px w-full bg-[rgba(10,10,10,0.06)] dark:bg-white/10"></div>
                 <span className="pointer-events-none absolute left-2 top-2 h-3 w-3 border-l border-t border-[rgba(10,10,10,0.12)] dark:border-white/12"></span>
@@ -320,15 +320,15 @@ export function Hero() {
                 <span className="pointer-events-none absolute bottom-2 right-2 h-3 w-3 border-b border-r border-[rgba(10,10,10,0.12)] dark:border-white/12"></span>
 
                 <div className="relative text-center">
-                  <div className="font-display text-[5.2rem] leading-none tracking-[-0.06em] text-[#0a0a0a] dark:text-[#fdf8ef] sm:text-[6.2rem]" style={{ fontFamily: 'Instrument Serif, Georgia, serif' }}>
+                  <div className="font-display text-[5.2rem] leading-none tracking-[-0.06em] text-[#0a0a0a] dark:text-[#f6f1e8] sm:text-[6.2rem]" style={{ fontFamily: 'Instrument Serif, Georgia, serif' }}>
                     <span>hf</span>
-                    <span className="font-mono text-[0.9rem] font-normal tracking-[0.14em] text-[#4a4642]/60 dark:text-[#fdf8ef]/45" style={{ verticalAlign: 'super', marginLeft: '2px' }}>
+                    <span className="font-mono text-[0.9rem] font-normal tracking-[0.14em] text-[#4a4642]/60 dark:text-[#f6f1e8]/45" style={{ verticalAlign: 'super', marginLeft: '2px' }}>
                       .pl
                     </span>
                   </div>
                   <div className="mx-auto mt-3 h-[2px] w-16 bg-[#e30613] dark:bg-[#ff1a2b]"></div>
                   <div className="mt-3 font-mono text-[10px] uppercase tracking-[0.18em] text-[#8a8683]">PL-676 • ARCHIVAL • 1996</div>
-                  <div className="mx-auto mt-4 max-w-[18rem] font-mono text-[0.72rem] leading-6 text-[#4a4642] dark:text-[#fdf8ef]/60 line-clamp-1">{t('hero_panel_status_body')}</div>
+                  <div className="mx-auto mt-4 max-w-[18rem] font-mono text-[0.72rem] leading-6 text-[#4a4642] dark:text-[#f6f1e8]/60 line-clamp-1">{t('hero_panel_status_body')}</div>
 
                   <div
                     className="relative mx-auto mt-6 h-[148px] w-[148px]"
@@ -344,7 +344,7 @@ export function Hero() {
                       transition={{ type: 'spring', stiffness: 180, damping: 18 }}
                       className="absolute inset-0 flex items-center justify-center pointer-events-none will-change-transform"
                     >
-                      <div className="relative flex h-[112px] w-[112px] items-center justify-center rounded-full border-[1.8px] border-[#e30613] bg-[#fdf8ef]/10 backdrop-blur-[0.5px] dark:bg-[#0a0a0a]/20 dark:border-[#ff1a2b]">
+                      <div className="relative flex h-[112px] w-[112px] items-center justify-center rounded-full border-[1.8px] border-[#e30613] bg-[#fdf8ef]/10 backdrop-blur-[0.5px] dark:bg-[#07080a]/20 dark:border-[#ff1a2b]">
                         <div className="absolute inset-[5px] rounded-full border border-[#e30613]/45 dark:border-[#ff1a2b]/45"></div>
                         <div className="absolute inset-[10px] rounded-full border border-dashed border-[#e30613]/20 dark:border-[#ff1a2b]/20"></div>
                         <span className="relative z-10 font-display text-[1.05rem] font-bold tracking-[-0.02em] text-[#e30613] dark:text-[#ff1a2b]" style={{ fontFamily: 'Instrument Serif, Georgia, serif' }}>
@@ -368,26 +368,26 @@ export function Hero() {
 
                   <div className="mt-5 flex justify-center gap-2">
                     {['1996', 'NASK', 'PL-676'].map((lbl) => (
-                      <span key={lbl} className="border border-[rgba(10,10,10,0.08)] bg-white px-2 py-1 font-mono text-[0.56rem] uppercase tracking-[0.12em] text-[#8a8683] dark:border-white/10 dark:bg-[#1a1a1a] dark:text-white/50" style={{ borderRadius: '4px' }}>
+                      <span key={lbl} className="border border-[rgba(10,10,10,0.08)] bg-white px-2 py-1 font-mono text-[0.56rem] uppercase tracking-[0.12em] text-[#8a8683] dark:border-white/10 dark:bg-[#171a1e] dark:text-white/50" style={{ borderRadius: '4px' }}>
                         {lbl}
                       </span>
                     ))}
                   </div>
 
                   <div className="mt-6 grid grid-cols-2 gap-0 border border-[rgba(10,10,10,0.08)] text-left dark:border-white/10" style={{ borderRadius: '4px', overflow: 'hidden' }}>
-                    <div className="border-r border-[rgba(10,10,10,0.08)] bg-white px-4 py-3 dark:border-white/10 dark:bg-[#1a1a1a]">
+                    <div className="border-r border-[rgba(10,10,10,0.08)] bg-white px-4 py-3 dark:border-white/10 dark:bg-[#171a1e]">
                       <div className="font-mono text-[0.60rem] uppercase tracking-[0.14em] text-[#e30613] dark:text-[#ff1a2b]">{t('hero_panel_status_title')}</div>
-                      <div className="mt-1 font-mono text-[0.70rem] leading-5 text-[#0a0a0a]/70 dark:text-[#fdf8ef]/70 line-clamp-1">{t('hero_panel_status_body')}</div>
+                      <div className="mt-1 font-mono text-[0.70rem] leading-5 text-[#0a0a0a]/70 dark:text-[#f6f1e8]/70 line-clamp-1">{t('hero_panel_status_body')}</div>
                     </div>
-                    <div className="bg-white px-4 py-3 dark:bg-[#1a1a1a]">
+                    <div className="bg-white px-4 py-3 dark:bg-[#171a1e]">
                       <div className="font-mono text-[0.60rem] uppercase tracking-[0.14em] text-[#e30613] dark:text-[#ff1a2b]">{t('hero_panel_flex_title')}</div>
-                      <div className="mt-1 font-mono text-[0.70rem] leading-5 text-[#0a0a0a]/70 dark:text-[#fdf8ef]/70 line-clamp-1">{t('hero_panel_flex_body')}</div>
+                      <div className="mt-1 font-mono text-[0.70rem] leading-5 text-[#0a0a0a]/70 dark:text-[#f6f1e8]/70 line-clamp-1">{t('hero_panel_flex_body')}</div>
                     </div>
                   </div>
 
                   <div className="mt-3 border border-dashed border-[rgba(10,10,10,0.10)] px-4 py-3 dark:border-white/10" style={{ borderRadius: '4px' }}>
                     <div className="font-mono text-[0.60rem] uppercase tracking-[0.14em] text-[#e30613] dark:text-[#ff1a2b]">{t('hero_panel_transfer_title')}</div>
-                    <div className="mt-1 font-mono text-[0.70rem] leading-5 text-[#4a4642] dark:text-[#fdf8ef]/60 line-clamp-1">{t('hero_panel_transfer_body')}</div>
+                    <div className="mt-1 font-mono text-[0.70rem] leading-5 text-[#4a4642] dark:text-[#f6f1e8]/60 line-clamp-1">{t('hero_panel_transfer_body')}</div>
                   </div>
 
                   <div className="mt-5 flex items-center justify-between border-t border-dashed border-[rgba(10,10,10,0.08)] pt-3 dark:border-white/10">

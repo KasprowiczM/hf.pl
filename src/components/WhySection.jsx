@@ -31,7 +31,7 @@ export function WhySection() {
 
   return (
     <motion.section
-      className="section-shell hairline-top bg-[#f6f1e8] dark:bg-[#0a0a0a]"
+      className="section-shell hairline-top bg-[#f6f1e8] dark:bg-[#07080a]"
       id="why"
       style={{ borderTopWidth: '1.5px', borderTopColor: 'var(--color-ink, #0a0a0a)' }}
       initial={shouldReduceMotion ? false : 'hidden'}
@@ -45,12 +45,12 @@ export function WhySection() {
           <motion.div variants={shouldReduceMotion ? undefined : item} className="swiss-content max-w-[46rem]">
             <div className="eyebrow">{t('why_overline')}</div>
             <h2
-              className="mt-3 font-display leading-[0.85] tracking-[-0.06em] text-[#0a0a0a] dark:text-[#fdf8ef]"
+              className="mt-3 font-display leading-[0.85] tracking-[-0.06em] text-[#0a0a0a] dark:text-[#f6f1e8]"
               style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(2.4rem, 1.4rem + 3vw, 4.2rem)' }}
             >
               DŁUGIE GINĄ. <span className="text-[#e30613] dark:text-[#ff1a2b]">KRÓTKIE ZOSTAJĄ.</span>
             </h2>
-            <p className="mt-4 max-w-[36rem] font-mono text-[0.76rem] leading-6 tracking-[0.06em] text-[#4a4642] dark:text-[#fdf8ef]/60">
+            <p className="mt-4 max-w-[36rem] font-mono text-[0.76rem] leading-6 tracking-[0.06em] text-[#4a4642] dark:text-[#f6f1e8]/60">
               {t('why_desc')}
             </p>
             <div className="mt-5 h-[2px] w-20 bg-[#e30613] dark:bg-[#ff1a2b]" aria-hidden="true" />
@@ -79,12 +79,12 @@ export function WhySection() {
               </div>
               <div className="relative min-w-0 flex flex-col sm:flex-row sm:items-baseline sm:gap-4">
                 <h3
-                  className="font-display shrink-0 leading-none tracking-[-0.06em] text-[#0a0a0a] dark:text-[#fdf8ef]"
+                  className="font-display shrink-0 leading-none tracking-[-0.06em] text-[#0a0a0a] dark:text-[#f6f1e8]"
                   style={{ fontFamily: 'Instrument Serif, Georgia, serif', fontSize: '1.85rem', lineHeight: 0.95 }}
                 >
                   {reason.title}
                 </h3>
-                <p className="mt-1 max-w-[36rem] font-body text-[15px] leading-6 text-[#4a4642] dark:text-[#fdf8ef]/65 sm:mt-0">
+                <p className="mt-1 max-w-[36rem] font-body text-[15px] leading-6 text-[#4a4642] dark:text-[#f6f1e8]/65 sm:mt-0">
                   {reason.text}
                 </p>
               </div>
@@ -94,7 +94,7 @@ export function WhySection() {
 
         <motion.div variants={shouldReduceMotion ? undefined : item} className="swiss-grid mt-4">
           <div className="swiss-content flex items-center gap-2 font-mono text-[10px] font-bold uppercase tracking-[0.18em] text-[#8a8683]">
-            <span className="h-px w-6 bg-[#0a0a0a] dark:bg-[#fdf8ef]/50 hidden sm:block" aria-hidden="true" />
+            <span className="h-px w-6 bg-[#0a0a0a] dark:bg-[#f6f1e8]/50 hidden sm:block" aria-hidden="true" />
             <span className="provenance">NASK • 676 • 1996 — {t('provenance_label')}</span>
           </div>
         </motion.div>

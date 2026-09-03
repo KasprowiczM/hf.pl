@@ -68,7 +68,7 @@ export function Valuation() {
   }, [shouldReduceMotion]);
 
   return (
-    <section ref={sectionRef} className="section-shell bg-[#0a0a0a] text-[#f6f1e8] hairline-top overflow-hidden" id="valuation" style={{ borderTop: '1px solid rgba(255,255,255,0.08)' }}>
+    <section ref={sectionRef} className="section-shell bg-[#07080a] text-[#f6f1e8] hairline-top overflow-hidden" id="valuation" style={{ borderTop: '1px solid rgba(255,255,255,0.08)' }}>
       {/* Swiss poster valuation — price 35-40k huge red on paper */}
       <div className="section-frame swiss-grid gap-8 lg:items-start lg:gap-14">
         {/* Left — slogan split — Swiss */}

@@ -52,33 +52,34 @@
 }
 
 .dark {
-  --color-bg: #0a0a0a;
-  --color-paper: #0a0a0a;
-  --color-surface: #141414;
-  --color-surface-2: #1a1a1a;
-  --color-surface-3: #212121;
+  --color-bg: #07080a;
+  --color-paper: #07080a;
+  --color-surface: #111418;
+  --color-surface-2: #171a1e;
+  --color-surface-3: #1e2327;
 
-  --color-ink: #fdf8ef;
-  --color-line: rgba(253, 248, 239, 0.08);
-  --color-line-strong: rgba(253, 248, 239, 0.16);
-  --color-hairline: rgba(253, 248, 239, 0.07);
+  --color-ink: #f6f1e8;
+  --color-line: rgba(246, 241, 232, 0.08);
+  --color-line-strong: rgba(246, 241, 232, 0.14);
+  --color-hairline: rgba(246, 241, 232, 0.08);
 
-  --color-text: #fdf8ef;
-  --color-text-muted: #b8b0a8;
+  --color-text: #f6f1e8;
+  --color-text-muted: #a8a29a;
   --color-text-faint: #8a8683;
 
   --color-accent: #ff1a2b;
-  --color-accent-hover: #ff3d4d;
+  --color-accent-hover: #ff3343;
   --color-accent-soft: rgba(255, 26, 43, 0.12);
+  --color-accent-soft-strong: rgba(255, 26, 43, 0.16);
   --color-seal: #ff1a2b;
   --color-seal-soft: rgba(255, 26, 43, 0.12);
 
   --color-success: #4ade80;
   --color-error: #ff1a2b;
 
-  --shadow-paper: 0 0 0 1px rgba(253, 248, 239, 0.14);
-  --shadow-doc: 0 0 0 1.5px rgba(253, 248, 239, 0.18);
-  --shadow-nav: 0 0 0 1px rgba(253, 248, 239, 0.12);
+  --shadow-paper: 0 0 0 1px rgba(246, 241, 232, 0.12);
+  --shadow-doc: 0 0 0 1.5px rgba(246, 241, 232, 0.16);
+  --shadow-nav: 0 0 0 1px rgba(246, 241, 232, 0.10);
 }
 
 @layer base {
@@ -90,7 +91,8 @@
     font-size: calc(16px * var(--font-scale, 1));
   }
 
-  .dark html { color-scheme: dark; }
+  html.dark { color-scheme: dark; }
+  .dark { color-scheme: dark; }
 
   body, #root { min-height: 100vh; }
 
@@ -119,6 +121,7 @@
   }
 }
 
+.dark body::before { opacity: 0.035; }
 body::before {
   content: "";
   position: fixed; inset: 0;
@@ -157,7 +160,7 @@ body::before {
   .hairline-top { border-top: 1px solid var(--color-hairline); }
   .hairline-bottom { border-bottom: 1px solid var(--color-hairline); }
   .ink-top { border-top: 1.5px solid var(--color-ink); }
-  .dark .ink-top { border-top-color: rgba(253,248,239,0.18); }
+  .dark .ink-top { border-top-color: rgba(246,241,232,0.12); }
 
   .swiss-grid-overlay {
     position: fixed;
@@ -184,7 +187,7 @@ body::before {
     height: 100%;
   }
   .swiss-grid-overlay__col:last-child { border-right: 1px solid rgba(10,10,10,0.03); }
-  .dark .swiss-grid-overlay__col { border-color: rgba(253,248,239,0.03); }
+  .dark .swiss-grid-overlay__col { border-color: rgba(246,241,232,0.04); }
 
   .eyebrow {
     @apply inline-flex items-center gap-2 uppercase;
@@ -264,7 +267,7 @@ body::before {
   .swiss-badge--ink {
     border-color: var(--color-ink); color: var(--color-ink);
   }
-  .dark .swiss-badge--ink { border-color: rgba(253,248,239,0.18); color: var(--color-text); }
+  .dark .swiss-badge--ink { border-color: rgba(246,241,232,0.14); color: var(--color-text); }
 
   .artifact-card {
     background: var(--color-surface);
@@ -280,7 +283,7 @@ body::before {
   .swiss-card--ink {
     border: 1.5px solid var(--color-ink);
   }
-  .dark .swiss-card--ink { border-color: rgba(253,248,239,0.16); }
+  .dark .swiss-card--ink { border-color: rgba(246,241,232,0.12); }
 
   .swiss-number-bg {
     position: absolute;
@@ -293,7 +296,7 @@ body::before {
     user-select: none;
     font-weight: 400;
   }
-  .dark .swiss-number-bg { color: rgba(253,248,239,0.045); }
+  .dark .swiss-number-bg { color: rgba(246,241,232,0.05); }
 
   .action-pill {
     @apply inline-flex items-center justify-center gap-2 px-5 py-3 font-semibold tracking-[-0.01em];
@@ -308,8 +311,8 @@ body::before {
     border-color: var(--color-ink);
   }
   .action-primary:hover { background: transparent; color: var(--color-ink); }
-  .dark .action-primary { background: var(--color-paper); color: var(--color-ink); border-color: var(--color-paper); }
-  .dark .action-primary:hover { background: transparent; color: var(--color-paper); }
+  .dark .action-primary { background: var(--color-ink); color: var(--color-paper); border-color: var(--color-ink); }
+  .dark .action-primary:hover { background: transparent; color: var(--color-ink); border-color: var(--color-ink); }
 
   .action-accent {
     border: 1.5px solid var(--color-accent);
@@ -324,8 +327,8 @@ body::before {
     color: var(--color-ink);
   }
   .action-ghost:hover { background: var(--color-ink); color: var(--color-paper); }
-  .dark .action-ghost { border-color: rgba(253,248,239,0.18); color: var(--color-paper); }
-  .dark .action-ghost:hover { background: var(--color-paper); color: var(--color-ink); }
+  .dark .action-ghost { border-color: rgba(246,241,232,0.16); color: var(--color-ink); }
+  .dark .action-ghost:hover { background: var(--color-ink); color: var(--color-paper); }
 
   .interactive-card { transition: transform 220ms cubic-bezier(0.25,1,0.5,1), border-color 180ms ease, box-shadow 180ms ease; }
   .interactive-card:hover { transform: translateY(-2px); border-color: var(--color-line-strong); }
@@ -339,10 +342,10 @@ body::before {
     text-align: left; font-family: var(--font-mono); font-weight: 700; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-text-faint);
     padding: 10px 14px; border-bottom: 1.5px solid var(--color-ink);
   }
-  .dark .editorial-table th, .dark .protocol-table th { border-bottom-color: rgba(253,248,239,0.22); }
+  .dark .editorial-table th, .dark .protocol-table th { border-bottom-color: rgba(246,241,232,0.16); }
   .editorial-table td, .protocol-table td { padding: 14px; border-bottom: 1px solid var(--color-hairline); vertical-align: top; }
   .editorial-table tr:last-child td, .protocol-table tr:last-child td { border-bottom: 1.5px solid var(--color-ink); }
-  .dark .editorial-table tr:last-child td, .dark .protocol-table tr:last-child td { border-bottom-color: rgba(253,248,239,0.22); }
+  .dark .editorial-table tr:last-child td, .dark .protocol-table tr:last-child td { border-bottom-color: rgba(246,241,232,0.16); }
 
   .provenance-stamp {
     font-family: var(--font-mono); font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase;
@@ -353,7 +356,7 @@ body::before {
     font-family: var(--font-mono); font-size: 10px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase;
     color: var(--color-ink); border: 1px solid var(--color-ink); padding: 5px 9px; border-radius: 2px; background: var(--color-paper); line-height: 1;
   }
-  .dark .stamp { color: var(--color-paper); border-color: rgba(253,248,239,0.22); background: transparent; }
+  .dark .stamp { color: var(--color-ink); border-color: rgba(246,241,232,0.16); background: transparent; }
   .stamp--seal { color: var(--color-accent); border-color: var(--color-accent); }
   .dark .stamp--seal { color: var(--color-accent); border-color: var(--color-accent); }
 
@@ -367,9 +370,9 @@ body::before {
 
   .protocol-line { height: 1px; background: var(--color-line-strong); border: 0; }
   .protocol-line--ink { height: 1.5px; background: var(--color-ink); }
-  .dark .protocol-line--ink { background: rgba(253,248,239,0.88); }
+  .dark .protocol-line--ink { background: rgba(246,241,232,0.88); }
   .ink-rule { height: 2px; background: var(--color-ink); border: 0; }
-  .dark .ink-rule { background: var(--color-paper); }
+  .dark .ink-rule { background: rgba(246,241,232,0.92); }
 
   .poster-price {
     font-family: var(--font-display);
@@ -387,10 +390,10 @@ body::before {
   .accent-line { height: 1px; background: var(--color-accent); }
   .hairline-rule { height: 1px; background: var(--color-hairline); }
   .hero-rule { height: 1.5px; background: var(--color-ink); transform-origin: left; animation: drawRule 520ms 200ms ease-out both; }
-  .dark .hero-rule { background: var(--color-paper); }
+  .dark .hero-rule { background: rgba(246,241,232,0.92); }
   .mono-brutal { font-family: var(--font-mono); font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; }
   .paper-surface { background: var(--color-surface); border: 1.5px solid var(--color-ink); border-radius: var(--radius-sm); }
-  .dark .paper-surface { border-color: rgba(253,248,239,0.14); }
+  .dark .paper-surface { border-color: rgba(246,241,232,0.10); }
 }
 
 @keyframes drawRule { from { transform: scaleX(0); } to { transform: scaleX(1); } }

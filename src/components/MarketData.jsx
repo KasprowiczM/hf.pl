@@ -73,7 +73,7 @@ export function MarketData() {
   return (
     <motion.section
       ref={sectionRef}
-      className="section-shell hairline-top bg-[#f6f1e8] dark:bg-[#0a0a0a]"
+      className="section-shell hairline-top bg-[#f6f1e8] dark:bg-[#07080a]"
       id="market"
       style={{ borderTopWidth: '1.5px', borderTopColor: 'var(--color-ink, #0a0a0a)' }}
       initial={shouldReduceMotion ? false : 'hidden'}
@@ -85,12 +85,12 @@ export function MarketData() {
         <motion.div variants={shouldReduceMotion ? undefined : item} className="swiss-content border-b border-[#0a0a0a] pb-6 dark:border-white/15">
           <div className="eyebrow">{t('market_overline')}</div>
           <h2
-            className="mt-3 font-display leading-[0.85] tracking-[-0.06em] text-[#0a0a0a] dark:text-[#fdf8ef]"
+            className="mt-3 font-display leading-[0.85] tracking-[-0.06em] text-[#0a0a0a] dark:text-[#f6f1e8]"
             style={{ fontFamily: 'Instrument Serif, Georgia, serif', fontSize: 'clamp(2.8rem, 1.6rem + 4vw, 4rem)' }}
           >
             KOSZT ZNIKA. <span className="text-[#e30613] dark:text-[#ff1a2b]">AKTYWO ZOSTAJE.</span>
           </h2>
-          <p className="mt-3 max-w-[42rem] font-mono text-[0.76rem] leading-6 tracking-[0.06em] text-[#4a4642] dark:text-[#fdf8ef]/60">
+          <p className="mt-3 max-w-[42rem] font-mono text-[0.76rem] leading-6 tracking-[0.06em] text-[#4a4642] dark:text-[#f6f1e8]/60">
             {t('market_desc')}
           </p>
           <div className="mt-4 h-[2px] w-20 bg-[#e30613] dark:bg-[#ff1a2b]" aria-hidden="true" />
@@ -106,8 +106,8 @@ export function MarketData() {
                 className="evidence-row relative overflow-hidden px-2 py-4"
                 style={{ borderTop: '1px solid var(--color-hairline)' }}
               >
-                <h3 className="text-[15px] font-bold tracking-[-0.01em] text-[#0a0a0a] dark:text-[#fdf8ef]">{t(signal.titleKey)}</h3>
-                <p className="mt-1 font-body text-[15px] leading-6 text-[#4a4642] dark:text-[#fdf8ef]/65">
+                <h3 className="text-[15px] font-bold tracking-[-0.01em] text-[#0a0a0a] dark:text-[#f6f1e8]">{t(signal.titleKey)}</h3>
+                <p className="mt-1 font-body text-[15px] leading-6 text-[#4a4642] dark:text-[#f6f1e8]/65">
                   {t(signal.bodyKey)}
                 </p>
                 <span className="absolute right-2 top-2 h-1 w-1 rounded-full bg-[#e30613] opacity-60 dark:bg-[#ff1a2b]" aria-hidden="true" />
@@ -119,7 +119,7 @@ export function MarketData() {
         <motion.div variants={container} className="col-span-12 grid gap-6 lg:col-span-7">
           <motion.section
             variants={shouldReduceMotion ? undefined : item}
-            className="overflow-hidden bg-[#fdf8ef] dark:bg-[#141414]"
+            className="overflow-hidden bg-[#fdf8ef] dark:bg-[#111418]"
             style={{ border: '1.5px solid var(--color-ink, #0a0a0a)', borderRadius: '4px' }}
           >
             <div
@@ -128,7 +128,7 @@ export function MarketData() {
             >
               <div>
                 <p className="mono text-[#e30613] dark:text-[#ff1a2b]">{t('benchmark_overline')}</p>
-                <h3 className="display-title mt-1 text-[1.5rem] leading-tight text-[#0a0a0a] dark:text-[#fdf8ef]">{t('benchmark_title')}</h3>
+                <h3 className="display-title mt-1 text-[1.5rem] leading-tight text-[#0a0a0a] dark:text-[#f6f1e8]">{t('benchmark_title')}</h3>
               </div>
               <div className="swiss-badge">PL-676</div>
             </div>
@@ -145,7 +145,7 @@ export function MarketData() {
                   }}
                 >
                   <p className="mono">{t(benchmark.key)}</p>
-                  <p className="mt-2 font-display text-[1.6rem] leading-none tracking-[-0.06em] text-[#0a0a0a] dark:text-[#fdf8ef] sm:text-[1.8rem]" style={{ fontFamily: 'Instrument Serif, Georgia, serif' }}>{t(benchmark.valueKey)}</p>
+                  <p className="mt-2 font-display text-[1.6rem] leading-none tracking-[-0.06em] text-[#0a0a0a] dark:text-[#f6f1e8] sm:text-[1.8rem]" style={{ fontFamily: 'Instrument Serif, Georgia, serif' }}>{t(benchmark.valueKey)}</p>
                 </div>
               ))}
             </div>
@@ -154,7 +154,7 @@ export function MarketData() {
           <motion.section
             ref={tableRef}
             variants={shouldReduceMotion ? undefined : item}
-            className="overflow-hidden bg-[#fdf8ef] dark:bg-[#141414]"
+            className="overflow-hidden bg-[#fdf8ef] dark:bg-[#111418]"
             style={{ border: '1.5px solid var(--color-ink, #0a0a0a)', borderRadius: '4px' }}
           >
             <div className="px-5 py-4 sm:px-6" style={{ borderBottom: '1.5px solid var(--color-ink)', background: '#0a0a0a' }}>
@@ -177,10 +177,10 @@ export function MarketData() {
                 </thead>
                 <tbody>
                   <tr className="market-compare-row will-change-transform">
-                    <td className="px-3 py-3.5 text-sm text-[#4a4642] dark:text-[#fdf8ef]/70" style={{ borderBottom: '1px solid var(--color-hairline)' }}>
+                    <td className="px-3 py-3.5 text-sm text-[#4a4642] dark:text-[#f6f1e8]/70" style={{ borderBottom: '1px solid var(--color-hairline)' }}>
                       {t('comparison_row1_asset')}
                     </td>
-                    <td className="font-semibold px-3 py-3.5 text-[#0a0a0a] dark:text-[#fdf8ef]" style={{ borderBottom: '1px solid var(--color-hairline)' }}>
+                    <td className="font-semibold px-3 py-3.5 text-[#0a0a0a] dark:text-[#f6f1e8]" style={{ borderBottom: '1px solid var(--color-hairline)' }}>
                       {t('comparison_row1_price')}
                     </td>
                     <td className="px-3 py-3.5 text-sm text-[#8a8683]" style={{ borderBottom: '1px solid var(--color-hairline)' }}>
@@ -188,10 +188,10 @@ export function MarketData() {
                     </td>
                   </tr>
                   <tr className="market-compare-row will-change-transform">
-                    <td className="px-3 py-3.5 text-sm text-[#4a4642] dark:text-[#fdf8ef]/70" style={{ borderBottom: '1px solid var(--color-hairline)' }}>
+                    <td className="px-3 py-3.5 text-sm text-[#4a4642] dark:text-[#f6f1e8]/70" style={{ borderBottom: '1px solid var(--color-hairline)' }}>
                       {t('comparison_row2_asset')}
                     </td>
-                    <td className="font-semibold px-3 py-3.5 text-[#0a0a0a] dark:text-[#fdf8ef]" style={{ borderBottom: '1px solid var(--color-hairline)' }}>
+                    <td className="font-semibold px-3 py-3.5 text-[#0a0a0a] dark:text-[#f6f1e8]" style={{ borderBottom: '1px solid var(--color-hairline)' }}>
                       {t('comparison_row2_price')}
                     </td>
                     <td className="px-3 py-3.5 text-sm text-[#8a8683]" style={{ borderBottom: '1px solid var(--color-hairline)' }}>
@@ -199,7 +199,7 @@ export function MarketData() {
                     </td>
                   </tr>
                   <tr className="market-compare-row will-change-transform" style={{ background: 'rgba(227,6,19,0.06)' }}>
-                    <td className="font-bold px-3 py-3.5 text-sm text-[#0a0a0a] dark:text-[#fdf8ef]" style={{ borderBottom: '1.5px solid var(--color-ink)' }}>
+                    <td className="font-bold px-3 py-3.5 text-sm text-[#0a0a0a] dark:text-[#f6f1e8]" style={{ borderBottom: '1.5px solid var(--color-ink)' }}>
                       {t('comparison_row3_asset')}{' '}
                       <span
                         className="ml-2 inline-flex items-center mono !text-white px-1.5 py-0.5"
@@ -211,7 +211,7 @@ export function MarketData() {
                     <td className="font-bold px-3 py-3.5" style={{ color: '#e30613', borderBottom: '1.5px solid var(--color-ink)' }}>
                       {t('comparison_row3_price')}
                     </td>
-                    <td className="font-medium px-3 py-3.5 text-sm text-[#0a0a0a] dark:text-[#fdf8ef]" style={{ borderBottom: '1.5px solid var(--color-ink)' }}>
+                    <td className="font-medium px-3 py-3.5 text-sm text-[#0a0a0a] dark:text-[#f6f1e8]" style={{ borderBottom: '1.5px solid var(--color-ink)' }}>
                       {t('comparison_row3_duration')}
                     </td>
                   </tr>

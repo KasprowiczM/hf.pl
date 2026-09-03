@@ -120,15 +120,15 @@ export function Scarcity() {
   ];
 
   return (
-    <section ref={sectionRef} className="section-shell bg-[#f6f1e8] hairline-top dark:bg-[#0a0a0a]" id="scarcity" style={{ borderTop: '1px solid rgba(10,10,10,0.08)', minHeight: '110vh' }}>
+    <section ref={sectionRef} className="section-shell bg-[#f6f1e8] hairline-top dark:bg-[#07080a]" id="scarcity" style={{ borderTop: '1px solid rgba(10,10,10,0.08)', minHeight: '110vh' }}>
       {/* Swiss header — pin not whole section, just WORD inside */}
       <div className="section-frame">
         <div className="swiss-grid border-b border-[#0a0a0a] pb-5 dark:border-white/15">
           <div className="col-span-12 flex flex-wrap items-center gap-3">
             <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-[#e30613] dark:text-[#ff1a2b]">{t('scarcity_overline')}</span>
-            <span className="h-px w-6 bg-[#0a0a0a] dark:bg-[#fdf8ef]/40 hidden sm:block" aria-hidden="true" />
+            <span className="h-px w-6 bg-[#0a0a0a] dark:bg-[#f6f1e8]/40 hidden sm:block" aria-hidden="true" />
             <h2
-              className="font-display leading-[0.85] tracking-[-0.06em] text-[#0a0a0a] dark:text-[#fdf8ef]"
+              className="font-display leading-[0.85] tracking-[-0.06em] text-[#0a0a0a] dark:text-[#f6f1e8]"
               style={{ fontFamily: 'Instrument Serif, Georgia, serif', fontSize: 'clamp(2.2rem, 1.4rem + 2.8vw, 3.8rem)' }}
             >
               676 ISTNIEJE. <span className="text-[#e30613] dark:text-[#ff1a2b] underline decoration-[#e30613] decoration-2 underline-offset-4 dark:decoration-[#ff1a2b]">0 POWSTANIE.</span>
@@ -148,10 +148,10 @@ export function Scarcity() {
             transition={{ duration: 0.5, ease: 'easeOut' }}
             className="will-change-transform"
           >
-            <div className="artifact-card relative overflow-hidden border border-[rgba(10,10,10,0.08)] bg-[#fdf8ef] p-0 dark:border-white/10 dark:bg-[#141414]" style={{ borderRadius: '4px' }}>
+            <div className="artifact-card relative overflow-hidden border border-[rgba(10,10,10,0.08)] bg-[#fdf8ef] p-0 dark:border-white/10 dark:bg-[#111418]" style={{ borderRadius: '4px' }}>
               <div className="flex items-center justify-between border-b border-[rgba(10,10,10,0.08)] px-5 py-3 dark:border-white/10">
                 <span className="font-mono text-[10px] uppercase tracking-[0.16em] text-[#8a8683]">NASK • 676 • 1996</span>
-                <span className="border border-[#0a0a0a] px-2 py-1 font-mono text-[10px] uppercase tracking-[0.14em] text-[#0a0a0a] dark:border-white/20 dark:text-[#fdf8ef]" style={{ borderRadius: '4px' }}>ARCHIVAL</span>
+                <span className="border border-[#0a0a0a] px-2 py-1 font-mono text-[10px] uppercase tracking-[0.14em] text-[#0a0a0a] dark:border-white/20 dark:text-[#f6f1e8]" style={{ borderRadius: '4px' }}>ARCHIVAL</span>
               </div>
 
               <div className="relative px-6 py-8 sm:px-8 sm:py-10">
@@ -164,7 +164,7 @@ export function Scarcity() {
 
                 <div
                   ref={sealRef}
-                  className="pointer-events-none absolute right-4 top-12 hidden sm:flex h-[94px] w-[94px] items-center justify-center rounded-full border-[1.4px] border-[#e30613] bg-[#fdf8ef]/60 backdrop-blur-[1px] dark:bg-[#0a0a0a]/40 dark:border-[#ff1a2b] sm:right-6 will-change-transform"
+                  className="pointer-events-none absolute right-4 top-12 hidden sm:flex h-[94px] w-[94px] items-center justify-center rounded-full border-[1.4px] border-[#e30613] bg-[#fdf8ef]/60 backdrop-blur-[1px] dark:bg-[#07080a]/40 dark:border-[#ff1a2b] sm:right-6 will-change-transform"
                 >
                   <div className="absolute inset-[4px] rounded-full border border-[#e30613]/45 dark:border-[#ff1a2b]/45"></div>
                   <span className="font-mono text-[0.52rem] font-bold uppercase tracking-[0.08em] text-[#e30613] dark:text-[#ff1a2b]">676</span>
@@ -186,31 +186,31 @@ export function Scarcity() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.5 }}
-                    className="mt-2 origin-left will-change-transform font-display leading-[0.85] tracking-[-0.06em] text-[#0a0a0a] dark:text-[#fdf8ef]"
+                    className="mt-2 origin-left will-change-transform font-display leading-[0.85] tracking-[-0.06em] text-[#0a0a0a] dark:text-[#f6f1e8]"
                     style={{ fontFamily: 'Instrument Serif, Georgia, serif', fontSize: 'clamp(5rem,4rem+8vw,9rem)' }}
                     aria-label="676"
                   >
                     {count}
                   </motion.p>
                   <div className="mt-4 h-[2px] w-16 bg-[#e30613] dark:bg-[#ff1a2b]" aria-hidden="true" />
-                  <p className="mt-4 max-w-[22rem] font-mono text-[0.74rem] leading-6 tracking-[0.04em] text-[#4a4642] dark:text-[#fdf8ef]/65">
+                  <p className="mt-4 max-w-[22rem] font-mono text-[0.74rem] leading-6 tracking-[0.04em] text-[#4a4642] dark:text-[#f6f1e8]/65">
                     {t('scarcity_avail')}
                   </p>
                 </div>
 
                 <div className="mt-6 flex items-center gap-2">
-                  <span className="h-px w-6 bg-[#0a0a0a] dark:bg-[#fdf8ef] hidden sm:block" aria-hidden="true" />
+                  <span className="h-px w-6 bg-[#0a0a0a] dark:bg-[#f6f1e8] hidden sm:block" aria-hidden="true" />
                   <span className="font-mono text-[10px] uppercase tracking-[0.12em] text-[#8a8683]">PL-676 — {t('provenance_label')}</span>
                 </div>
 
                 <div className="mt-7 grid grid-cols-3 border border-[rgba(10,10,10,0.08)] text-center text-[0.60rem] dark:border-white/10" style={{ borderRadius: '4px', overflow: 'hidden' }}>
                   <div className="border-r border-[rgba(10,10,10,0.08)] px-2 py-2 dark:border-white/10">
                     <div className="font-mono uppercase tracking-[0.12em] text-[#8a8683]">Nr</div>
-                    <div className="font-mono font-bold text-[#0a0a0a] dark:text-[#fdf8ef]">676/1996</div>
+                    <div className="font-mono font-bold text-[#0a0a0a] dark:text-[#f6f1e8]">676/1996</div>
                   </div>
                   <div className="border-r border-[rgba(10,10,10,0.08)] px-2 py-2 dark:border-white/10">
                     <div className="font-mono uppercase tracking-[0.12em] text-[#8a8683]">Rejestr</div>
-                    <div className="font-mono font-bold text-[#0a0a0a] dark:text-[#fdf8ef]">NASK</div>
+                    <div className="font-mono font-bold text-[#0a0a0a] dark:text-[#f6f1e8]">NASK</div>
                   </div>
                   <div className="px-2 py-2">
                     <div className="font-mono uppercase tracking-[0.12em] text-[#8a8683]">Karta</div>
@@ -236,7 +236,7 @@ export function Scarcity() {
           </motion.div>
           <motion.h3
             variants={{ hidden: { opacity: 0, y: 8 }, visible: { opacity: 1, y: 0, transition: { duration: 0.5 } } }}
-            className="mt-2 font-mono text-[0.72rem] uppercase tracking-[0.12em] text-[#4a4642] dark:text-[#fdf8ef]/50"
+            className="mt-2 font-mono text-[0.72rem] uppercase tracking-[0.12em] text-[#4a4642] dark:text-[#f6f1e8]/50"
           >
             Limit wpisany w matematykę. Nie w marketing.
           </motion.h3>
@@ -249,7 +249,7 @@ export function Scarcity() {
                 className="evidence-row grid gap-2 border-b border-[rgba(10,10,10,0.06)] px-2 py-5 last:border-b-0 dark:border-white/10 sm:grid-cols-[172px_1fr] sm:items-center"
               >
                 <span className="font-mono text-[10px] font-bold uppercase tracking-[0.12em] text-[#e30613] dark:text-[#ff1a2b]">{point.title}</span>
-                <span className="font-body text-[15px] leading-6 text-[#4a4642] dark:text-[#fdf8ef]/65">
+                <span className="font-body text-[15px] leading-6 text-[#4a4642] dark:text-[#f6f1e8]/65">
                   {t(point.key)}
                 </span>
               </motion.article>

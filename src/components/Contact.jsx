@@ -71,7 +71,7 @@ export function Contact() {
   return (
     <motion.section
       ref={sectionRef}
-      className="section-shell hairline-top bg-[#f6f1e8] dark:bg-[#0a0a0a]"
+      className="section-shell hairline-top bg-[#f6f1e8] dark:bg-[#07080a]"
       id="contact"
       style={{ borderTopWidth: '1.5px', borderTopColor: 'var(--color-ink, #0a0a0a)' }}
       initial={shouldReduceMotion ? false : 'hidden'}
@@ -85,16 +85,16 @@ export function Contact() {
           <div className="eyebrow">{t('contact_overline')}</div>
           <h2
             ref={sloganRef}
-            className="mt-3 font-display leading-[0.85] tracking-[-0.06em] text-[#0a0a0a] dark:text-[#fdf8ef] will-change-transform"
+            className="mt-3 font-display leading-[0.85] tracking-[-0.06em] text-[#0a0a0a] dark:text-[#f6f1e8] will-change-transform"
             style={{ fontFamily: 'Instrument Serif, Georgia, serif', fontSize: 'clamp(2.8rem, 1.6rem + 4vw, 5rem)' }}
           >
             ZANIM <span className="text-[#e30613] dark:text-[#ff1a2b]">KONKURENT.</span>
           </h2>
           <div className="mt-4 h-[2px] w-16 bg-[#e30613] dark:bg-[#ff1a2b]" aria-hidden="true" />
-          <p className="mt-4 max-w-[34rem] font-body text-[15px] leading-6 text-[#4a4642] dark:text-[#fdf8ef]/60">
+          <p className="mt-4 max-w-[34rem] font-body text-[15px] leading-6 text-[#4a4642] dark:text-[#f6f1e8]/60">
             {t('contact_desc')}
           </p>
-          <p className="mt-3 max-w-[34rem] font-body text-[14px] leading-6 text-[#4a4642]/85 dark:text-[#fdf8ef]/50">
+          <p className="mt-3 max-w-[34rem] font-body text-[14px] leading-6 text-[#4a4642]/85 dark:text-[#f6f1e8]/50">
             {t('contact_info')}
           </p>
           <motion.a
@@ -102,7 +102,7 @@ export function Contact() {
             onClick={() => trackEvent('cta_click', { location: 'contact_hero', target: 'mailto' })}
             whileHover={shouldReduceMotion ? undefined : { y: -1 }}
             whileTap={shouldReduceMotion ? undefined : { y: 0 }}
-            className="mt-6 inline-flex items-center gap-2 border border-[#0a0a0a] bg-[#0a0a0a] px-6 py-3 font-mono text-[0.74rem] font-bold uppercase tracking-[0.14em] text-[#f6f1e8] no-underline hover:bg-transparent hover:text-[#0a0a0a] dark:border-[#fdf8ef] dark:bg-[#fdf8ef] dark:text-[#0a0a0a] dark:hover:bg-transparent dark:hover:text-[#fdf8ef]"
+            className="mt-6 inline-flex items-center gap-2 border border-[#0a0a0a] bg-[#0a0a0a] px-6 py-3 font-mono text-[0.74rem] font-bold uppercase tracking-[0.14em] text-[#f6f1e8] no-underline hover:bg-transparent hover:text-[#0a0a0a] dark:border-[#f6f1e8] dark:bg-[#f6f1e8] dark:text-[#07080a] dark:hover:bg-transparent dark:hover:text-[#f6f1e8]"
             style={{ borderRadius: '4px' }}
           >
             NAPISZ TERAZ — domain@hf.pl
@@ -117,7 +117,7 @@ export function Contact() {
         {/* Right — Swiss protocol-card: square, hairline rows, radius 4 */}
         <motion.div
           variants={shouldReduceMotion ? undefined : item}
-          className="col-span-12 lg:col-span-7 overflow-hidden bg-[#fdf8ef] dark:bg-[#141414] p-6 sm:p-7 lg:p-8 will-change-transform"
+          className="col-span-12 lg:col-span-7 overflow-hidden bg-[#fdf8ef] dark:bg-[#111418] p-6 sm:p-7 lg:p-8 will-change-transform"
           style={{ border: '1.5px solid var(--color-ink, #0a0a0a)', borderRadius: '4px' }}
         >
           <div className="flex flex-col gap-3 sm:flex-row">
@@ -157,7 +157,7 @@ export function Contact() {
                 <span className="mono shrink-0 pt-0.5 tabular-nums" aria-hidden="true" style={{ color: '#e30613', fontSize: '10px' }}>
                   0{index + 1}
                 </span>
-                <span className="text-[15px] leading-6 text-[#4a4642] dark:text-[#fdf8ef]/70 line-clamp-1">
+                <span className="text-[15px] leading-6 text-[#4a4642] dark:text-[#f6f1e8]/70 line-clamp-1">
                   {t(key)}
                 </span>
               </div>

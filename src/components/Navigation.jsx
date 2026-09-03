@@ -99,7 +99,7 @@ export function Navigation() {
         initial={{ y: -12, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ type: 'spring', stiffness: 340, damping: 28, mass: 0.7 }}
-        className="fixed inset-x-0 top-0 z-50 border-b border-[rgba(10,10,10,0.08)] bg-[#f6f1e8]/92 backdrop-blur-[8px] dark:border-white/10 dark:bg-[#0a0a0a]/88"
+        className="fixed inset-x-0 top-0 z-50 border-b border-[rgba(10,10,10,0.08)] bg-[#f6f1e8]/92 backdrop-blur-[8px] dark:border-[rgba(246,241,232,0.08)] dark:bg-[#07080a]/90"
       >
         <nav
           className="section-frame flex h-[52px] items-center justify-between gap-4 px-4 sm:px-6 lg:px-10"
@@ -108,12 +108,12 @@ export function Navigation() {
           {/* left: Swiss wordmark + red dot + PL-676 badge red outline */}
           <a href="#hero" className="flex items-center gap-3 no-underline shrink-0">
             <span
-              className="flex items-baseline gap-[1px] font-display leading-none tracking-[-0.04em] text-[#0a0a0a] dark:text-[#fdf8ef]"
+              className="flex items-baseline gap-[1px] font-display leading-none tracking-[-0.04em] text-[#0a0a0a] dark:text-[#f6f1e8]"
               style={{ fontFamily: 'Instrument Serif, Georgia, serif', fontSize: '1.55rem' }}
             >
               <span>hf</span>
               <span className="signal-dot relative -top-[0.55em] ml-[1px]" aria-hidden="true" />
-              <span className="text-[#0a0a0a]/35 dark:text-[#fdf8ef]/40 text-[1.5rem] tracking-[-0.03em]">.pl</span>
+              <span className="text-[#0a0a0a]/35 dark:text-[#f6f1e8]/40 text-[1.5rem] tracking-[-0.03em]">.pl</span>
             </span>
             <span className="hidden sm:inline-flex items-center justify-center border border-[#e30613] bg-transparent px-2 py-1 font-mono text-[0.58rem] font-bold tracking-[0.16em] text-[#e30613] dark:border-[#ff1a2b] dark:text-[#ff1a2b]" style={{ borderRadius: '4px' }}>
               PL-676
@@ -128,7 +128,7 @@ export function Navigation() {
                 <a
                   key={key}
                   href={href}
-                  className="font-mono text-[0.66rem] font-semibold tracking-[0.14em] uppercase text-[#0a0a0a]/70 no-underline hover:text-[#e30613] dark:text-[#fdf8ef]/65 dark:hover:text-[#ff1a2b]"
+                  className="font-mono text-[0.66rem] font-semibold tracking-[0.14em] uppercase text-[#0a0a0a]/70 no-underline hover:text-[#e30613] dark:text-[#f6f1e8]/65 dark:hover:text-[#ff1a2b]"
                 >
                   {label}
                 </a>
@@ -140,7 +140,7 @@ export function Navigation() {
           <div className="flex items-center gap-1.5 sm:gap-2">
             {/* language — PL [x] EN [ ] — Swiss ink border 1px */}
             <div
-              className="flex items-center gap-2 border border-[rgba(10,10,10,0.14)] bg-transparent px-2 py-1.5 dark:border-white/18"
+              className="flex items-center gap-2 border border-[rgba(10,10,10,0.14)] bg-transparent px-2 py-1.5 dark:border-[rgba(246,241,232,0.12)]"
               style={{ borderRadius: '4px' }}
               role="group"
               aria-label={t('language_switch')}
@@ -156,8 +156,8 @@ export function Navigation() {
                     aria-label={lang.toUpperCase()}
                     className={`inline-flex items-center font-mono text-[0.66rem] font-bold uppercase tracking-[0.14em] transition-colors ${
                       active
-                        ? 'text-[#0a0a0a] dark:text-[#fdf8ef]'
-                        : 'text-[#8a8683] hover:text-[#0a0a0a] dark:text-white/40 dark:hover:text-[#fdf8ef]'
+                        ? 'text-[#0a0a0a] dark:text-[#f6f1e8]'
+                        : 'text-[#8a8683] hover:text-[#0a0a0a] dark:text-[#f6f1e8]/40 dark:hover:text-[#f6f1e8]'
                     }`}
                   >
                     <span>{lang.toUpperCase()}</span>
@@ -183,7 +183,7 @@ export function Navigation() {
             </div>
 
             <div
-              className="hidden sm:flex items-center gap-0.5 border border-[rgba(10,10,10,0.14)] bg-transparent px-1 py-1 dark:border-white/18"
+              className="hidden sm:flex items-center gap-0.5 border border-[rgba(10,10,10,0.14)] bg-transparent px-1 py-1 dark:border-[rgba(246,241,232,0.12)]"
               style={{ borderRadius: '4px' }}
               role="group"
               aria-label={t('font_size')}
@@ -193,7 +193,7 @@ export function Navigation() {
                 onClick={decreaseFontSize}
                 aria-label={t('font_decrease')}
                 disabled={fontScale <= 0.9}
-                className="px-1.5 py-1 text-[#0a0a0a]/55 hover:text-[#0a0a0a] disabled:opacity-30 dark:text-white/50 dark:hover:text-[#fdf8ef]"
+                className="px-1.5 py-1 text-[#0a0a0a]/55 hover:text-[#0a0a0a] disabled:opacity-30 dark:text-[#f6f1e8]/50 dark:hover:text-[#f6f1e8]"
               >
                 <Type className="h-3 w-3 sm:h-3.5 sm:w-3.5" aria-hidden="true" />
               </button>
@@ -205,14 +205,14 @@ export function Navigation() {
                 onClick={increaseFontSize}
                 aria-label={t('font_increase')}
                 disabled={fontScale >= 1.2}
-                className="px-1.5 py-1 text-[#0a0a0a]/55 hover:text-[#0a0a0a] disabled:opacity-30 dark:text-white/50 dark:hover:text-[#fdf8ef]"
+                className="px-1.5 py-1 text-[#0a0a0a]/55 hover:text-[#0a0a0a] disabled:opacity-30 dark:text-[#f6f1e8]/50 dark:hover:text-[#f6f1e8]"
               >
                 <Type className="h-4 w-4 sm:h-4.5 sm:w-4.5" aria-hidden="true" />
               </button>
             </div>
 
             <div
-              className="flex items-center border border-[rgba(10,10,10,0.14)] bg-transparent p-0.5 dark:border-white/18"
+              className="flex items-center border border-[rgba(10,10,10,0.14)] bg-transparent p-0.5 dark:border-[rgba(246,241,232,0.12)]"
               style={{ borderRadius: '4px' }}
               role="group"
               aria-label={t('theme_switch')}
@@ -220,7 +220,9 @@ export function Navigation() {
               <button
                 type="button"
                 onClick={cycleTheme}
-                className="px-2 py-1.5 text-[#0a0a0a]/60 hover:text-[#0a0a0a] dark:text-white/60 dark:hover:text-[#fdf8ef]"
+                title={`${t(`theme_${theme}`)} → ${t(`theme_${nextTheme}`)}`}
+                aria-label={`${t('theme_switch')}: ${t(`theme_${theme}`)}`}
+                className="px-2 py-1.5 text-[#0a0a0a]/60 hover:text-[#0a0a0a] dark:text-[#f6f1e8]/60 dark:hover:text-[#f6f1e8]"
               >
                 {theme === 'dark' && <Sun className="h-4 w-4" aria-hidden="true" />}
                 {theme === 'light' && <Moon className="h-4 w-4" aria-hidden="true" />}
@@ -237,7 +239,7 @@ export function Navigation() {
               transition={{ type: 'spring', stiffness: 400, damping: 20 }}
               href="#contact"
               onClick={() => trackEvent('cta_click', { location: 'navigation', target: 'contact' })}
-              className="hidden sm:inline-flex items-center gap-1.5 border border-[#0a0a0a] bg-[#0a0a0a] px-4 py-2 font-mono text-[0.68rem] font-bold uppercase tracking-[0.14em] text-[#f6f1e8] no-underline hover:bg-transparent hover:text-[#0a0a0a] dark:border-[#fdf8ef] dark:bg-[#fdf8ef] dark:text-[#0a0a0a] dark:hover:bg-transparent dark:hover:text-[#fdf8ef]"
+              className="hidden sm:inline-flex items-center gap-1.5 border border-[#0a0a0a] bg-[#0a0a0a] px-4 py-2 font-mono text-[0.68rem] font-bold uppercase tracking-[0.14em] text-[#f6f1e8] no-underline hover:bg-transparent hover:text-[#0a0a0a] dark:border-[#f6f1e8] dark:bg-[#f6f1e8] dark:text-[#07080a] dark:hover:bg-transparent dark:hover:text-[#f6f1e8]"
               style={{ borderRadius: '4px' }}
             >
               {t('nav_offer')}
