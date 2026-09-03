@@ -19,6 +19,18 @@ class ResizeObserver {
 }
 window.ResizeObserver = ResizeObserver
 
+class IntersectionObserver {
+  // eslint-disable-next-line no-unused-vars
+  constructor(_callback, _options) {}
+  observe() {}
+  unobserve() {}
+  disconnect() {}
+  takeRecords() { return []; }
+}
+window.IntersectionObserver = IntersectionObserver
+globalThis.IntersectionObserver = IntersectionObserver
+if (typeof global !== 'undefined') global.IntersectionObserver = IntersectionObserver
+
 Object.defineProperty(window, 'matchMedia', {
   writable: true,
   value: (query) => ({
