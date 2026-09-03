@@ -44,7 +44,6 @@ export function Navigation() {
   };
 
   const cycleTheme = () => applyTheme(THEME_CYCLE[theme]);
-
   const nextTheme = THEME_CYCLE[theme];
 
   const increaseFontSize = () =>
@@ -63,41 +62,41 @@ export function Navigation() {
 
   return (
     <>
-      <a href="#main" className="sr-only absolute left-0 top-0 z-[999] bg-primary px-4 py-3 text-black focus:not-sr-only">
+      <a href="#main" className="sr-only absolute left-0 top-0 z-[999] bg-ink px-4 py-3 text-paper focus:not-sr-only">
         {t('skip')}
       </a>
-      <header className="fixed inset-x-0 top-0 z-50 px-2 pt-2 sm:px-6 sm:pt-4 lg:px-8">
+      <header className="fixed inset-x-0 top-0 z-50 px-2 pt-2 sm:px-4 sm:pt-3 lg:px-8">
         <nav
-          className="section-frame flex items-center justify-between rounded-full border border-white/18 bg-[rgba(8,10,14,0.86)] px-3 py-2.5 shadow-[0_24px_60px_rgba(4,8,14,0.42)] backdrop-blur-xl sm:px-5 sm:py-3"
+          className="section-frame flex items-center justify-between rounded-full border border-line bg-paper/90 px-3 py-2 shadow-nav backdrop-blur-xl sm:px-4 sm:py-2.5 dark:bg-ink/90"
           aria-label="Main navigation"
         >
           <a href="#hero" className="flex items-center gap-3 no-underline">
-            <span className="display-title text-[1.45rem] leading-none tracking-tight text-white sm:text-[1.65rem]">
-              <span className="gold-gradient bg-clip-text text-transparent">hf</span>
-              <span className="text-white/45">.pl</span>
+            <span className="display-title text-[1.45rem] leading-none tracking-tight sm:text-[1.55rem]">
+              <span className="text-ink dark:text-paper">hf</span>
+              <span className="text-text-faint">.pl</span>
             </span>
+            <span className="hidden sm:inline-flex provenance-stamp ml-2">PL-676</span>
           </a>
 
-          <div className="hidden items-center gap-6 lg:flex">
+          <div className="hidden items-center gap-5 lg:flex">
             {navItems.map(({ key, href }) => (
-              <a key={key} href={href} className="text-sm font-medium text-white/72 no-underline hover:text-white">
+              <a key={key} href={href} className="text-[0.82rem] font-medium tracking-[-0.01em] text-text-muted no-underline hover:text-ink dark:hover:text-paper">
                 {t(key)}
               </a>
             ))}
           </div>
 
-          <div className="flex items-center gap-2 sm:gap-3">
-            {/* Language switcher */}
-            <div className="flex rounded-full border border-white/16 bg-white/6 p-0.5 sm:p-1" role="group" aria-label={t('language_switch')}>
+          <div className="flex items-center gap-2 sm:gap-2.5">
+            <div className="flex rounded-full border border-line bg-surface p-0.5 sm:p-1" role="group" aria-label={t('language_switch')}>
               {['pl', 'en'].map((lang) => (
                 <button
                   key={lang}
                   type="button"
                   onClick={() => changeLanguage(lang)}
-                  className={`rounded-full px-2.5 py-1.5 text-[0.68rem] font-semibold uppercase tracking-[0.14em] sm:px-3 sm:text-xs sm:tracking-[0.16em] ${
+                  className={`rounded-full px-2.5 py-1.5 text-[0.68rem] font-semibold uppercase tracking-[0.14em] sm:px-3 sm:text-xs ${
                     i18n.language === lang
-                      ? 'bg-white text-[#0c1017]'
-                      : 'text-white/62 hover:bg-white/12 hover:text-white'
+                      ? 'bg-ink text-paper dark:bg-paper dark:text-ink'
+                      : 'text-text-faint hover:text-ink dark:hover:text-paper'
                   }`}
                   aria-pressed={i18n.language === lang}
                 >
@@ -106,35 +105,33 @@ export function Navigation() {
               ))}
             </div>
 
-            {/* Font size — visible on all screen sizes */}
-            <div className="flex rounded-full border border-white/16 bg-white/6 p-0.5 sm:p-1" role="group" aria-label={t('font_size')}>
+            <div className="hidden sm:flex rounded-full border border-line bg-surface p-0.5 sm:p-1" role="group" aria-label={t('font_size')}>
               <button
                 type="button"
                 onClick={decreaseFontSize}
                 aria-label={t('font_decrease')}
                 disabled={fontScale <= 0.9}
-                className="rounded-full px-2 py-1.5 text-white/62 hover:bg-white/12 hover:text-white disabled:opacity-30 sm:px-2.5"
+                className="rounded-full px-2 py-1.5 text-text-faint hover:text-ink disabled:opacity-30 sm:px-2.5 dark:hover:text-paper"
               >
                 <Type className="h-3 w-3 sm:h-3.5 sm:w-3.5" aria-hidden="true" />
               </button>
-              <span className="px-1 text-[0.65rem] font-semibold tracking-[0.12em] text-white/55 sm:text-[0.7rem]" aria-hidden="true">A</span>
+              <span className="px-1 text-[0.65rem] font-semibold tracking-[0.12em] text-text-faint sm:text-[0.7rem]" aria-hidden="true">A</span>
               <button
                 type="button"
                 onClick={increaseFontSize}
                 aria-label={t('font_increase')}
                 disabled={fontScale >= 1.2}
-                className="rounded-full px-2 py-1.5 text-white/62 hover:bg-white/12 hover:text-white disabled:opacity-30 sm:px-2.5"
+                className="rounded-full px-2 py-1.5 text-text-faint hover:text-ink disabled:opacity-30 sm:px-2.5 dark:hover:text-paper"
               >
                 <Type className="h-4 w-4 sm:h-4.5 sm:w-4.5" aria-hidden="true" />
               </button>
             </div>
 
-            {/* Theme toggle */}
-            <div className="flex rounded-full border border-white/16 bg-white/6 p-0.5 sm:p-1" role="group" aria-label={t('theme_switch')}>
+            <div className="flex rounded-full border border-line bg-surface p-0.5 sm:p-1" role="group" aria-label={t('theme_switch')}>
               <button
                 type="button"
                 onClick={cycleTheme}
-                className="rounded-full px-2.5 py-1.5 text-white/62 hover:bg-white/12 hover:text-white sm:px-3"
+                className="rounded-full px-2.5 py-1.5 text-text-faint hover:text-ink sm:px-3 dark:hover:text-paper"
               >
                 {theme === 'dark' && <Sun className="h-4 w-4" aria-hidden="true" />}
                 {theme === 'light' && <Moon className="h-4 w-4" aria-hidden="true" />}
@@ -145,11 +142,10 @@ export function Navigation() {
               </button>
             </div>
 
-            {/* CTA */}
             <a
               href="#contact"
               onClick={() => trackEvent('cta_click', { location: 'navigation', target: 'contact' })}
-              className="action-pill hidden bg-white text-[#0d1117] no-underline hover:-translate-y-1 hover:shadow-[0_20px_38px_rgba(255,255,255,0.18)] sm:inline-flex"
+              className="action-pill hidden bg-ink text-paper no-underline hover:bg-[#1a1f2a] sm:inline-flex dark:bg-paper dark:text-ink"
             >
               {t('nav_offer')}
               <ArrowUpRight size={15} />

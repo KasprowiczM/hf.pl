@@ -9,7 +9,10 @@ export function SEO() {
   const title = t('seo_title');
   const description = t('seo_desc');
   const keywords = t('seo_keywords');
-  const image = `${baseUrl}/og-card.svg`;
+  const image = `${baseUrl}/og-card.png`;
+  const locale = lang === 'pl' ? 'pl_PL' : 'en_US';
+  const localeAlternate = lang === 'pl' ? 'en_US' : 'pl_PL';
+  const imageAlt = 'hf.pl — premium two-letter .pl domain';
 
   return (
     <Helmet htmlAttributes={{ lang }}>
@@ -27,13 +30,19 @@ export function SEO() {
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
       <meta property="og:image" content={image} />
-      <meta property="og:locale" content={lang === 'pl' ? 'pl_PL' : 'en_US'} />
+      <meta property="og:image:width" content="1200" />
+      <meta property="og:image:height" content="630" />
+      <meta property="og:image:alt" content={imageAlt} />
+      <meta property="og:image:type" content="image/png" />
+      <meta property="og:locale" content={locale} />
+      <meta property="og:locale:alternate" content={localeAlternate} />
       <meta property="og:site_name" content="hf.pl" />
-      <meta property="twitter:card" content="summary_large_image" />
-      <meta property="twitter:url" content={currentUrl} />
-      <meta property="twitter:title" content={title} />
-      <meta property="twitter:description" content={description} />
-      <meta property="twitter:image" content={image} />
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:url" content={currentUrl} />
+      <meta name="twitter:title" content={title} />
+      <meta name="twitter:description" content={description} />
+      <meta name="twitter:image" content={image} />
+      <meta name="twitter:image:alt" content={imageAlt} />
       <script type="application/ld+json">
         {JSON.stringify({
           '@context': 'https://schema.org',
@@ -41,10 +50,14 @@ export function SEO() {
           name: 'hf.pl',
           url: baseUrl,
           description,
-          inLanguage: lang,
+          inLanguage: ['pl-PL', 'en-US'],
           potentialAction: {
             '@type': 'CommunicateAction',
             target: 'mailto:domain@hf.pl',
+          },
+          speakable: {
+            '@type': 'SpeakableSpecification',
+            cssSelector: ['#tldr', '#faq'],
           },
         })}
       </script>
@@ -58,14 +71,36 @@ export function SEO() {
             '@type': 'Brand',
             name: 'hf.pl',
           },
-          offers: {
-            '@type': 'AggregateOffer',
-            url: currentUrl,
-            priceCurrency: lang === 'pl' ? 'PLN' : 'EUR',
-            lowPrice: lang === 'pl' ? '35000' : '8000',
-            highPrice: lang === 'pl' ? '40000' : '9000',
-            availability: 'https://schema.org/InStock',
-          },
+          sku: 'hf.pl',
+          image: `${baseUrl}/og-card.png`,
+          offers: [
+            {
+              '@type': 'Offer',
+              priceCurrency: 'PLN',
+              lowPrice: '35000',
+              highPrice: '40000',
+              availability: 'https://schema.org/InStock',
+              url: currentUrl,
+              priceValidUntil: '2026-12-31',
+              seller: {
+                '@type': 'Organization',
+                name: 'hf.pl',
+              },
+            },
+            {
+              '@type': 'Offer',
+              priceCurrency: 'EUR',
+              lowPrice: '8200',
+              highPrice: '9400',
+              availability: 'https://schema.org/InStock',
+              url: currentUrl,
+              priceValidUntil: '2026-12-31',
+              seller: {
+                '@type': 'Organization',
+                name: 'hf.pl',
+              },
+            },
+          ],
         })}
       </script>
       <script type="application/ld+json">
@@ -74,10 +109,12 @@ export function SEO() {
           '@type': 'Organization',
           name: 'hf.pl',
           url: baseUrl,
+          logo: `${baseUrl}/og-card.png`,
           contactPoint: {
             '@type': 'ContactPoint',
             email: 'domain@hf.pl',
             contactType: 'sales',
+            areaServed: 'PL',
             availableLanguage: ['pl', 'en'],
           },
           sameAs: [baseUrl],
@@ -86,8 +123,28 @@ export function SEO() {
       <script type="application/ld+json">
         {JSON.stringify({
           '@context': 'https://schema.org',
+          '@type': 'BreadcrumbList',
+          itemListElement: [
+            {
+              '@type': 'ListItem',
+              position: 1,
+              name: 'Home',
+              item: `${baseUrl}/`,
+            },
+            {
+              '@type': 'ListItem',
+              position: 2,
+              name: 'hf.pl',
+              item: currentUrl,
+            },
+          ],
+        })}
+      </script>
+      <script type="application/ld+json">
+        {JSON.stringify({
+          '@context': 'https://schema.org',
           '@type': 'FAQPage',
-          mainEntity: [1, 2, 3].map((index) => ({
+          mainEntity: [1, 2, 3, 4, 5, 6, 7].map((index) => ({
             '@type': 'Question',
             name: t(`faq${index}_q`),
             acceptedAnswer: {

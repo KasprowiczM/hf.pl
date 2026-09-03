@@ -13,29 +13,29 @@ export function UseCases() {
   const { t } = useTranslation();
 
   return (
-    <section className="section-shell section-tone-light reveal reveal-up" id="usecases">
-      <div className="section-frame grid gap-7 sm:gap-10 lg:grid-cols-[minmax(0,0.72fr)_minmax(0,1fr)] lg:gap-16">
+    <section className="section-shell hairline-top" id="usecases">
+      <div className="section-frame grid gap-8 lg:grid-cols-[minmax(0,0.7fr)_minmax(0,1fr)] lg:gap-12">
         <div className="max-w-[34rem]">
           <div className="eyebrow">{t('use_overline')}</div>
           <h2 className="section-title text-balance">{t('use_title')}</h2>
           <p className="section-lead mt-5">{t('use_desc')}</p>
+          <div className="mt-6 inline-flex items-center gap-2 border border-line px-3 py-1 rounded-full">
+            <span className="h-1.5 w-1.5 rounded-full bg-accent"></span>
+            <span className="mono">HF → hf.pl • parasol bez rebrandu</span>
+          </div>
         </div>
 
-        <div className="grid gap-3 sm:gap-4 sm:grid-cols-2">
+        <div className="grid gap-0 border-y border-hairline">
           {useCasesList.map((useCase) => (
-            <article
-              key={useCase.i18nKey}
-              className="interactive-card reveal reveal-up rounded-[1.6rem] border border-border bg-surface/92 px-5 py-6"
-            >
-              <p className="text-xs uppercase tracking-[0.18em] text-text-faint">{t('use_case_label')}</p>
-              <h3 className="mt-3 text-lg font-semibold tracking-[-0.02em] text-text">
-                {useCase.domain || t(useCase.i18nDomainKey)}
-              </h3>
-              <p className="mt-1 text-xs uppercase tracking-[0.16em] text-primary">
-                {t('use_case_maps_to')}
-                <span className="ml-2 font-semibold text-text">hf.pl</span>
-              </p>
-              <p className="mt-3 text-sm leading-7 text-text-muted">{t(useCase.i18nKey)}</p>
+            <article key={useCase.i18nKey} className="evidence-row flex gap-4 px-2 py-5">
+              <div className="hidden sm:block mono pt-1 shrink-0 w-28">— HF.PL</div>
+              <div className="min-w-0 flex-1">
+                <h3 className="text-[0.95rem] font-semibold tracking-[-0.01em] text-ink dark:text-paper">
+                  {useCase.domain || t(useCase.i18nDomainKey)} <span className="text-text-faint font-normal">→ hf.pl</span>
+                </h3>
+                <p className="mono mt-1 text-accent">{t('use_case_maps_to')} hf.pl</p>
+                <p className="mt-2 text-sm leading-6 text-text-muted">{t(useCase.i18nKey)}</p>
+              </div>
             </article>
           ))}
         </div>

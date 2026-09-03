@@ -23,32 +23,27 @@ function App() {
   useEffect(() => {
     const elements = Array.from(document.querySelectorAll('.reveal'));
     if (!elements.length) return undefined;
-
+    // Editorial: quiet 12px reveal, show immediately if no IO support
+    if (!('IntersectionObserver' in window)) {
+      elements.forEach((el) => el.classList.add('is-visible'));
+      return undefined;
+    }
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          entry.target.classList.toggle('is-visible', entry.isIntersecting);
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
+          }
         });
       },
-      { threshold: 0.14, rootMargin: '0px 0px -8% 0px' },
+      { threshold: 0.12, rootMargin: '0px 0px -6% 0px' },
     );
-
     elements.forEach((el) => observer.observe(el));
     return () => observer.disconnect();
   }, []);
 
-  useEffect(() => {
-    const onScroll = () => {
-      const max = Math.max(document.body.scrollHeight - window.innerHeight, 1);
-      document.documentElement.style.setProperty(
-        '--scroll-progress',
-        (window.scrollY / max).toFixed(4),
-      );
-    };
-    onScroll();
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
+
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -60,8 +55,8 @@ function App() {
         <UseCases />
         <MarketData />
         <Scarcity />
-        <FAQ />
         <Valuation />
+        <FAQ />
         <Contact />
       </main>
       <Footer />

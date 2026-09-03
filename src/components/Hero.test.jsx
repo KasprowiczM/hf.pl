@@ -20,8 +20,8 @@ describe('Hero', () => {
     }).not.toThrow();
   });
 
-  test('renders antigravity interaction box', () => {
+  test('renders editorial artifact card', () => {
     const { container } = render(<Hero />);
-    expect(container.querySelector('.hf-antigravity-box')).toBeInTheDocument();
+    expect(container.querySelector('.artifact-card')).toBeInTheDocument();
   });
-}); 
+});

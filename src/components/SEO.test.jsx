@@ -16,6 +16,14 @@ vi.mock('react-i18next', () => ({
         faq2_a: 'A2',
         faq3_q: 'Q3',
         faq3_a: 'A3',
+        faq4_q: 'Q4',
+        faq4_a: 'A4',
+        faq5_q: 'Q5',
+        faq5_a: 'A5',
+        faq6_q: 'Q6',
+        faq6_a: 'A6',
+        faq7_q: 'Q7',
+        faq7_a: 'A7',
       };
       return translations[key] || key;
     },
@@ -45,6 +53,6 @@ describe('SEO', () => {
 
     expect(document.querySelector('meta[name="robots"]')?.getAttribute('content')).toContain('index,follow');
     expect(document.querySelector('meta[property="og:site_name"]')?.getAttribute('content')).toBe('hf.pl');
-    expect(document.querySelectorAll('script[type="application/ld+json"]').length).toBe(4);
+    expect(document.querySelectorAll('script[type="application/ld+json"]').length).toBe(5);
   });
 });

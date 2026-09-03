@@ -1,0 +1,4 @@
+# Cloudflare Pages — SPA rewrites with i18n prerender
+# /en/ is prerendered to dist/en/index.html (postbuild). 200 = rewrite, not redirect.
+/en/*  /en/index.html  200
+/*  /index.html  200

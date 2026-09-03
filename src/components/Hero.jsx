@@ -1,278 +1,149 @@
-import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { ArrowDown, Mail } from 'lucide-react';
+import { ArrowRight, ArrowDown } from 'lucide-react';
 import { trackEvent } from '../lib/analytics';
 
-const proofPanelKeys = [
-  ['hero_panel_status_title', 'hero_panel_status_body'],
-  ['hero_panel_flex_title', 'hero_panel_flex_body'],
-  ['hero_panel_transfer_title', 'hero_panel_transfer_body'],
-];
-
-const TOKENS = ['$', '€', '£', '¥', '₿', '₿', '$', '€', '₿', '¥', '£'];
-const COLORS = ['#f3efe7', '#cfb68b', '#f6d8a8', '#93b4ff', '#f7ca82'];
-
 export function Hero() {
-  const { t, i18n } = useTranslation();
-  const boxRef = useRef(null);
-  const canvasRef = useRef(null);
-  const particlesRef = useRef([]);
-  const pointerRef = useRef({ x: 0, y: 0, active: false });
-  const animationRef = useRef(0);
-  const trackedInteractionRef = useRef(false);
-  const metricAnimationRef = useRef(0);
-  const [animatedMetrics, setAnimatedMetrics] = useState({
-    metric1: Number(t('metric_1_value')) || 2,
-    metric2: Number(t('metric_2_value')) || 676,
-  });
-  const metric1Target = Number(t('metric_1_value')) || 2;
-  const metric2Target = Number(t('metric_2_value')) || 676;
+  const { t } = useTranslation();
 
   const proofItems = [
-    { value: String(animatedMetrics.metric1), label: t('metric_1_label') },
-    { value: String(animatedMetrics.metric2), label: t('metric_2_label') },
-    { value: t('metric_3_value'), label: t('metric_3_label') },
+    { value: t('metric_1_value'), label: t('metric_1_label'), sub: t('metric_1_sub') },
+    { value: t('metric_2_value'), label: t('metric_2_label'), sub: t('metric_2_sub') },
+    { value: t('metric_3_value'), label: t('metric_3_label'), sub: t('metric_3_sub') },
   ];
 
-  useEffect(() => {
-    const start = performance.now();
-    const duration = 900;
-    const run = (time) => {
-      const progress = Math.min((time - start) / duration, 1);
-      const eased = 1 - Math.pow(1 - progress, 3);
-      setAnimatedMetrics({
-        metric1: Math.max(0, Math.round(metric1Target * eased)),
-        metric2: Math.max(0, Math.round(metric2Target * eased)),
-      });
-      if (progress < 1) metricAnimationRef.current = window.requestAnimationFrame(run);
-    };
-    if (metricAnimationRef.current) window.cancelAnimationFrame(metricAnimationRef.current);
-    metricAnimationRef.current = window.requestAnimationFrame(run);
-    return () => { if (metricAnimationRef.current) window.cancelAnimationFrame(metricAnimationRef.current); };
-  }, [i18n.language, metric1Target, metric2Target]);
-
-  useEffect(() => {
-    if (!boxRef.current || !canvasRef.current) return undefined;
-
-    const box = boxRef.current;
-    const canvas = canvasRef.current;
-    const context = canvas.getContext('2d');
-    if (!context) return undefined;
-
-    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-    const resize = () => {
-      const width = box.clientWidth;
-      const height = box.clientHeight;
-      const pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
-      canvas.width = Math.floor(width * pixelRatio);
-      canvas.height = Math.floor(height * pixelRatio);
-      canvas.style.width = `${width}px`;
-      canvas.style.height = `${height}px`;
-      context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
-      particlesRef.current = Array.from({ length: 24 }, (_, index) => ({
-        x: Math.random() * width,
-        y: Math.random() * height,
-        vx: (Math.random() - 0.5) * 1.4,
-        vy: (Math.random() - 0.5) * 1.4,
-        size: 16 + Math.random() * 22,
-        rotation: Math.random() * Math.PI * 2,
-        vr: (Math.random() - 0.5) * 0.032,
-        glyph: TOKENS[index % TOKENS.length],
-        color: COLORS[index % COLORS.length],
-      }));
-    };
-
-    const drawShape = (particle) => {
-      context.save();
-      context.translate(particle.x, particle.y);
-      context.rotate(particle.rotation);
-      context.fillStyle = particle.color;
-      context.globalAlpha = 0.92;
-      context.font = `700 ${particle.size}px "Satoshi", "Inter", sans-serif`;
-      context.textAlign = 'center';
-      context.textBaseline = 'middle';
-      context.shadowColor = 'rgba(9, 12, 18, 0.45)';
-      context.shadowBlur = 14;
-      context.fillText(particle.glyph, 0, 0);
-      context.restore();
-    };
-
-    const step = (time) => {
-      const width = box.clientWidth;
-      const height = box.clientHeight;
-      context.clearRect(0, 0, width, height);
-      const gradient = context.createLinearGradient(0, 0, width, height);
-      gradient.addColorStop(0, '#0d1726');
-      gradient.addColorStop(0.5, '#16233a');
-      gradient.addColorStop(1, '#0b111c');
-      context.fillStyle = gradient;
-      context.fillRect(0, 0, width, height);
-
-      particlesRef.current.forEach((particle, index) => {
-        const pointer = pointerRef.current;
-        const dxCenter = width * 0.5 - particle.x;
-        const dyCenter = height * 0.5 - particle.y;
-        particle.vx += dxCenter * 0.00045;
-        particle.vy += dyCenter * 0.00035;
-        particle.vx += Math.sin(time * 0.0009 + index * 0.4) * 0.013;
-        particle.vy += Math.cos(time * 0.0011 + index * 0.3) * 0.009;
-
-        if (pointer.active) {
-          const dx = particle.x - pointer.x;
-          const dy = particle.y - pointer.y;
-          const distance = Math.sqrt(dx * dx + dy * dy) || 1;
-          if (distance < 180) {
-            const force = ((180 - distance) / 180) * 0.95;
-            particle.vx += (dx / distance) * force;
-            particle.vy += (dy / distance) * force;
-          }
-        }
-
-        particle.vx *= 0.987;
-        particle.vy *= 0.987;
-        particle.x += particle.vx;
-        particle.y += particle.vy;
-        particle.rotation += particle.vr;
-
-        const bound = particle.size * 0.52;
-        if (particle.x < bound || particle.x > width - bound) {
-          particle.vx *= -0.84;
-          particle.x = Math.min(Math.max(particle.x, bound), width - bound);
-        }
-        if (particle.y < bound || particle.y > height - bound) {
-          particle.vy *= -0.84;
-          particle.y = Math.min(Math.max(particle.y, bound), height - bound);
-        }
-        drawShape(particle);
-      });
-
-      animationRef.current = window.requestAnimationFrame(step);
-    };
-
-    resize();
-    const resizeObserver = new ResizeObserver(resize);
-    resizeObserver.observe(box);
-
-    const startLoop = () => {
-      if (!reducedMotion && !document.hidden) {
-        animationRef.current = window.requestAnimationFrame(step);
-      }
-    };
-
-    const onVisibilityChange = () => {
-      if (document.hidden) {
-        window.cancelAnimationFrame(animationRef.current);
-      } else {
-        startLoop();
-      }
-    };
-
-    document.addEventListener('visibilitychange', onVisibilityChange);
-    startLoop();
-
-    return () => {
-      window.cancelAnimationFrame(animationRef.current);
-      resizeObserver.disconnect();
-      document.removeEventListener('visibilitychange', onVisibilityChange);
-    };
-  }, []);
-
-  const handlePointerMove = (event) => {
-    if (!boxRef.current) return;
-    const rect = boxRef.current.getBoundingClientRect();
-    pointerRef.current = {
-      x: event.clientX - rect.left,
-      y: event.clientY - rect.top,
-      active: true,
-    };
-    if (!trackedInteractionRef.current) {
-      trackedInteractionRef.current = true;
-      trackEvent('hero_interact', { area: 'antigravity_abstract' });
-    }
-  };
-
   return (
-    <section className="section-shell section-tone-light reveal reveal-up relative overflow-hidden pt-20 sm:pt-30 lg:pt-36" id="hero">
-      <div className="pointer-events-none absolute inset-0" aria-hidden="true">
-        <div className="absolute left-[8%] top-[18%] h-48 w-48 rounded-full bg-primary/12 blur-3xl"></div>
-        <div className="absolute bottom-[14%] right-[12%] h-56 w-56 rounded-full bg-surface-offset/8 blur-3xl"></div>
-      </div>
+    <section className="section-shell relative overflow-hidden pt-24 sm:pt-32 lg:pt-36 hairline-bottom" id="hero">
+      {/* subtle paper grain handled by body::before */}
+      <div className="section-frame">
+        <div className="grid items-start gap-10 lg:grid-cols-[minmax(0,1.05fr)_minmax(380px,0.95fr)] lg:gap-14">
+          {/* Left: editorial copy */}
+          <div className="max-w-[40rem]">
+            <div className="eyebrow reveal is-visible">
+              <span className="h-1 w-1 rounded-full bg-accent" aria-hidden="true"></span>
+              {t('badge')}
+              <span className="ml-2 hidden sm:inline-flex provenance-stamp">{t('hero_provenance')}</span>
+            </div>
 
-      <div className="section-frame grid items-center gap-8 sm:gap-12 lg:grid-cols-[minmax(0,1.04fr)_minmax(420px,0.96fr)] lg:gap-16">
-        <div className="max-w-[40rem]">
-          <div className="eyebrow reveal reveal-left">
-            <span className="h-2 w-2 rounded-full bg-primary"></span>
-            {t('badge')}
+            <h1 className="display-title mt-5 text-[clamp(3.6rem,2.4rem+8vw,8.2rem)] leading-[0.88] tracking-[-0.05em]">
+              <span className="text-ink dark:text-paper">{t('domain_prefix')}</span>
+              <span className="text-text-faint font-light">.pl</span>
+            </h1>
+            <div className="hero-rule mt-4 max-w-[28rem]"></div>
+
+            <p className="mt-6 max-w-[36rem] text-balance text-[1.15rem] leading-7 text-ink dark:text-paper sm:text-[1.35rem] sm:leading-8">
+              {t('hero_subtitle')}
+            </p>
+            <p className="mt-3 max-w-[34rem] font-display italic text-[1.05rem] leading-7 text-text-muted">
+              {t('hero_subtitle_accent')}
+            </p>
+
+            <p className="mt-6 max-w-[34rem] text-sm leading-6 text-text-muted border-l border-line pl-4">
+              {t('hero_note')}
+            </p>
+
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
+              <a
+                href="mailto:domain@hf.pl"
+                onClick={() => trackEvent('cta_click', { location: 'hero', target: 'mailto' })}
+                className="action-pill action-primary shadow-paper"
+              >
+                {t('cta_offer')}
+                <ArrowRight size={16} aria-hidden="true" />
+              </a>
+              <a
+                href="#valuation"
+                onClick={() => trackEvent('cta_click', { location: 'hero', target: 'valuation' })}
+                className="action-pill border border-line bg-surface text-ink hover:bg-paper dark:bg-surface dark:text-paper"
+              >
+                {t('cta_valuation')}
+                <ArrowDown size={15} aria-hidden="true" />
+              </a>
+            </div>
+            <p className="mono mt-3">{t('cta_offer_sub')}</p>
+
+            {/* Proof bar — editorial hairline, not cards */}
+            <div className="mt-10 grid grid-cols-3 gap-0 border-y border-hairline">
+              {proofItems.map((item) => (
+                <div key={item.label} className="px-3 py-5 sm:px-4 text-center sm:text-left border-r border-hairline last:border-r-0">
+                  <div className="stat-value text-[2rem] leading-none sm:text-[2.6rem]">{item.value}</div>
+                  <div className="mono mt-2">{item.label}</div>
+                  <div className="mt-1 text-[0.72rem] leading-4 text-text-faint">{item.sub}</div>
+                </div>
+              ))}
+            </div>
+
+            {/* TL;DR for GEO — speakable */}
+            <div id="tldr" className="mt-8 rounded-xl border border-line bg-surface/60 p-4 sm:p-5">
+              <div className="mono mb-3">{t('tldr_title')}</div>
+              <ul className="space-y-1.5 text-sm leading-6 text-text-muted">
+                <li className="flex gap-2"><span className="text-accent">—</span><span>{t('tldr_b1')}</span></li>
+                <li className="flex gap-2"><span className="text-accent">—</span><span>{t('tldr_b2')}</span></li>
+                <li className="flex gap-2"><span className="text-accent">—</span><span>{t('tldr_b3')}</span></li>
+                <li className="flex gap-2"><span className="text-accent">—</span><span>{t('tldr_b4')}</span></li>
+                <li className="flex gap-2"><span className="text-accent">—</span><span>{t('tldr_b5')}</span></li>
+              </ul>
+            </div>
           </div>
-          <h1 className="display-title reveal reveal-up text-balance text-[clamp(3.2rem,2.15rem+9vw,9.2rem)] leading-[0.86]">
-            <span className="gold-gradient bg-clip-text text-transparent">{t('domain_prefix')}</span>
-            <span className="text-text-faint">.pl</span>
-          </h1>
-          <p className="mt-4 max-w-[36rem] text-balance text-base leading-7 text-text-muted sm:mt-6 sm:text-xl sm:leading-8 reveal reveal-up">
-            {t('hero_subtitle')}
-          </p>
-          <div className="mt-6 flex flex-col items-stretch gap-3 sm:flex-row sm:flex-wrap sm:items-center reveal reveal-up">
-            <a
-              href="mailto:domain@hf.pl"
-              onClick={() => trackEvent('cta_click', { location: 'hero', target: 'mailto' })}
-              className="action-pill hoverable justify-center bg-text text-bg no-underline"
-            >
-              <Mail size={16} aria-hidden="true" />
-              {t('cta_offer')}
-            </a>
-            <a
-              href="#valuation"
-              onClick={() => trackEvent('cta_click', { location: 'hero', target: 'valuation' })}
-              className="action-pill hoverable justify-center border border-border bg-surface/90 text-text no-underline"
-            >
-              {t('cta_valuation')}
-              <ArrowDown size={15} aria-hidden="true" />
-            </a>
-          </div>
-          <p className="mt-4 max-w-[34rem] text-sm leading-6 text-text-muted sm:mt-5 sm:leading-7 reveal reveal-up">{t('hero_note')}</p>
 
-          <dl className="mt-8 grid gap-3 sm:mt-10 sm:gap-4 sm:grid-cols-3">
-            {proofItems.map((item) => (
-              <div key={item.label} className="interactive-card rounded-[1.5rem] border border-border bg-surface/90 p-5">
-                <dt className="text-xs uppercase tracking-[0.18em] text-text-faint">{item.label}</dt>
-                <dd className="stat-value mt-3 text-[clamp(2rem,1.6rem+1.8vw,3rem)] leading-none text-text">{item.value}</dd>
+          {/* Right: archival artifact — document, not toy */}
+          <div className="relative lg:sticky lg:top-28">
+            <div className="artifact-card overflow-hidden rounded-[1.5rem] p-0">
+              {/* header rule */}
+              <div className="flex items-center justify-between border-b border-hairline px-6 py-4">
+                <span className="mono">{t('hero_visual_label')}</span>
+                <span className="provenance-stamp">{t('hero_visual_tag')}</span>
               </div>
-            ))}
-          </dl>
-        </div>
 
-        <div className="relative reveal reveal-right">
-          <div className="hero-shadow premium-gradient-surface parallax-sheen relative overflow-hidden rounded-[2rem] border border-border px-6 py-6 text-white sm:px-8">
-            <div className="backdrop-grain absolute inset-0 opacity-80"></div>
-            <div className="relative z-10">
-              <div className="flex items-center justify-between text-[0.72rem] uppercase tracking-[0.22em] text-white/65">
-                <span>{t('hero_visual_label')}</span>
-                <span>{t('hero_visual_tag')}</span>
-              </div>
-              <div className="relative mt-8 overflow-hidden rounded-[1.7rem] border border-white/10 bg-[radial-gradient(circle_at_top,#1f2a39_0%,#101720_80%)] px-6 py-8 sm:px-8">
-                <div className="absolute inset-x-10 top-6 h-px origin-left bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.8),transparent)] [animation:pulseLine_3.2s_ease-in-out_infinite]"></div>
-                <div
-                  ref={boxRef}
-                  onMouseMove={handlePointerMove}
-                  onMouseLeave={() => { pointerRef.current.active = false; }}
-                  className="hf-antigravity-box relative mx-auto h-[200px] w-full max-w-[420px] cursor-none overflow-hidden rounded-[1.3rem] border border-white/12 sm:h-[260px]"
-                  role="img"
-                  aria-label={t('hero_art_alt')}
-                >
-                  <canvas ref={canvasRef} className="h-full w-full" />
+              {/* paper artifact */}
+              <div className="relative bg-paper dark:bg-ink px-6 py-8 sm:px-8 sm:py-10">
+                {/* hairline cross */}
+                <div className="pointer-events-none absolute left-1/2 top-0 h-full w-px bg-hairline opacity-60"></div>
+                <div className="pointer-events-none absolute left-0 top-1/2 h-px w-full bg-hairline opacity-60"></div>
+
+                <div className="relative text-center">
+                  <div className="display-title text-[5.5rem] leading-none tracking-[-0.06em] sm:text-[7rem]">
+                    <span className="text-ink dark:text-paper">hf</span>
+                    <span className="text-text-faint font-light">.pl</span>
+                  </div>
+                  <div className="mx-auto mt-4 h-px w-20 bg-accent"></div>
+                  <div className="mono mt-3">PL-676 • ARCHIVAL • 1996</div>
+                  <div className="mx-auto mt-6 max-w-[18rem] text-sm leading-6 text-text-muted">
+                    {t('hero_panel_status_body')}
+                  </div>
+                </div>
+
+                {/* provenance grid */}
+                <div className="mt-8 grid grid-cols-3 gap-0 border border-hairline rounded-lg overflow-hidden text-center">
+                  <div className="px-3 py-3 border-r border-hairline">
+                    <div className="mono">REF</div>
+                    <div className="mt-1 text-sm font-semibold">PL-676</div>
+                  </div>
+                  <div className="px-3 py-3 border-r border-hairline">
+                    <div className="mono">REJESTR</div>
+                    <div className="mt-1 text-sm font-semibold">NASK</div>
+                  </div>
+                  <div className="px-3 py-3">
+                    <div className="mono">STATUS</div>
+                    <div className="mt-1 text-sm font-semibold text-success">{t('badge_live')}</div>
+                  </div>
                 </div>
               </div>
-              <div className="mt-6 grid gap-3 sm:grid-cols-3">
-                {proofPanelKeys.map(([titleKey, bodyKey]) => (
-                  <div key={titleKey} className="interactive-card rounded-[1.25rem] border border-white/10 bg-white/6 p-4">
-                    <p className="text-[0.68rem] font-semibold uppercase tracking-[0.2em]">
-                      <span className="gold-gradient bg-clip-text text-transparent">{t(titleKey)}</span>
-                    </p>
-                    <p className="mt-2 text-sm leading-6 text-white/78">{t(bodyKey)}</p>
+
+              {/* footer proof panels — editorial, no hover lift */}
+              <div className="grid gap-0 border-t border-hairline sm:grid-cols-3">
+                {[['hero_panel_status_title','hero_panel_status_body'],['hero_panel_flex_title','hero_panel_flex_body'],['hero_panel_transfer_title','hero_panel_transfer_body']].map(([tk,bk])=> (
+                  <div key={tk} className="border-r border-hairline last:border-r-0 px-4 py-4">
+                    <div className="mono text-accent">{t(tk)}</div>
+                    <div className="mt-2 text-sm leading-6 text-text-muted">{t(bk)}</div>
                   </div>
                 ))}
               </div>
+            </div>
+
+            {/* archival note under artifact */}
+            <div className="mt-4 flex items-center justify-between px-1">
+              <span className="mono">NASK • 1996 • PL-676 — {t('provenance_label')}</span>
+              <span className="hidden sm:inline mono">{t('hero_status_value')}</span>
             </div>
           </div>
         </div>
