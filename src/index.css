@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@custom-variant dark (&:is(.dark *));
 
 /* ==========================================================================
    hf.pl — SIGNAL SWISS (Design C — Million Dollar)
