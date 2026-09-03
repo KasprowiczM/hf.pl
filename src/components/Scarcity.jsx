@@ -9,8 +9,8 @@ export function Scarcity() {
   const { t } = useTranslation();
   const shouldReduceMotion = useReducedMotion();
   const sectionRef = useRef(null);
-  const sloganRef = useRef(null);
-  const metricRef = useRef(null);
+  const pinWrapperRef = useRef(null);
+  const countWrapRef = useRef(null);
   const countRef = useRef(null);
   const sealRef = useRef(null);
   const animationRef = useRef(0);
@@ -18,7 +18,7 @@ export function Scarcity() {
   const [hasAnimated, setHasAnimated] = useState(false);
 
   useEffect(() => {
-    if (!metricRef.current) return undefined;
+    if (!countWrapRef.current) return undefined;
     const animateCount = () => {
       if (hasAnimated) return;
       setHasAnimated(true);
@@ -46,7 +46,7 @@ export function Scarcity() {
       },
       { threshold: 0.35 }
     );
-    observer.observe(metricRef.current);
+    observer.observe(countWrapRef.current);
     return () => {
       observer.disconnect();
       if (animationRef.current) window.cancelAnimationFrame(animationRef.current);
@@ -62,22 +62,23 @@ export function Scarcity() {
     try {
       gsap.registerPlugin(ScrollTrigger);
       ctx = gsap.context(() => {
-        // pin slogan
-        if (sloganRef.current) {
+        // pin ONLY scarcity WORD (676) wrapper — pinSpacing true, trigger is wrapper (no overlap)
+        if (pinWrapperRef.current && countWrapRef.current) {
           ScrollTrigger.create({
-            trigger: sectionRef.current,
+            trigger: pinWrapperRef.current,
             start: 'top top',
-            end: '+=700',
-            pin: sloganRef.current,
-            pinSpacing: false,
+            end: '+=720',
+            pin: countWrapRef.current,
+            pinSpacing: true,
             anticipatePin: 1,
+            refreshPriority: 2,
           });
         }
-        // 676 scale 0.8 -> 1.1 scrub
+        // 676 scale scrub
         if (countRef.current) {
           gsap.fromTo(
             countRef.current,
-            { scale: 0.8 },
+            { scale: 0.86 },
             {
               scale: 1.08,
               ease: 'none',
@@ -90,7 +91,6 @@ export function Scarcity() {
             }
           );
         }
-        // red seal rotate scrub
         if (sealRef.current) {
           gsap.to(sealRef.current, {
             rotation: 360,
@@ -120,149 +120,146 @@ export function Scarcity() {
   ];
 
   return (
-    <section ref={sectionRef} className="section-shell bg-[#efebe3] hairline-top dark:bg-[#080808]" id="scarcity" style={{ borderTop: '1px solid rgba(8,8,8,0.12)' }}>
-      {/* Pinned slogan */}
-      <div ref={sloganRef} className="section-frame will-change-transform" style={{ zIndex: 1 }}>
-        <div className="flex flex-wrap items-center gap-3 border-b border-[#080808] pb-5 dark:border-white/15">
-          <span className="font-mono text-[0.62rem] uppercase tracking-[0.18em] text-[#8b1a1a]">{t('scarcity_overline')}</span>
-          <span className="h-px w-6 bg-[#080808] dark:bg-[#efebe3]/40 hidden sm:block" aria-hidden="true" />
-          <h2
-            className="font-display leading-[0.85] tracking-[-0.05em] text-[#080808] dark:text-[#efebe3]"
-            style={{ fontFamily: 'Instrument Serif, Georgia, serif', fontSize: 'clamp(2.2rem, 1.4rem + 2.8vw, 3.8rem)' }}
-          >
-            676 ISTNIEJE. <span className="text-[#8b1a1a]">0 POWSTANIE.</span>
-          </h2>
+    <section ref={sectionRef} className="section-shell bg-[#f6f1e8] hairline-top dark:bg-[#0a0a0a]" id="scarcity" style={{ borderTop: '1px solid rgba(10,10,10,0.08)', minHeight: '110vh' }}>
+      {/* Swiss header — pin not whole section, just WORD inside */}
+      <div className="section-frame">
+        <div className="swiss-grid border-b border-[#0a0a0a] pb-5 dark:border-white/15">
+          <div className="col-span-12 flex flex-wrap items-center gap-3">
+            <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-[#e30613] dark:text-[#ff1a2b]">{t('scarcity_overline')}</span>
+            <span className="h-px w-6 bg-[#0a0a0a] dark:bg-[#fdf8ef]/40 hidden sm:block" aria-hidden="true" />
+            <h2
+              className="font-display leading-[0.85] tracking-[-0.06em] text-[#0a0a0a] dark:text-[#fdf8ef]"
+              style={{ fontFamily: 'Instrument Serif, Georgia, serif', fontSize: 'clamp(2.2rem, 1.4rem + 2.8vw, 3.8rem)' }}
+            >
+              676 ISTNIEJE. <span className="text-[#e30613] dark:text-[#ff1a2b] underline decoration-[#e30613] decoration-2 underline-offset-4 dark:decoration-[#ff1a2b]">0 POWSTANIE.</span>
+            </h2>
+          </div>
         </div>
       </div>
 
-      <div className="section-frame grid items-start gap-8 px-4 pt-8 sm:px-6 lg:grid-cols-[0.95fr_1.05fr] lg:gap-14 lg:px-10">
-        {/* Left — protocol-card stamp */}
-        <motion.div
-          initial={{ opacity: 0, y: 12 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.5, ease: 'easeOut' }}
-          className="lg:sticky lg:top-24"
-        >
-          <div className="artifact-card protocol-card relative overflow-hidden border border-[#080808] bg-[#efebe3] p-0 dark:border-white/15 dark:bg-[#111318]">
-            <div className="flex items-center justify-between border-b border-[#080808] px-5 py-3 dark:border-white/15">
-              <span className="font-mono text-[0.62rem] uppercase tracking-[0.16em] text-[#080808] dark:text-[#efebe3]/70">NASK • 676 • 1996</span>
-              <span className="border border-[#080808] px-2 py-1 font-mono text-[0.60rem] uppercase tracking-[0.14em] text-[#080808] dark:border-white/20 dark:text-[#efebe3]">ARCHIVAL</span>
-            </div>
-
-            <div className="relative px-6 py-8 sm:px-8 sm:py-10">
-              <div className="pointer-events-none absolute left-1/2 top-0 h-full w-px bg-[#080808]/10 dark:bg-white/10"></div>
-              <div className="pointer-events-none absolute left-0 top-1/2 h-px w-full bg-[#080808]/10 dark:bg-white/10"></div>
-              <span className="pointer-events-none absolute left-2 top-2 h-3 w-3 border-l border-t border-[#080808]/25 dark:border-white/20"></span>
-              <span className="pointer-events-none absolute right-2 top-2 h-3 w-3 border-r border-t border-[#080808]/25 dark:border-white/20"></span>
-              <span className="pointer-events-none absolute bottom-2 left-2 h-3 w-3 border-b border-l border-[#080808]/25 dark:border-white/20"></span>
-              <span className="pointer-events-none absolute bottom-2 right-2 h-3 w-3 border-b border-r border-[#080808]/25 dark:border-white/20"></span>
-
-              <div
-                ref={sealRef}
-                className="pointer-events-none absolute right-4 top-12 hidden sm:flex h-[94px] w-[94px] items-center justify-center rounded-full border-[1.4px] border-[#8b1a1a] bg-[#efebe3]/60 backdrop-blur-[1px] dark:bg-[#080808]/40 sm:right-6 will-change-transform"
-              >
-                <div className="absolute inset-[4px] rounded-full border border-[#8b1a1a]/45"></div>
-                <span className="font-mono text-[0.52rem] font-bold uppercase tracking-[0.08em] text-[#8b1a1a]">676</span>
-                <svg className="absolute inset-0 h-full w-full" viewBox="0 0 100 100" aria-hidden="true">
-                  <defs>
-                    <path id="scarcitySealCircle" d="M 50,50 m -34,0 a 34,34 0 1,1 68,0 a 34,34 0 1,1 -68,0" />
-                  </defs>
-                  <text fontSize="5.8" letterSpacing="0.7" fill="#8b1a1a" fontFamily="monospace">
-                    <textPath href="#scarcitySealCircle" startOffset="0%"> ARCHIWUM • NASK • 1996 • </textPath>
-                  </text>
-                </svg>
+      <div className="section-frame swiss-grid items-start gap-8 pt-8 lg:gap-14">
+        {/* Left — pin-wrapper: WORD pinned, spacer prevents overlap */}
+        <div ref={pinWrapperRef} className="pin-wrapper col-span-12 lg:col-span-6" style={{ minHeight: '280px' }}>
+          <motion.div
+            ref={countWrapRef}
+            initial={{ opacity: 0, y: 12 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.5, ease: 'easeOut' }}
+            className="will-change-transform"
+          >
+            <div className="artifact-card relative overflow-hidden border border-[rgba(10,10,10,0.08)] bg-[#fdf8ef] p-0 dark:border-white/10 dark:bg-[#141414]" style={{ borderRadius: '4px' }}>
+              <div className="flex items-center justify-between border-b border-[rgba(10,10,10,0.08)] px-5 py-3 dark:border-white/10">
+                <span className="font-mono text-[10px] uppercase tracking-[0.16em] text-[#8a8683]">NASK • 676 • 1996</span>
+                <span className="border border-[#0a0a0a] px-2 py-1 font-mono text-[10px] uppercase tracking-[0.14em] text-[#0a0a0a] dark:border-white/20 dark:text-[#fdf8ef]" style={{ borderRadius: '4px' }}>ARCHIVAL</span>
               </div>
 
-              <div ref={metricRef} className="relative">
-                <p className="font-mono text-[0.62rem] uppercase tracking-[0.16em] text-[#080808]/60 dark:text-[#efebe3]/50">{t('scarcity_label')}</p>
-                <motion.p
-                  ref={countRef}
-                  initial={{ opacity: 0, y: 8 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5 }}
-                  className="mt-2 origin-left will-change-transform font-display leading-[0.85] tracking-[-0.06em] text-[#080808] dark:text-[#efebe3]"
-                  style={{ fontFamily: 'Instrument Serif, Georgia, serif', fontSize: 'clamp(5rem,4rem+8vw,9rem)' }}
-                  aria-label="676"
+              <div className="relative px-6 py-8 sm:px-8 sm:py-10">
+                <div className="pointer-events-none absolute left-1/2 top-0 h-full w-px bg-[rgba(10,10,10,0.06)] dark:bg-white/10"></div>
+                <div className="pointer-events-none absolute left-0 top-1/2 h-px w-full bg-[rgba(10,10,10,0.06)] dark:bg-white/10"></div>
+                <span className="pointer-events-none absolute left-2 top-2 h-3 w-3 border-l border-t border-[rgba(10,10,10,0.12)] dark:border-white/12"></span>
+                <span className="pointer-events-none absolute right-2 top-2 h-3 w-3 border-r border-t border-[rgba(10,10,10,0.12)] dark:border-white/12"></span>
+                <span className="pointer-events-none absolute bottom-2 left-2 h-3 w-3 border-b border-l border-[rgba(10,10,10,0.12)] dark:border-white/12"></span>
+                <span className="pointer-events-none absolute bottom-2 right-2 h-3 w-3 border-b border-r border-[rgba(10,10,10,0.12)] dark:border-white/12"></span>
+
+                <div
+                  ref={sealRef}
+                  className="pointer-events-none absolute right-4 top-12 hidden sm:flex h-[94px] w-[94px] items-center justify-center rounded-full border-[1.4px] border-[#e30613] bg-[#fdf8ef]/60 backdrop-blur-[1px] dark:bg-[#0a0a0a]/40 dark:border-[#ff1a2b] sm:right-6 will-change-transform"
                 >
-                  {count}
-                </motion.p>
-                <div className="mt-4 h-[2px] w-16 bg-[#8b1a1a]" aria-hidden="true" />
-                <p
-                  className="mt-4 max-w-[22rem] font-mono text-[#080808]/65 dark:text-[#efebe3]/65"
-                  style={{ fontSize: '0.76rem', lineHeight: '1.6', display: '-webkit-box', WebkitLineClamp: 1, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}
-                >
-                  {t('scarcity_avail')}
-                </p>
-              </div>
-
-              <div className="mt-6 flex items-center gap-2">
-                <span className="h-px w-6 bg-[#080808] dark:bg-[#efebe3]" aria-hidden="true" />
-                <span className="font-mono text-[0.60rem] uppercase tracking-[0.12em] text-[#080808]/50 dark:text-[#efebe3]/40">PL-676 — {t('provenance_label')}</span>
-              </div>
-
-              <div className="mt-7 grid grid-cols-3 border border-[#080808] text-center text-[0.60rem] dark:border-white/15">
-                <div className="border-r border-[#080808] px-2 py-2 dark:border-white/15">
-                  <div className="font-mono uppercase tracking-[0.12em] text-[#080808]/40 dark:text-[#efebe3]/40">Nr</div>
-                  <div className="font-mono font-semibold text-[#080808] dark:text-[#efebe3]">676/1996</div>
+                  <div className="absolute inset-[4px] rounded-full border border-[#e30613]/45 dark:border-[#ff1a2b]/45"></div>
+                  <span className="font-mono text-[0.52rem] font-bold uppercase tracking-[0.08em] text-[#e30613] dark:text-[#ff1a2b]">676</span>
+                  <svg className="absolute inset-0 h-full w-full" viewBox="0 0 100 100" aria-hidden="true">
+                    <defs>
+                      <path id="scarcitySealCircle" d="M 50,50 m -34,0 a 34,34 0 1,1 68,0 a 34,34 0 1,1 -68,0" />
+                    </defs>
+                    <text fontSize="5.8" letterSpacing="0.7" fill="#e30613" fontFamily="monospace">
+                      <textPath href="#scarcitySealCircle" startOffset="0%"> ARCHIWUM • NASK • 1996 • </textPath>
+                    </text>
+                  </svg>
                 </div>
-                <div className="border-r border-[#080808] px-2 py-2 dark:border-white/15">
-                  <div className="font-mono uppercase tracking-[0.12em] text-[#080808]/40 dark:text-[#efebe3]/40">Rejestr</div>
-                  <div className="font-mono font-semibold text-[#080808] dark:text-[#efebe3]">NASK</div>
+
+                <div className="relative">
+                  <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-[#8a8683]">{t('scarcity_label')}</p>
+                  <motion.p
+                    ref={countRef}
+                    initial={{ opacity: 0, y: 8 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5 }}
+                    className="mt-2 origin-left will-change-transform font-display leading-[0.85] tracking-[-0.06em] text-[#0a0a0a] dark:text-[#fdf8ef]"
+                    style={{ fontFamily: 'Instrument Serif, Georgia, serif', fontSize: 'clamp(5rem,4rem+8vw,9rem)' }}
+                    aria-label="676"
+                  >
+                    {count}
+                  </motion.p>
+                  <div className="mt-4 h-[2px] w-16 bg-[#e30613] dark:bg-[#ff1a2b]" aria-hidden="true" />
+                  <p className="mt-4 max-w-[22rem] font-mono text-[0.74rem] leading-6 tracking-[0.04em] text-[#4a4642] dark:text-[#fdf8ef]/65">
+                    {t('scarcity_avail')}
+                  </p>
                 </div>
-                <div className="px-2 py-2">
-                  <div className="font-mono uppercase tracking-[0.12em] text-[#080808]/40 dark:text-[#efebe3]/40">Karta</div>
-                  <div className="font-mono font-semibold text-[#8b1a1a]">PL-676</div>
+
+                <div className="mt-6 flex items-center gap-2">
+                  <span className="h-px w-6 bg-[#0a0a0a] dark:bg-[#fdf8ef] hidden sm:block" aria-hidden="true" />
+                  <span className="font-mono text-[10px] uppercase tracking-[0.12em] text-[#8a8683]">PL-676 — {t('provenance_label')}</span>
+                </div>
+
+                <div className="mt-7 grid grid-cols-3 border border-[rgba(10,10,10,0.08)] text-center text-[0.60rem] dark:border-white/10" style={{ borderRadius: '4px', overflow: 'hidden' }}>
+                  <div className="border-r border-[rgba(10,10,10,0.08)] px-2 py-2 dark:border-white/10">
+                    <div className="font-mono uppercase tracking-[0.12em] text-[#8a8683]">Nr</div>
+                    <div className="font-mono font-bold text-[#0a0a0a] dark:text-[#fdf8ef]">676/1996</div>
+                  </div>
+                  <div className="border-r border-[rgba(10,10,10,0.08)] px-2 py-2 dark:border-white/10">
+                    <div className="font-mono uppercase tracking-[0.12em] text-[#8a8683]">Rejestr</div>
+                    <div className="font-mono font-bold text-[#0a0a0a] dark:text-[#fdf8ef]">NASK</div>
+                  </div>
+                  <div className="px-2 py-2">
+                    <div className="font-mono uppercase tracking-[0.12em] text-[#8a8683]">Karta</div>
+                    <div className="font-mono font-bold text-[#e30613] dark:text-[#ff1a2b]">PL-676</div>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
+            <p className="mt-3 hidden font-mono text-[10px] uppercase tracking-[0.12em] text-[#8a8683] lg:block">NASK • 676 • 1996 — {t('provenance_value')}</p>
+          </motion.div>
+        </div>
 
-          <p className="mt-3 hidden font-mono text-[0.60rem] uppercase tracking-[0.12em] text-[#080808]/40 dark:text-[#efebe3]/40 lg:block">NASK • 676 • 1996 — {t('provenance_value')}</p>
-        </motion.div>
-
-        {/* Right — evidence rows punchy 1 line */}
+        {/* Right — evidence rows punchy */}
         <motion.div
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.2 }}
           variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.07 } } }}
+          className="col-span-12 lg:col-span-6"
         >
-          <motion.div variants={{ hidden: { opacity: 0, y: 8 }, visible: { opacity: 1, y: 0, transition: { duration: 0.45 } } }} className="font-mono text-[0.62rem] uppercase tracking-[0.18em] text-[#8b1a1a]">
+          <motion.div variants={{ hidden: { opacity: 0, y: 8 }, visible: { opacity: 1, y: 0, transition: { duration: 0.45 } } }} className="font-mono text-[10px] uppercase tracking-[0.18em] text-[#e30613] dark:text-[#ff1a2b]">
             {t('scarcity_overline')}
           </motion.div>
           <motion.h3
             variants={{ hidden: { opacity: 0, y: 8 }, visible: { opacity: 1, y: 0, transition: { duration: 0.5 } } }}
-            className="mt-2 font-mono text-[0.72rem] uppercase tracking-[0.12em] text-[#080808]/60 dark:text-[#efebe3]/50"
+            className="mt-2 font-mono text-[0.72rem] uppercase tracking-[0.12em] text-[#4a4642] dark:text-[#fdf8ef]/50"
           >
             Limit wpisany w matematykę. Nie w marketing.
           </motion.h3>
 
-          <motion.div variants={{ hidden: { opacity: 0 }, visible: { opacity: 1 } }} className="mt-6 border-y border-[#080808] dark:border-white/15">
+          <motion.div variants={{ hidden: { opacity: 0 }, visible: { opacity: 1 } }} className="mt-6 border-y border-[#0a0a0a] dark:border-white/15">
             {points.map((point) => (
               <motion.article
                 key={point.key}
                 variants={{ hidden: { opacity: 0, y: 10 }, visible: { opacity: 1, y: 0, transition: { duration: 0.4 } } }}
-                className="grid gap-2 border-b border-[#080808]/10 px-2 py-5 last:border-b-0 dark:border-white/10 sm:grid-cols-[172px_1fr] sm:items-center"
+                className="evidence-row grid gap-2 border-b border-[rgba(10,10,10,0.06)] px-2 py-5 last:border-b-0 dark:border-white/10 sm:grid-cols-[172px_1fr] sm:items-center"
               >
-                <span className="font-mono text-[0.62rem] font-semibold uppercase tracking-[0.12em] text-[#8b1a1a]">{point.title}</span>
-                <span
-                  className="font-mono text-[#080808]/70 dark:text-[#efebe3]/70"
-                  style={{ fontSize: '0.80rem', lineHeight: '1.6', display: '-webkit-box', WebkitLineClamp: 1, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}
-                >
+                <span className="font-mono text-[10px] font-bold uppercase tracking-[0.12em] text-[#e30613] dark:text-[#ff1a2b]">{point.title}</span>
+                <span className="font-body text-[15px] leading-6 text-[#4a4642] dark:text-[#fdf8ef]/65">
                   {t(point.key)}
                 </span>
               </motion.article>
             ))}
           </motion.div>
 
-          <motion.p
-            variants={{ hidden: { opacity: 0 }, visible: { opacity: 1, transition: { delay: 0.3 } } }}
-            className="mt-4 font-mono text-[0.60rem] uppercase tracking-[0.12em] text-[#080808]/40 dark:text-[#efebe3]/40"
-          >
-            NASK • 676 • 1996 — {t('provenance_value')}
-          </motion.p>
+          <motion.div variants={{ hidden: { opacity: 0, y: 6 }, visible: { opacity: 1, y: 0, transition: { duration: 0.42 } } }} className="mt-6 flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.14em] text-[#8a8683]">
+            <span className="h-px w-6 bg-[#0a0a0a]/15 dark:bg-white/15 hidden sm:block" aria-hidden="true" />
+            <span>DODRUK = 0 • PL-676 — ARCHIWUM NASK</span>
+          </motion.div>
         </motion.div>
       </div>
     </section>

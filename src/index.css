@@ -1,92 +1,86 @@
 @import "tailwindcss";
 
 /* ==========================================================================
-   hf.pl — Brutalist-Notarial
-   Fork: feat/brutalist-notarial
-   Palette: paper #efebe3 / #f2ede0, ink #080808, seal #8b1a1a, faint #6b645c
-   Type: Instrument Serif (display) / Satoshi (body) / Satoshi Mono (provenance)
-   Surface: flat paper + 1px ink borders, no shadows, no gradients
-   Texture: analog photocopy noise — baseFrequency 0.85, ~3.2% opacity
+   hf.pl — SIGNAL SWISS (Design C — Million Dollar)
+   Palette: paper #f6f1e8 / surface #fdf8ef / ink #0a0a0a / muted #4a4642 / faint #8a8683 / signal red #e30613
+   Type: Instrument Serif display  -0.06 / Satoshi 15px / Mono 10px 0.18em RED
+   Grid: Swiss 12col rigid — hairline 1px / outer 1.5px ink / radii 4px / rule 2px red
+   Motion: Lenis + GSAP ScrollTrigger (pinSpacing true) / noise 0.02
    ========================================================================== */
 
 @theme {
   --font-scale: 1;
 
-  /* --- paper / ink --- */
-  --color-bg: #efebe3;
-  --color-paper: #efebe3;
-  --color-surface: #f2ede0;
-  --color-surface-2: #e8e0cf;
-  --color-surface-3: #ddd4c0;
+  --color-bg: #f6f1e8;
+  --color-paper: #f6f1e8;
+  --color-surface: #fdf8ef;
+  --color-surface-2: #efe7d6;
+  --color-surface-3: #e8ddd0;
 
-  --color-ink: #080808;
-  --color-line: rgba(8, 8, 8, 0.09);
-  --color-line-strong: rgba(8, 8, 8, 0.16);
-  --color-hairline: rgba(8, 8, 8, 0.07);
+  --color-ink: #0a0a0a;
+  --color-line: rgba(10, 10, 10, 0.08);
+  --color-line-strong: rgba(10, 10, 10, 0.14);
+  --color-hairline: rgba(10, 10, 10, 0.06);
 
-  --color-text: #080808;
-  --color-text-muted: #3f3c37;
-  --color-text-faint: #6b645c;
+  --color-text: #0a0a0a;
+  --color-text-muted: #4a4642;
+  --color-text-faint: #8a8683;
 
-  /* --- seal red (notarial) --- */
-  --color-accent: #8b1a1a;
-  --color-accent-hover: #6e1313;
-  --color-accent-soft: rgba(139, 26, 26, 0.07);
-  --color-seal: #8b1a1a;
-  --color-seal-soft: rgba(139, 26, 26, 0.08);
+  --color-accent: #e30613;
+  --color-accent-hover: #b8050f;
+  --color-accent-soft: rgba(227, 6, 19, 0.07);
+  --color-accent-soft-strong: rgba(227, 6, 19, 0.11);
+  --color-seal: #e30613;
+  --color-seal-soft: rgba(227, 6, 19, 0.07);
 
-  --color-success: #1a5c2e;
-  --color-error: #8b1a1a;
+  --color-success: #14532d;
+  --color-error: #e30613;
 
-  /* --- brutalist surfaces: no blur, just ink borders --- */
   --shadow-paper: 0 0 0 1px var(--color-ink);
   --shadow-doc: 0 0 0 1.5px var(--color-ink);
-  --shadow-nav: 0 0 0 1px var(--color-ink);
+  --shadow-nav: 0 0 0 1px var(--color-line-strong);
 
-  /* --- type --- */
-  --font-display: "Instrument Serif", "Georgia", serif;
+  --font-display: "Instrument Serif", Georgia, serif;
   --font-body: "Satoshi", "Inter", "Helvetica Neue", sans-serif;
-  --font-mono: "Satoshi Mono", "JetBrains Mono", ui-monospace, "Cascadia Code", "SF Mono", Menlo, monospace;
+  --font-mono: ui-monospace, "Cascadia Code", "SF Mono", Menlo, monospace;
 
-  /* --- radii: square, utilitarian --- */
   --radius-sm: 4px;
   --radius-md: 4px;
   --radius-lg: 4px;
+  --radius-xl: 4px;
+  --radius-2xl: 4px;
 }
 
 .dark {
-  --color-bg: #090a0e;
-  --color-paper: #090a0e;
-  --color-surface: #12151b;
-  --color-surface-2: #171b22;
-  --color-surface-3: #1e242e;
+  --color-bg: #0a0a0a;
+  --color-paper: #0a0a0a;
+  --color-surface: #141414;
+  --color-surface-2: #1a1a1a;
+  --color-surface-3: #212121;
 
-  --color-ink: #f4efe6;
-  --color-line: rgba(244, 239, 230, 0.09);
-  --color-line-strong: rgba(244, 239, 230, 0.15);
-  --color-hairline: rgba(244, 239, 230, 0.07);
+  --color-ink: #fdf8ef;
+  --color-line: rgba(253, 248, 239, 0.08);
+  --color-line-strong: rgba(253, 248, 239, 0.16);
+  --color-hairline: rgba(253, 248, 239, 0.07);
 
-  --color-text: #f4efe6;
-  --color-text-muted: #a8a29a;
-  --color-text-faint: #8a847c;
+  --color-text: #fdf8ef;
+  --color-text-muted: #b8b0a8;
+  --color-text-faint: #8a8683;
 
-  --color-accent: #c93434;
-  --color-accent-hover: #e04a4a;
-  --color-accent-soft: rgba(201, 52, 52, 0.10);
-  --color-seal: #c93434;
-  --color-seal-soft: rgba(201, 52, 52, 0.12);
+  --color-accent: #ff1a2b;
+  --color-accent-hover: #ff3d4d;
+  --color-accent-soft: rgba(255, 26, 43, 0.12);
+  --color-seal: #ff1a2b;
+  --color-seal-soft: rgba(255, 26, 43, 0.12);
 
   --color-success: #4ade80;
-  --color-error: #f87171;
+  --color-error: #ff1a2b;
 
-  --shadow-paper: 0 0 0 1px rgba(244, 239, 230, 0.14);
-  --shadow-doc: 0 0 0 1.5px rgba(244, 239, 230, 0.18);
-  --shadow-nav: 0 0 0 1px rgba(244, 239, 230, 0.12);
+  --shadow-paper: 0 0 0 1px rgba(253, 248, 239, 0.14);
+  --shadow-doc: 0 0 0 1.5px rgba(253, 248, 239, 0.18);
+  --shadow-nav: 0 0 0 1px rgba(253, 248, 239, 0.12);
 }
 
-/* ------------------------------------------------------------------ */
-/* Base                                                               */
-/* ------------------------------------------------------------------ */
 @layer base {
   * { box-sizing: border-box; }
 
@@ -102,10 +96,11 @@
 
   body {
     background-color: var(--color-paper);
-    /* flat — no gradients. Texture comes from body::before photocopy grain */
     background-image: none;
     color: var(--color-text);
     font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.6;
     overflow-x: hidden;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
@@ -113,416 +108,294 @@
     font-feature-settings: "kern" 1, "liga" 1;
   }
 
-  a, button {
-    transition: color 150ms ease, background-color 150ms ease, border-color 150ms ease, opacity 150ms ease;
-  }
+  a, button { transition: color 150ms ease, background-color 150ms ease, border-color 150ms ease, opacity 150ms ease, transform 180ms ease; }
 
-  ::selection { background: rgba(139, 26, 26, 0.18); color: var(--color-text); }
-  .dark ::selection { background: rgba(201, 52, 52, 0.28); color: var(--color-text); }
+  ::selection { background: rgba(227, 6, 19, 0.14); color: var(--color-text); }
+  .dark ::selection { background: rgba(255, 26, 43, 0.28); color: var(--color-text); }
 
-  /* focus: brutalist 1.5px ink outline */
   :focus-visible {
-    outline: 1.5px solid var(--color-ink);
+    outline: 1.5px solid var(--color-accent);
     outline-offset: 2px;
   }
-  .dark :focus-visible { outline-color: var(--color-paper); }
 }
 
-/* ------------------------------------------------------------------ */
-/* Noise — analog photocopy / paper fiber, 3.2% brutalist grain       */
-/* baseFrequency 0.85 = coarser, more degraded than editorial 0.9     */
-/* ------------------------------------------------------------------ */
 body::before {
   content: "";
   position: fixed; inset: 0;
   pointer-events: none; z-index: 9999;
-  opacity: 0.032;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  opacity: 0.02;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.90' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
 }
 
-/* ------------------------------------------------------------------ */
-/* Components                                                         */
-/* ------------------------------------------------------------------ */
 @layer components {
-  /* ---- shell: rigid, more air on desktop, hairline frame hint ---- */
-  .section-shell { @apply scroll-mt-24 px-4 py-12 sm:px-6 sm:py-16 lg:px-10 lg:py-24; }
-  .section-frame { @apply mx-auto w-full max-w-[1240px]; }
+  .section-shell { @apply scroll-mt-24 px-4 py-16 sm:px-6 sm:py-20 lg:px-10 lg:py-28; position: relative; }
+  .section-frame { @apply mx-auto w-full max-w-[1280px]; }
+
+  .swiss-grid {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: 1rem;
+  }
+  @media (min-width: 1024px) { .swiss-grid { gap: 1.5rem; } }
+
+  .swiss-content {
+    grid-column: span 12 / span 12;
+  }
+  @media (min-width: 1024px) {
+    .swiss-content { grid-column: 3 / span 8; }
+  }
+
+  .red-rule { height: 2px; background: var(--color-accent); border: 0; }
+  .red-rule--hairline { height: 1px; }
+  .red-underline { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 4px; text-decoration-color: var(--color-accent); }
+
+  .signal-dot { width: 6px; height: 6px; border-radius: 9999px; background: var(--color-accent); display: inline-block; flex-shrink: 0; }
+  .signal-dot--sm { width: 5px; height: 5px; }
+  .signal-dot--lg { width: 8px; height: 8px; }
 
   .hairline { border-color: var(--color-hairline); }
   .hairline-top { border-top: 1px solid var(--color-hairline); }
   .hairline-bottom { border-bottom: 1px solid var(--color-hairline); }
+  .ink-top { border-top: 1.5px solid var(--color-ink); }
+  .dark .ink-top { border-top-color: rgba(253,248,239,0.18); }
 
-  /* ---- eyebrow: brutalist mono 10px / 0.18em, all-caps ----------- */
+  .swiss-grid-overlay {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    display: none;
+  }
+  @media (min-width: 1024px) {
+    .swiss-grid-overlay { display: block; }
+  }
+  .swiss-grid-overlay__inner {
+    height: 100%;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 2.5rem;
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: 1.5rem;
+    opacity: 1;
+  }
+  .swiss-grid-overlay__col {
+    border-left: 1px solid rgba(10,10,10,0.03);
+    height: 100%;
+  }
+  .swiss-grid-overlay__col:last-child { border-right: 1px solid rgba(10,10,10,0.03); }
+  .dark .swiss-grid-overlay__col { border-color: rgba(253,248,239,0.03); }
+
   .eyebrow {
     @apply inline-flex items-center gap-2 uppercase;
     font-family: var(--font-mono);
-    font-size: 0.625rem; /* 10px */
+    font-size: 10px;
     font-weight: 700;
     letter-spacing: 0.18em;
     line-height: 1;
-    color: var(--color-text-faint);
-  }
-  .eyebrow::before {
-    content: "";
-    width: 14px;
-    height: 1.5px;
-    background: var(--color-ink);
-    opacity: 1;
-    flex-shrink: 0;
-  }
-  .eyebrow-accent {
     color: var(--color-accent);
   }
-  .eyebrow-accent::before { background: var(--color-accent); }
-  .dark .eyebrow::before { background: var(--color-text-faint); }
-  .dark .eyebrow-accent::before { background: var(--color-accent); }
+  .eyebrow::before { content: ""; width: 14px; height: 1.5px; background: var(--color-accent); flex-shrink: 0; }
+  .eyebrow--ink { color: var(--color-text-faint); }
+  .eyebrow--ink::before { background: var(--color-ink); opacity: 0.9; }
 
-  /* mono-brutal: standalone utility for labels, table heads, provenance */
   .mono-brutal {
     font-family: var(--font-mono);
-    font-size: 0.625rem;
+    font-size: 10px;
     font-weight: 700;
     letter-spacing: 0.18em;
     text-transform: uppercase;
     line-height: 1;
+    color: var(--color-accent);
+  }
+  .mono {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
     color: var(--color-text-faint);
   }
 
-  /* ---- display: heavy contrast, tight tracking ------------------- */
   .display-title {
     font-family: var(--font-display);
     font-weight: 400;
-    letter-spacing: -0.05em;
+    letter-spacing: -0.06em;
     line-height: 0.88;
   }
-  /* hero: 8rem brutalist scale (clamped for viewport) */
   .hero-display {
     font-family: var(--font-display);
     font-weight: 400;
     font-size: clamp(3.2rem, 1.2rem + 7vw, 8rem);
-    letter-spacing: -0.055em;
+    letter-spacing: -0.06em;
     line-height: 0.86;
   }
-
-  .mono {
-    font-family: var(--font-mono);
-    font-size: 0.625rem;
-    font-weight: 700;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--color-text-faint);
-  }
-
   .section-title {
     font-family: var(--font-display);
     font-size: clamp(2.6rem, 1.8rem + 3.2vw, 5.2rem);
-    letter-spacing: -0.05em;
+    letter-spacing: -0.06em;
     line-height: 0.90;
   }
-
   .section-lead {
-    @apply max-w-[42rem] text-[0.98rem] leading-7 sm:text-[1.06rem] sm:leading-8;
-    color: var(--color-text-muted);
-    text-wrap: balance;
+    @apply max-w-[42rem] leading-7;
+    font-size: 15px; line-height: 1.6; color: var(--color-text-muted); text-wrap: balance;
   }
 
-  /* ---- actions: square, 1.5px ink border, no pill -------------- */
+  .provenance {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+    display: inline-flex; align-items: center; gap: 0.5rem;
+  }
+  .provenance::before { content: ""; width: 18px; height: 1px; background: var(--color-accent); }
+
+  .swiss-badge {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    border: 1px solid var(--color-accent);
+    background: transparent;
+    color: var(--color-accent);
+    font-family: var(--font-mono);
+    font-size: 10px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase;
+    padding: 4px 8px; line-height: 1; border-radius: var(--radius-sm);
+  }
+  .swiss-badge--ink {
+    border-color: var(--color-ink); color: var(--color-ink);
+  }
+  .dark .swiss-badge--ink { border-color: rgba(253,248,239,0.18); color: var(--color-text); }
+
+  .artifact-card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+  }
+  .swiss-card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-md);
+  }
+  .swiss-card--ink {
+    border: 1.5px solid var(--color-ink);
+  }
+  .dark .swiss-card--ink { border-color: rgba(253,248,239,0.16); }
+
+  .swiss-number-bg {
+    position: absolute;
+    font-family: var(--font-display);
+    font-size: 5rem;
+    line-height: 1;
+    letter-spacing: -0.06em;
+    color: rgba(10,10,10,0.045);
+    pointer-events: none;
+    user-select: none;
+    font-weight: 400;
+  }
+  .dark .swiss-number-bg { color: rgba(253,248,239,0.045); }
+
   .action-pill {
-    @apply inline-flex items-center justify-center gap-2 px-5 py-3 text-[0.86rem] font-semibold tracking-[-0.01em];
+    @apply inline-flex items-center justify-center gap-2 px-5 py-3 font-semibold tracking-[-0.01em];
     border-radius: var(--radius-sm);
     border: 1.5px solid transparent;
-    transition: all 150ms ease;
+    font-size: 0.86rem;
+    transition: all 180ms ease;
   }
   .action-primary {
     background: var(--color-ink);
     color: var(--color-paper);
     border-color: var(--color-ink);
   }
-  .action-primary:hover {
-    background: transparent;
-    color: var(--color-ink);
-  }
-  .dark .action-primary {
-    background: var(--color-paper);
-    color: var(--color-ink);
-    border-color: var(--color-paper);
-  }
-  .dark .action-primary:hover {
-    background: transparent;
-    color: var(--color-paper);
-  }
+  .action-primary:hover { background: transparent; color: var(--color-ink); }
+  .dark .action-primary { background: var(--color-paper); color: var(--color-ink); border-color: var(--color-paper); }
+  .dark .action-primary:hover { background: transparent; color: var(--color-paper); }
 
-  .action-secondary {
+  .action-accent {
+    border: 1.5px solid var(--color-accent);
+    color: var(--color-accent);
     background: transparent;
-    color: var(--color-ink);
+  }
+  .action-accent:hover { background: var(--color-accent); color: white; }
+
+  .action-ghost {
+    background: transparent;
     border-color: var(--color-ink);
+    color: var(--color-ink);
   }
-  .action-secondary:hover { background: var(--color-ink); color: var(--color-paper); }
-  .dark .action-secondary { color: var(--color-paper); border-color: rgba(244,239,230,0.28); }
-  .dark .action-secondary:hover { background: var(--color-paper); color: var(--color-ink); }
+  .action-ghost:hover { background: var(--color-ink); color: var(--color-paper); }
+  .dark .action-ghost { border-color: rgba(253,248,239,0.18); color: var(--color-paper); }
+  .dark .action-ghost:hover { background: var(--color-paper); color: var(--color-ink); }
 
-  .stat-value { font-family: var(--font-display); letter-spacing: -0.05em; line-height: 0.9; }
-
-  /* ----------------------------------------------------------------
-     Cards — brutalist notarial
-     .protocol-card = primary (1.5px ink, 4px radius, flat)
-     .artifact-card = legacy alias → same surface
-     ---------------------------------------------------------------- */
-  .protocol-card,
-  .artifact-card {
-    background: var(--color-surface);
-    border: 1.5px solid var(--color-ink);
-    border-radius: var(--radius-sm);
-    box-shadow: none;
-  }
-  .dark .protocol-card,
-  .dark .artifact-card {
-    background: var(--color-surface);
-    border-color: rgba(244, 239, 230, 0.14);
-  }
-
-  /* variant: ghost protocol (outline) */
-  .protocol-card--ghost {
-    background: transparent;
-    border-style: dashed;
-  }
-
-  /* ---- evidence-row: brutalist table row ------------------------ */
-  .evidence-row {
-    background: transparent;
-    border: 0;
-    border-top: 1px solid var(--color-line-strong);
-    border-radius: 0;
-    box-shadow: none;
-    transition: background 150ms ease;
-  }
-  .evidence-row:first-child { border-top-width: 1.5px; border-top-color: var(--color-ink); }
-  .dark .evidence-row:first-child { border-top-color: rgba(244,239,230,0.22); }
-  .evidence-row:last-child { border-bottom: 1px solid var(--color-line-strong); }
-  .evidence-row:hover { background: var(--color-accent-soft); }
-  /* mono number left, colon separator — use via .evidence-num in JSX */
-  .evidence-num {
-    font-family: var(--font-mono);
-    font-size: 0.68rem;
-    font-weight: 700;
-    letter-spacing: 0.14em;
-    color: var(--color-text-faint);
-  }
-  .evidence-num::after {
-    content: ":";
-    margin-left: 0.15em;
-    color: var(--color-text-faint);
-  }
-
-  .ghost-card {
-    background: transparent;
-    border: 1px solid transparent;
-    border-radius: var(--radius-sm);
-    transition: border-color 150ms ease, background 150ms ease;
-  }
-  .ghost-card:hover { border-color: var(--color-line-strong); background: rgba(8,8,8,0.02); }
-  .dark .ghost-card:hover { background: rgba(244,239,230,0.04); border-color: rgba(244,239,230,0.10); }
-
-  .interactive-card {
-    transition: border-color 150ms ease, background 150ms ease, transform 150ms ease;
-  }
+  .interactive-card { transition: transform 220ms cubic-bezier(0.25,1,0.5,1), border-color 180ms ease, box-shadow 180ms ease; }
+  .interactive-card:hover { transform: translateY(-2px); border-color: var(--color-line-strong); }
   .interactive-card:active { transform: translateY(0.5px); }
 
-  /* ----------------------------------------------------------------
-     Reveal — minimal fallback for no-JS / before framer-motion hydrates
-     180ms opacity, 8px translate — motion handles the rest in JS
-     ---------------------------------------------------------------- */
-  .reveal {
-    opacity: 0;
-    transform: translateY(8px);
-    transition: opacity 180ms ease-out, transform 180ms ease-out;
-    will-change: opacity, transform;
-  }
+  .reveal { opacity: 0; transform: translateY(8px); transition: opacity 180ms ease-out, transform 180ms ease-out; will-change: opacity, transform; }
   .reveal.is-visible { opacity: 1; transform: translateY(0); }
-  .reveal-left, .reveal-right, .reveal-up { transform: translateY(8px); }
-  .reveal-left.is-visible, .reveal-right.is-visible, .reveal-up.is-visible { transform: translateY(0); }
 
-  /* ----------------------------------------------------------------
-     Tables — brutalist notarial
-     .editorial-table kept for compat → re-skinned brutalist
-     .protocol-table = alias
-     ---------------------------------------------------------------- */
-  .editorial-table,
-  .protocol-table { border-collapse: collapse; width: 100%; font-size: 0.875rem; }
-  .editorial-table th,
-  .protocol-table th {
-    text-align: left;
-    font-family: var(--font-mono);
-    font-weight: 700;
-    font-size: 0.625rem;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--color-text-faint);
-    padding: 10px 14px;
-    border-bottom: 1.5px solid var(--color-ink);
+  .editorial-table, .protocol-table { border-collapse: collapse; width: 100%; font-size: 0.875rem; }
+  .editorial-table th, .protocol-table th {
+    text-align: left; font-family: var(--font-mono); font-weight: 700; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-text-faint);
+    padding: 10px 14px; border-bottom: 1.5px solid var(--color-ink);
   }
-  .dark .editorial-table th,
-  .dark .protocol-table th { border-bottom-color: rgba(244,239,230,0.22); }
-  .editorial-table td,
-  .protocol-table td {
-    padding: 14px;
-    border-bottom: 1px solid var(--color-hairline);
-    vertical-align: top;
-  }
-  .editorial-table tr:last-child td,
-  .protocol-table tr:last-child td { border-bottom: 1.5px solid var(--color-ink); }
-  .dark .editorial-table tr:last-child td,
-  .dark .protocol-table tr:last-child td { border-bottom-color: rgba(244,239,230,0.22); }
+  .dark .editorial-table th, .dark .protocol-table th { border-bottom-color: rgba(253,248,239,0.22); }
+  .editorial-table td, .protocol-table td { padding: 14px; border-bottom: 1px solid var(--color-hairline); vertical-align: top; }
+  .editorial-table tr:last-child td, .protocol-table tr:last-child td { border-bottom: 1.5px solid var(--color-ink); }
+  .dark .editorial-table tr:last-child td, .dark .protocol-table tr:last-child td { border-bottom-color: rgba(253,248,239,0.22); }
 
-  /* ----------------------------------------------------------------
-     Notarial elements — stamp, seal, rules, grid
-     ---------------------------------------------------------------- */
   .provenance-stamp {
-    font-family: var(--font-mono);
-    font-size: 0.625rem;
-    font-weight: 700;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--color-text-faint);
-    border: 1px solid var(--color-line-strong);
-    padding: 4px 8px;
-    border-radius: 4px;
-    background: transparent;
+    font-family: var(--font-mono); font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--color-text-faint); border: 1px solid var(--color-line-strong); padding: 4px 8px; border-radius: var(--radius-sm); background: transparent;
   }
-
-  /* .stamp: compact mono label with 1px ink border (e.g. PROTOKOŁ 12/2024) */
   .stamp {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4em;
-    font-family: var(--font-mono);
-    font-size: 0.625rem;
-    font-weight: 700;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: var(--color-ink);
-    border: 1px solid var(--color-ink);
-    padding: 5px 9px;
-    border-radius: 2px;
-    background: var(--color-paper);
-    line-height: 1;
+    display: inline-flex; align-items: center; gap: 0.4em;
+    font-family: var(--font-mono); font-size: 10px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--color-ink); border: 1px solid var(--color-ink); padding: 5px 9px; border-radius: 2px; background: var(--color-paper); line-height: 1;
   }
-  .dark .stamp { color: var(--color-paper); border-color: rgba(244,239,230,0.22); background: transparent; }
-  .stamp--seal {
-    color: var(--color-seal);
-    border-color: var(--color-seal);
-  }
+  .dark .stamp { color: var(--color-paper); border-color: rgba(253,248,239,0.22); background: transparent; }
+  .stamp--seal { color: var(--color-accent); border-color: var(--color-accent); }
   .dark .stamp--seal { color: var(--color-accent); border-color: var(--color-accent); }
 
-  /* .seal: circular notarial stamp, double border, seal red */
   .seal {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 72px;
-    height: 72px;
-    border-radius: 999px;
-    border: 1.5px solid var(--color-seal);
-    outline: 1px solid var(--color-seal);
-    outline-offset: 3px;
-    color: var(--color-seal);
-    font-family: var(--font-mono);
-    font-size: 0.58rem;
-    font-weight: 700;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    text-align: center;
-    line-height: 1.1;
-    background: transparent;
-    transform: rotate(-6deg);
-    user-select: none;
+    display: inline-flex; align-items: center; justify-content: center; width: 72px; height: 72px; border-radius: 999px;
+    border: 1.5px solid var(--color-accent); outline: 1px solid var(--color-accent); outline-offset: 3px; color: var(--color-accent);
+    font-family: var(--font-mono); font-size: 0.58rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; text-align: center; line-height: 1.1; background: transparent; transform: rotate(-6deg); user-select: none;
   }
-  .dark .seal { border-color: var(--color-accent); outline-color: var(--color-accent); color: var(--color-accent); }
   .seal--sm { width: 52px; height: 52px; font-size: 0.5rem; }
   .seal--lg { width: 96px; height: 96px; font-size: 0.66rem; }
 
-  /* protocol horizontal rule */
-  .protocol-line {
-    height: 1px;
-    background: var(--color-line-strong);
-    border: 0;
-  }
-  .protocol-line--ink {
-    height: 1.5px;
-    background: var(--color-ink);
-  }
-  .dark .protocol-line--ink { background: rgba(244,239,230,0.88); }
-
-  /* notarial rigid grid: 1px ink dividers */
-  .notarial-grid {
-    display: grid;
-    border: 1.5px solid var(--color-ink);
-    border-radius: var(--radius-sm);
-    overflow: hidden;
-    background: var(--color-paper);
-  }
-  .dark .notarial-grid { border-color: rgba(244,239,230,0.14); }
-  .notarial-grid > * {
-    border-right: 1px solid var(--color-line);
-    border-bottom: 1px solid var(--color-line);
-  }
-  .notarial-grid > *:last-child { border-right: 0; }
-
-  /* ink-rule: brutalist 2px solid rule (section divider) */
-  .ink-rule {
-    height: 2px;
-    background: var(--color-ink);
-    border: 0;
-  }
+  .protocol-line { height: 1px; background: var(--color-line-strong); border: 0; }
+  .protocol-line--ink { height: 1.5px; background: var(--color-ink); }
+  .dark .protocol-line--ink { background: rgba(253,248,239,0.88); }
+  .ink-rule { height: 2px; background: var(--color-ink); border: 0; }
   .dark .ink-rule { background: var(--color-paper); }
+
+  .poster-price {
+    font-family: var(--font-display);
+    font-weight: 400;
+    letter-spacing: -0.06em;
+    line-height: 0.88;
+    color: var(--color-accent);
+    font-size: clamp(2.8rem, 1.6rem + 4.5vw, 5.2rem);
+  }
 }
 
 @layer utilities {
   .text-balance { text-wrap: balance; }
-
-  /* legacy aliases */
   .ink-line { height: 1px; background: var(--color-ink); }
   .accent-line { height: 1px; background: var(--color-accent); }
-
-  .ink-rule { height: 2px; background: var(--color-ink); }
-  .dark .ink-rule { background: var(--color-paper); }
-
   .hairline-rule { height: 1px; background: var(--color-hairline); }
-
-  .hero-rule {
-    height: 1.5px;
-    background: var(--color-ink);
-    transform-origin: left;
-    animation: drawRule 520ms 200ms ease-out both;
-  }
+  .hero-rule { height: 1.5px; background: var(--color-ink); transform-origin: left; animation: drawRule 520ms 200ms ease-out both; }
   .dark .hero-rule { background: var(--color-paper); }
-
-  .mono-brutal {
-    font-family: var(--font-mono);
-    font-size: 0.625rem;
-    font-weight: 700;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-  }
-
-  /* notarial paper surface helper */
-  .paper-surface {
-    background: var(--color-surface);
-    border: 1.5px solid var(--color-ink);
-    border-radius: var(--radius-sm);
-  }
-  .dark .paper-surface { border-color: rgba(244,239,230,0.14); }
+  .mono-brutal { font-family: var(--font-mono); font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; }
+  .paper-surface { background: var(--color-surface); border: 1.5px solid var(--color-ink); border-radius: var(--radius-sm); }
+  .dark .paper-surface { border-color: rgba(253,248,239,0.14); }
 }
 
-/* ------------------------------------------------------------------ */
-/* Keyframes                                                          */
-/* ------------------------------------------------------------------ */
 @keyframes drawRule { from { transform: scaleX(0); } to { transform: scaleX(1); } }
 @keyframes fadeUp { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 
-/* ------------------------------------------------------------------ */
-/* Reduced motion                                                     */
-/* ------------------------------------------------------------------ */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
@@ -533,43 +406,21 @@ body::before {
 .section-shell .section-title + .section-lead { margin-top: 0.9rem; }
 
 @media (max-width: 640px) {
-  .section-shell { padding-top: 2.5rem; padding-bottom: 2.75rem; }
-  body::before { opacity: 0.022; }
+  .section-shell { padding-top: 4rem; padding-bottom: 4rem; }
+  body::before { opacity: 0.015; }
   .hero-display { font-size: clamp(2.8rem, 1rem + 9vw, 4.2rem); }
   .seal { width: 60px; height: 60px; }
+  .poster-price { font-size: clamp(2.2rem, 1.2rem + 7vw, 3.4rem); }
 }
 
-/* ==========================================================================
-   hf.pl — Super Scroll Punch (feat/catchy-scroll)
-   Lenis + GSAP ScrollTrigger foundation — slogan → section pin/scrub
-   Keeps brutalist-notarial palette; additive only, no palette overrides
-   ========================================================================== */
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+.lenis.lenis-stopped { overflow: hidden; }
+.lenis.lenis-smooth iframe { pointer-events: none; }
 
-/* --- Lenis recommended CSS --- */
-html.lenis,
-html.lenis body {
-  height: auto;
-}
-.lenis.lenis-smooth {
-  scroll-behavior: auto !important;
-}
-.lenis.lenis-smooth [data-lenis-prevent] {
-  overscroll-behavior: contain;
-}
-.lenis.lenis-stopped {
-  overflow: hidden;
-}
-.lenis.lenis-smooth iframe {
-  pointer-events: none;
-}
+.snap-section { scroll-snap-align: start; scroll-snap-stop: always; }
 
-/* --- snap-section — optional class for snap points (GSAP snap handles section snap) --- */
-.snap-section {
-  scroll-snap-align: start;
-  scroll-snap-stop: always;
-}
-
-/* --- slogan — punchy brutalist display for catchy scroll slogans --- */
 .slogan {
   font-family: var(--font-display);
   font-size: clamp(2.8rem, 1.6rem + 5vw, 6rem);
@@ -579,48 +430,19 @@ html.lenis body {
   text-wrap: balance;
 }
 
-/* --- pin-spacer — ScrollTrigger pinSpacing compat with brutalist borders --- */
-.pin-spacer {
-  pointer-events: none;
-  background: transparent;
-}
-.gsap-pin-spacer {
-  pointer-events: none;
-}
+.pin-wrapper { position: relative; }
+.gsap-pin-spacer { pointer-events: none; }
+.pin-spacer { pointer-events: none; background: transparent; }
 
-/* --- will-change for scrubbed / batched elements (GPU hint) --- */
-.evidence-row {
-  will-change: transform, opacity;
-}
-#progress {
-  will-change: transform;
-  transform-origin: left center;
-}
+.evidence-row { will-change: transform, opacity; }
+#progress { will-change: transform; transform-origin: left center; }
+#progress-vertical { will-change: transform; transform-origin: top center; }
+.scroll-progress { position: fixed; top: 0; left: 0; height: 2px; width: 100%; transform-origin: left; background: var(--color-accent); z-index: 100; }
+.section-shell { position: relative; }
 
-/* --- scroll-progress helper (fallback if JS disabled) --- */
-.scroll-progress {
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 2px;
-  width: 100%;
-  transform-origin: left;
-  background: var(--color-seal);
-  z-index: 100;
-}
-
-/* ensure section-shell works with pinSpacing (no overflow clip on pin parent) */
-.section-shell {
-  position: relative;
-}
-
-/* ==========================================================================
-   Self-hosted fonts — unchanged paths, compatible with Cloudflare Pages
-   ========================================================================== */
 @font-face { font-family: 'Satoshi'; src: url('/fonts/satoshi-400.woff2') format('woff2'); font-weight: 400; font-display: swap; font-style: normal; }
 @font-face { font-family: 'Satoshi'; src: url('/fonts/satoshi-500.woff2') format('woff2'); font-weight: 500; font-display: swap; font-style: normal; }
 @font-face { font-family: 'Satoshi'; src: url('/fonts/satoshi-700.woff2') format('woff2'); font-weight: 700; font-display: swap; font-style: normal; }
-/* Satoshi Mono — uses system ui-monospace stack (no woff2 yet). Keep token --font-mono as system fallback. */
 @font-face { font-family: 'Instrument Serif'; src: url('/fonts/instrument-serif-regular-latin.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: swap; unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
 @font-face { font-family: 'Instrument Serif'; src: url('/fonts/instrument-serif-regular-latin-ext.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: swap; unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF; }
 @font-face { font-family: 'Instrument Serif'; src: url('/fonts/instrument-serif-italic-latin.woff2') format('woff2'); font-weight: 400; font-style: italic; font-display: swap; unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }

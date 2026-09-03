@@ -35,10 +35,9 @@ export function UseCases() {
     try {
       gsap.registerPlugin(ScrollTrigger);
       ctx = gsap.context(() => {
-        // horizontal scrub for marquee track
         if (trackRef.current) {
           gsap.to(trackRef.current, {
-            xPercent: -22,
+            xPercent: -18,
             ease: 'none',
             scrollTrigger: {
               trigger: sectionRef.current,
@@ -48,20 +47,6 @@ export function UseCases() {
             },
           });
         }
-        // parallax for evidence rows data-speed
-        const rows = gsap.utils.toArray('[data-speed="0.5"]');
-        rows.forEach((row) => {
-          gsap.to(row, {
-            yPercent: -6,
-            ease: 'none',
-            scrollTrigger: {
-              trigger: row,
-              start: 'top bottom',
-              end: 'bottom top',
-              scrub: 0.8,
-            },
-          });
-        });
       }, sectionRef);
     } catch {
       // ignore
@@ -83,67 +68,62 @@ export function UseCases() {
   return (
     <motion.section
       ref={sectionRef}
-      className="section-shell hairline-top overflow-hidden"
+      className="section-shell hairline-top overflow-hidden bg-[#f6f1e8] dark:bg-[#0a0a0a]"
       id="usecases"
-      style={{ borderTopWidth: '1.5px', borderTopColor: 'var(--color-ink, #080808)' }}
+      style={{ borderTopWidth: '1.5px', borderTopColor: 'var(--color-ink, #0a0a0a)' }}
       initial={shouldReduceMotion ? false : 'hidden'}
       whileInView="visible"
       viewport={{ once: true, amount: 0.12 }}
       variants={container}
     >
       <div className="section-frame">
-        <motion.div variants={shouldReduceMotion ? undefined : item} className="max-w-[34rem]">
-          <div className="eyebrow">{t('use_overline')}</div>
-          <h2
-            className="mt-3 font-display leading-[0.85] tracking-[-0.05em] text-ink dark:text-paper"
-            style={{ fontFamily: 'Instrument Serif, Georgia, serif', fontSize: 'clamp(2.4rem, 1.2rem + 3vw, 4rem)' }}
-          >
-            JEDEN SKRÓT. <span className="text-[#8b1a1a]">WSZYSTKIE MARKI.</span>
-          </h2>
-          <p
-            className="mt-4 text-text-muted"
-            style={{ fontSize: '0.88rem', lineHeight: '1.6', display: '-webkit-box', WebkitLineClamp: 1, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}
-          >
-            {t('use_desc')}
-          </p>
-          <div
-            className="mt-5 inline-flex items-center gap-2 border px-3 py-1"
-            style={{ borderColor: 'var(--color-ink)', borderWidth: '1px', borderRadius: 0 }}
-          >
-            <span className="h-1.5 w-1.5 rounded-full" aria-hidden="true" style={{ background: '#8b1a1a' }} />
-            <span className="mono !text-ink dark:!text-paper" style={{ letterSpacing: '0.14em' }}>
-              HF → hf.pl • PARASOL BEZ REBRANDU
-            </span>
-          </div>
-        </motion.div>
+        <div className="swiss-grid">
+          <motion.div variants={shouldReduceMotion ? undefined : item} className="swiss-content max-w-[34rem]">
+            <div className="eyebrow">{t('use_overline')}</div>
+            <h2
+              className="mt-3 font-display leading-[0.85] tracking-[-0.06em] text-[#0a0a0a] dark:text-[#fdf8ef]"
+              style={{ fontFamily: 'Instrument Serif, Georgia, serif', fontSize: 'clamp(2.4rem, 1.2rem + 3vw, 4rem)' }}
+            >
+              JEDEN SKRÓT. <span className="text-[#e30613] dark:text-[#ff1a2b]">WSZYSTKIE MARKI.</span>
+            </h2>
+            <p className="mt-4 font-body text-[15px] leading-6 text-[#4a4642] dark:text-[#fdf8ef]/65">
+              {t('use_desc')}
+            </p>
+            <div className="mt-5 inline-flex items-center gap-2 border border-[rgba(10,10,10,0.08)] bg-white px-3 py-2 dark:border-white/10 dark:bg-[#141414]" style={{ borderRadius: '4px' }}>
+              <span className="signal-dot" aria-hidden="true" />
+              <span className="font-mono text-[10px] font-bold uppercase tracking-[0.14em] text-[#0a0a0a] dark:text-[#fdf8ef]">HF → hf.pl • PARASOL BEZ REBRANDU</span>
+            </div>
+          </motion.div>
+        </div>
 
-        {/* Marquee showcase — horizontal scrub */}
-        <motion.div variants={shouldReduceMotion ? undefined : item} className="mt-8 overflow-hidden border-y border-[var(--color-hairline)] py-3">
+        {/* Marquee showcase — Swiss signal red badge outline, scrub */}
+        <motion.div variants={shouldReduceMotion ? undefined : item} className="mt-8 overflow-hidden border-y border-[rgba(10,10,10,0.06)] py-3 dark:border-white/10">
           <div ref={trackRef} className="flex gap-3 will-change-transform" style={{ width: 'max-content' }}>
             {marqueeTiles.map((tile) => (
               <div
                 key={tile.k}
-                className="flex min-w-[280px] items-center justify-between border border-[#080808] bg-[#efebe3] px-5 py-5 dark:border-white/15 dark:bg-[#111318] sm:min-w-[360px] sm:px-6"
+                className="flex min-w-[280px] items-center justify-between border border-[rgba(10,10,10,0.08)] bg-[#fdf8ef] px-5 py-5 dark:border-white/10 dark:bg-[#141414] sm:min-w-[360px] sm:px-6"
+                style={{ borderRadius: '4px' }}
               >
-                <span className="font-display text-[1.7rem] tracking-[-0.04em] text-[#080808] dark:text-[#efebe3] sm:text-[2rem]" style={{ fontFamily: 'Instrument Serif, Georgia, serif' }}>
+                <span className="font-display text-[1.7rem] tracking-[-0.06em] text-[#0a0a0a] dark:text-[#fdf8ef] sm:text-[2rem]" style={{ fontFamily: 'Instrument Serif, Georgia, serif' }}>
                   {tile.k}
                 </span>
-                <span className="font-mono text-[0.62rem] uppercase tracking-[0.14em] text-[#8b1a1a]">{tile.sub}</span>
+                <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-[#e30613] dark:text-[#ff1a2b]">{tile.sub}</span>
               </div>
             ))}
-            <div className="flex min-w-[280px] items-center justify-between border border-dashed border-[#080808]/30 bg-transparent px-5 py-5 sm:min-w-[360px] sm:px-6">
-              <span className="font-display text-[1.7rem] tracking-[-0.04em] text-[#080808]/70 dark:text-[#efebe3]/70 sm:text-[2rem]" style={{ fontFamily: 'Instrument Serif, Georgia, serif' }}>
+            <div className="flex min-w-[280px] items-center justify-between border border-dashed border-[rgba(10,10,10,0.18)] bg-transparent px-5 py-5 sm:min-w-[360px] sm:px-6" style={{ borderRadius: '4px' }}>
+              <span className="font-display text-[1.7rem] tracking-[-0.06em] text-[#0a0a0a]/70 dark:text-[#fdf8ef]/70 sm:text-[2rem]" style={{ fontFamily: 'Instrument Serif, Georgia, serif' }}>
                 YOURS
               </span>
-              <span className="font-mono text-[0.62rem] uppercase tracking-[0.14em] text-[#080808]/50 dark:text-[#efebe3]/50">Twoja narracja → hf.pl</span>
+              <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-[#8a8683]">Twoja narracja → hf.pl</span>
             </div>
           </div>
         </motion.div>
 
         <motion.div
           variants={container}
-          className="mt-6 grid gap-0 border-y"
-          style={{ borderColor: 'var(--color-hairline)', borderTopWidth: '1px', borderBottomWidth: '1px' }}
+          className="mt-6 grid gap-0 border-y border-[rgba(10,10,10,0.06)] dark:border-white/10"
+          style={{ borderTopWidth: '1px', borderBottomWidth: '1px' }}
         >
           {useCasesList.map((useCase) => {
             const domainLabel = useCase.domain || t(useCase.i18nDomainKey);
@@ -153,28 +133,24 @@ export function UseCases() {
                 variants={item}
                 className="evidence-row flex gap-4 px-2 py-4 items-center"
                 style={{ borderTop: '1px solid var(--color-hairline)' }}
-                data-speed="0.5"
               >
                 <div className="hidden sm:flex shrink-0 w-28 flex-col gap-1">
-                  <span className="mono" style={{ color: '#8b1a1a', fontSize: '0.58rem' }}>
+                  <span className="font-mono text-[10px] font-bold uppercase tracking-[0.18em] text-[#e30613] dark:text-[#ff1a2b]">
                     — {useCase.code}
                   </span>
-                  <span className="mono !normal-case" style={{ textTransform: 'none', letterSpacing: '0.06em', fontSize: '0.62rem' }}>
+                  <span className="font-mono text-[10px] font-bold tracking-[0.06em] text-[#8a8683]" style={{ textTransform: 'none', letterSpacing: '0.06em' }}>
                     {domainLabel}
                   </span>
                 </div>
                 <div className="min-w-0 flex-1 flex items-baseline gap-3">
-                  <h3 className="text-[0.95rem] font-semibold tracking-[-0.01em] text-ink dark:text-paper leading-5 shrink-0">
-                    {domainLabel} <span className="text-text-faint font-normal">→ hf.pl</span>
+                  <h3 className="text-[15px] font-semibold tracking-[-0.01em] text-[#0a0a0a] dark:text-[#fdf8ef] leading-5 shrink-0" style={{ fontFamily: 'Satoshi, sans-serif', fontWeight: 700 }}>
+                    {domainLabel} <span className="text-[#8a8683] font-normal">→ hf.pl</span>
                   </h3>
-                  <p
-                    className="hidden sm:block text-text-muted"
-                    style={{ fontSize: '0.88rem', lineHeight: '1.5', display: '-webkit-box', WebkitLineClamp: 1, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}
-                  >
+                  <p className="hidden sm:block font-body text-[15px] leading-6 text-[#4a4642] dark:text-[#fdf8ef]/60 line-clamp-1">
                     {t(useCase.i18nKey)}
                   </p>
                 </div>
-                <span className="sm:hidden font-mono text-[0.58rem] uppercase tracking-[0.12em] text-[#8b1a1a]">{useCase.code}</span>
+                <span className="sm:hidden font-mono text-[10px] uppercase tracking-[0.12em] text-[#e30613] dark:text-[#ff1a2b]">{useCase.code}</span>
               </motion.article>
             );
           })}

@@ -26,7 +26,7 @@ export function Contact() {
         if (sloganRef.current) {
           gsap.fromTo(
             sloganRef.current,
-            { xPercent: -2, opacity: 0.85 },
+            { xPercent: -2, opacity: 0.88 },
             {
               xPercent: 0,
               opacity: 1,
@@ -71,66 +71,61 @@ export function Contact() {
   return (
     <motion.section
       ref={sectionRef}
-      className="section-shell hairline-top"
+      className="section-shell hairline-top bg-[#f6f1e8] dark:bg-[#0a0a0a]"
       id="contact"
-      style={{ borderTopWidth: '1.5px', borderTopColor: 'var(--color-ink, #080808)' }}
+      style={{ borderTopWidth: '1.5px', borderTopColor: 'var(--color-ink, #0a0a0a)' }}
       initial={shouldReduceMotion ? false : 'hidden'}
       whileInView="visible"
       viewport={{ once: true, amount: 0.12 }}
       variants={container}
     >
-      <div className="section-frame grid gap-10 lg:grid-cols-[0.88fr_1.12fr] lg:gap-14 lg:items-start">
-        {/* Left — slogan ZANIM KONKURENT. */}
-        <motion.div variants={shouldReduceMotion ? undefined : item} className="max-w-[36rem]">
+      <div className="section-frame swiss-grid gap-10 lg:gap-14 lg:items-start">
+        {/* Left — slogan ZANIM KONKURENT. — Swiss */}
+        <motion.div variants={shouldReduceMotion ? undefined : item} className="col-span-12 lg:col-span-5 max-w-[36rem]">
           <div className="eyebrow">{t('contact_overline')}</div>
           <h2
             ref={sloganRef}
-            className="mt-3 font-display leading-[0.85] tracking-[-0.05em] text-ink dark:text-paper will-change-transform"
+            className="mt-3 font-display leading-[0.85] tracking-[-0.06em] text-[#0a0a0a] dark:text-[#fdf8ef] will-change-transform"
             style={{ fontFamily: 'Instrument Serif, Georgia, serif', fontSize: 'clamp(2.8rem, 1.6rem + 4vw, 5rem)' }}
           >
-            ZANIM <span className="text-[#8b1a1a]">KONKURENT.</span>
+            ZANIM <span className="text-[#e30613] dark:text-[#ff1a2b]">KONKURENT.</span>
           </h2>
-          <p
-            className="mt-4 max-w-[34rem] text-text-muted"
-            style={{ fontSize: '0.88rem', lineHeight: '1.6', display: '-webkit-box', WebkitLineClamp: 1, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}
-          >
+          <div className="mt-4 h-[2px] w-16 bg-[#e30613] dark:bg-[#ff1a2b]" aria-hidden="true" />
+          <p className="mt-4 max-w-[34rem] font-body text-[15px] leading-6 text-[#4a4642] dark:text-[#fdf8ef]/60">
             {t('contact_desc')}
           </p>
-          <p
-            className="mt-3 max-w-[34rem] text-text-muted"
-            style={{ fontSize: '0.84rem', lineHeight: '1.6', display: '-webkit-box', WebkitLineClamp: 1, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}
-          >
+          <p className="mt-3 max-w-[34rem] font-body text-[14px] leading-6 text-[#4a4642]/85 dark:text-[#fdf8ef]/50">
             {t('contact_info')}
           </p>
-          {/* CTA ink — brutalist */}
           <motion.a
             href="mailto:domain@hf.pl"
             onClick={() => trackEvent('cta_click', { location: 'contact_hero', target: 'mailto' })}
             whileHover={shouldReduceMotion ? undefined : { y: -1 }}
             whileTap={shouldReduceMotion ? undefined : { y: 0 }}
-            className="mt-6 inline-flex items-center gap-2 border border-[#080808] bg-[#080808] px-6 py-3 font-mono text-[0.76rem] font-semibold uppercase tracking-[0.14em] text-[#efebe3] no-underline hover:bg-transparent hover:text-[#080808] dark:border-[#efebe3] dark:bg-[#efebe3] dark:text-[#080808] dark:hover:bg-transparent dark:hover:text-[#efebe3]"
+            className="mt-6 inline-flex items-center gap-2 border border-[#0a0a0a] bg-[#0a0a0a] px-6 py-3 font-mono text-[0.74rem] font-bold uppercase tracking-[0.14em] text-[#f6f1e8] no-underline hover:bg-transparent hover:text-[#0a0a0a] dark:border-[#fdf8ef] dark:bg-[#fdf8ef] dark:text-[#0a0a0a] dark:hover:bg-transparent dark:hover:text-[#fdf8ef]"
+            style={{ borderRadius: '4px' }}
           >
             NAPISZ TERAZ — domain@hf.pl
             <ArrowRight size={15} aria-hidden="true" />
           </motion.a>
-          <p className="mono mt-3 flex items-center gap-2">
-            <span className="h-px w-6" aria-hidden="true" style={{ background: '#080808' }} />
-            <span>NASK • 1996 • PL-676 — {t('provenance_label')}</span>
+          <p className="mono mt-4 flex items-center gap-2" style={{ color: '#8a8683' }}>
+            <span className="h-px w-6 bg-[#0a0a0a]/18 dark:bg-white/15 hidden sm:block" aria-hidden="true" />
+            <span className="provenance">NASK • 1996 • PL-676 — {t('provenance_label')}</span>
           </p>
         </motion.div>
 
-        {/* Right — protocol-card brut: square, 1.5px ink, hairline rows */}
+        {/* Right — Swiss protocol-card: square, hairline rows, radius 4 */}
         <motion.div
           variants={shouldReduceMotion ? undefined : item}
-          className="overflow-hidden bg-paper dark:bg-surface p-6 sm:p-7 lg:p-8 will-change-transform"
-          style={{ border: '1.5px solid var(--color-ink, #080808)', borderRadius: 0 }}
+          className="col-span-12 lg:col-span-7 overflow-hidden bg-[#fdf8ef] dark:bg-[#141414] p-6 sm:p-7 lg:p-8 will-change-transform"
+          style={{ border: '1.5px solid var(--color-ink, #0a0a0a)', borderRadius: '4px' }}
         >
           <div className="flex flex-col gap-3 sm:flex-row">
             <a
               href="mailto:domain@hf.pl"
               onClick={() => trackEvent('cta_click', { location: 'contact', target: 'mailto' })}
-              className="inline-flex flex-1 items-center justify-center gap-2 px-5 py-3 text-[0.86rem] font-semibold tracking-[-0.01em] no-underline transition-colors"
-              style={{ background: '#080808', color: '#efebe3', border: '1.5px solid #080808', borderRadius: 0 }}
+              className="inline-flex flex-1 items-center justify-center gap-2 px-5 py-3 text-[0.86rem] font-bold tracking-[-0.01em] no-underline transition-colors"
+              style={{ background: '#0a0a0a', color: '#f6f1e8', border: '1.5px solid #0a0a0a', borderRadius: '4px' }}
             >
               <Mail size={16} aria-hidden="true" />
               {t('contact_email_label')}
@@ -139,37 +134,37 @@ export function Contact() {
               type="button"
               onClick={handleCopy}
               aria-label={copied ? t('copied') : 'domain@hf.pl — copy to clipboard'}
-              className="inline-flex flex-1 items-center justify-center gap-2 px-5 py-3 text-[0.86rem] font-semibold tracking-[-0.01em] transition-colors"
+              className="inline-flex flex-1 items-center justify-center gap-2 px-5 py-3 text-[0.86rem] font-bold tracking-[-0.01em] transition-colors"
               style={{
-                background: 'var(--color-paper, #efebe3)',
-                color: '#080808',
-                border: '1px solid var(--color-hairline)',
-                borderRadius: 0,
+                background: '#f6f1e8',
+                color: '#0a0a0a',
+                border: '1px solid rgba(10,10,10,0.08)',
+                borderRadius: '4px',
               }}
             >
-              {copied ? <Check size={16} aria-hidden="true" style={{ color: '#8b1a1a' }} /> : <Copy size={16} aria-hidden="true" />}
+              {copied ? <Check size={16} aria-hidden="true" style={{ color: '#e30613' }} /> : <Copy size={16} aria-hidden="true" />}
               {copied ? t('copied') : 'domain@hf.pl'}
             </button>
           </div>
 
-          <div className="mt-6 border-y" style={{ borderColor: 'var(--color-hairline)', borderTopWidth: '1px', borderBottomWidth: '1px' }}>
+          <div className="mt-6 border-y border-[rgba(10,10,10,0.06)] dark:border-white/10" style={{ borderTopWidth: '1px', borderBottomWidth: '1px' }}>
             {['cl1', 'cl2', 'cl3'].map((key, index) => (
               <div
                 key={key}
                 className="evidence-row flex gap-4 px-1 py-4 sm:px-2 sm:py-5"
                 style={{ borderTop: '1px solid var(--color-hairline)' }}
               >
-                <span className="mono shrink-0 pt-0.5 tabular-nums" aria-hidden="true" style={{ color: '#8b1a1a', fontSize: '0.65rem' }}>
+                <span className="mono shrink-0 pt-0.5 tabular-nums" aria-hidden="true" style={{ color: '#e30613', fontSize: '10px' }}>
                   0{index + 1}
                 </span>
-                <span className="text-sm leading-6 text-text-muted line-clamp-1" style={{ display: '-webkit-box', WebkitLineClamp: 1, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
+                <span className="text-[15px] leading-6 text-[#4a4642] dark:text-[#fdf8ef]/70 line-clamp-1">
                   {t(key)}
                 </span>
               </div>
             ))}
           </div>
 
-          <p className="mono mt-5 text-center" style={{ letterSpacing: '0.14em', color: 'var(--color-text-faint)' }}>
+          <p className="mono mt-5 text-center" style={{ letterSpacing: '0.14em', color: '#8a8683' }}>
             Odpowiedź w 24h • NDA • HF.PL — ZANIM KONKURENT
           </p>
         </motion.div>

@@ -25,7 +25,7 @@ function App() {
     trackPageView(i18n.resolvedLanguage || i18n.language || 'pl');
   }, [i18n.language, i18n.resolvedLanguage]);
 
-  // reveal observer — keeps brutalist fallback, enhanced by GSAP batch below
+  // reveal observer — Swiss fallback, GSAP batch is progressive enhancement
   useEffect(() => {
     const elements = Array.from(document.querySelectorAll('.reveal'));
     if (!elements.length) return undefined;
@@ -48,16 +48,15 @@ function App() {
     return () => observer.disconnect();
   }, []);
 
-  // Lenis + GSAP ScrollTrigger — super scroll foundation
+  // Lenis + GSAP — Signal Swiss: Lenis duration 1.0, pinSpacing true, no overlap
   useEffect(() => {
-    // respect reduced motion: skip smooth + scrub, keep static progress hidden
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (prefersReduced) return undefined;
 
     gsap.registerPlugin(ScrollTrigger);
 
     const lenis = new Lenis({
-      duration: 1.1,
+      duration: 1.0,
       smoothWheel: true,
       smoothTouch: false,
       gestureOrientation: 'vertical',
@@ -65,10 +64,8 @@ function App() {
     });
     lenisRef.current = lenis;
 
-    // Sync ScrollTrigger on Lenis scroll
     lenis.on('scroll', ScrollTrigger.update);
 
-    // RAF loop — mirrors Lenis docs; ticker also added for GSAP lagSmoothing compat
     function raf(time) {
       lenis.raf(time);
       rafIdRef.current = requestAnimationFrame(raf);
@@ -79,7 +76,7 @@ function App() {
     gsap.ticker.add(tickerHandler);
     gsap.ticker.lagSmoothing(0);
 
-    // scroll progress bar — scrub from 0 to 1 across whole doc
+    // horizontal scroll progress — signal red 2px
     gsap.to('#progress', {
       scaleX: 1,
       ease: 'none',
@@ -91,25 +88,25 @@ function App() {
       },
     });
 
-    // evidence-row stagger reveal — punchy, subtle (12-16px)
+    // evidence rows — y12 stagger 0.06 (brief) — Swiss batch
     ScrollTrigger.batch('.evidence-row', {
       onEnter: (els) =>
         gsap.fromTo(
           els,
-          { y: 16, opacity: 0 },
-          { y: 0, opacity: 1, duration: 0.45, ease: 'power2.out', stagger: 0.07, overwrite: true },
+          { y: 12, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.48, ease: 'power2.out', stagger: 0.06, overwrite: true },
         ),
-      start: 'top 92%',
+      start: 'top 94%',
       once: true,
     });
 
-    // generic reveal enhancement — complements observer (GSAP as progressive enhancement)
+    // generic reveal complement
     ScrollTrigger.batch('.reveal', {
       onEnter: (els) =>
         gsap.to(els, {
           y: 0,
           opacity: 1,
-          duration: 0.4,
+          duration: 0.42,
           ease: 'power2.out',
           stagger: 0.05,
           overwrite: true,
@@ -117,22 +114,10 @@ function App() {
       start: 'top 92%',
     });
 
-    // lightweight section snap — lenis + gsap snap can conflict, so keep snap soft (0.1)
-    // sections.length-aware snap; snap 1/(n-1) with tolerance so it feels punchy not janky
-    const sections = document.querySelectorAll('.section-shell');
-    let snapTrigger;
-    if (sections.length > 1) {
-      snapTrigger = ScrollTrigger.create({
-        snap: 1 / (sections.length - 1),
-        // delay + duration keep snap subtle; lenis smooth handles the glide
-        // ScrollTrigger snap is 0.1-scale soft — adjust as content slogans evolve
-      });
-      // Fallback soft snap value per spec: 0.1 tolerance
-      if (snapTrigger && snapTrigger.vars) {
-        snapTrigger.vars.snap = 0.1;
-      }
-    }
+    // hero split — clipPath inset scrub 0.7 (brief): done inside Hero component via context
+    // scarcity WORD pin is inside Scarcity component with pinSpacing true
 
+    // ensure ScrollTrigger measures after fonts/lenis
     ScrollTrigger.refresh();
 
     return () => {
@@ -145,16 +130,25 @@ function App() {
   }, []);
 
   return (
-    <div className="flex min-h-screen flex-col">
-      {/* scroll progress — fixed top, GSAP drives scaleX 0→1 */}
+    <div className="flex min-h-screen flex-col bg-[#f6f1e8] dark:bg-[#0a0a0a]">
+      {/* scroll progress — signal red 2px top */}
       <div
         id="progress"
-        className="fixed top-0 left-0 h-[2px] w-full bg-[#8b1a1a] z-[100] origin-left scale-x-0 will-change-transform"
+        className="fixed top-0 left-0 h-[2px] w-full bg-[#e30613] z-[100] origin-left scale-x-0 will-change-transform dark:bg-[#ff1a2b]"
         aria-hidden="true"
       />
+      {/* Swiss 12col grid lines — faint vertical hairlines (desktop) */}
+      <div className="swiss-grid-overlay" aria-hidden="true">
+        <div className="swiss-grid-overlay__inner">
+          {Array.from({ length: 12 }).map((_, i) => (
+            <div key={i} className="swiss-grid-overlay__col" />
+          ))}
+        </div>
+      </div>
+
       <SEO />
       <Navigation />
-      <main id="main" className="flex-1">
+      <main id="main" className="flex-1 relative z-[1]">
         <Hero />
         <WhySection />
         <UseCases />

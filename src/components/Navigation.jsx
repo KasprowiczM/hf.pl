@@ -92,41 +92,43 @@ export function Navigation() {
 
   return (
     <>
-      <a href="#main" className="sr-only absolute left-0 top-0 z-[999] bg-[#080808] px-4 py-3 text-[#efebe3] focus:not-sr-only">
+      <a href="#main" className="sr-only absolute left-0 top-0 z-[999] bg-[#0a0a0a] px-4 py-3 text-[#f6f1e8] focus:not-sr-only">
         {t('skip')}
       </a>
       <motion.header
-        initial={{ y: -16, opacity: 0 }}
+        initial={{ y: -12, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ type: 'spring', stiffness: 340, damping: 28, mass: 0.7 }}
-        className="fixed inset-x-0 top-0 z-50 border-b border-[#080808] bg-[#efebe3]/90 backdrop-blur-[2px] dark:border-white/15 dark:bg-[#080808]/90"
+        className="fixed inset-x-0 top-0 z-50 border-b border-[rgba(10,10,10,0.08)] bg-[#f6f1e8]/92 backdrop-blur-[8px] dark:border-white/10 dark:bg-[#0a0a0a]/88"
       >
         <nav
-          className="section-frame flex h-[56px] items-center justify-between gap-4 px-3 sm:px-4 lg:px-8"
+          className="section-frame flex h-[52px] items-center justify-between gap-4 px-4 sm:px-6 lg:px-10"
           aria-label="Main navigation"
         >
-          {/* left: brutalist stamp */}
+          {/* left: Swiss wordmark + red dot + PL-676 badge red outline */}
           <a href="#hero" className="flex items-center gap-3 no-underline shrink-0">
             <span
-              className="font-display text-[1.65rem] leading-none tracking-[-0.04em] text-[#080808] dark:text-[#efebe3]"
-              style={{ fontFamily: 'Instrument Serif, Georgia, serif' }}
+              className="flex items-baseline gap-[1px] font-display leading-none tracking-[-0.04em] text-[#0a0a0a] dark:text-[#fdf8ef]"
+              style={{ fontFamily: 'Instrument Serif, Georgia, serif', fontSize: '1.55rem' }}
             >
-              hf<span className="text-[#080808]/40 dark:text-[#efebe3]/40">.pl</span>
+              <span>hf</span>
+              <span className="signal-dot relative -top-[0.55em] ml-[1px]" aria-hidden="true" />
+              <span className="text-[#0a0a0a]/35 dark:text-[#fdf8ef]/40 text-[1.5rem] tracking-[-0.03em]">.pl</span>
             </span>
-            <span className="hidden sm:inline-flex h-[26px] w-[64px] items-center justify-center border border-[#8b1a1a] bg-transparent px-2 font-mono text-[0.60rem] font-semibold tracking-[0.14em] text-[#8b1a1a] dark:border-[#efebe3]/70 dark:text-[#efebe3]">
+            <span className="hidden sm:inline-flex items-center justify-center border border-[#e30613] bg-transparent px-2 py-1 font-mono text-[0.58rem] font-bold tracking-[0.16em] text-[#e30613] dark:border-[#ff1a2b] dark:text-[#ff1a2b]" style={{ borderRadius: '4px' }}>
               PL-676
             </span>
           </a>
 
-          {/* center: mono capitals */}
-          <div className="hidden items-center gap-5 lg:flex">
+          {/* center: mono caps — Swiss tracking 0.14em */}
+          <div className="hidden items-center gap-6 lg:flex">
             {navItems.map(({ key, href }) => {
               const label = brutalistLabels[key]?.[i18n.language] || brutalistLabels[key]?.pl || t(key);
               return (
                 <a
                   key={key}
                   href={href}
-                  className="font-mono text-[0.70rem] font-medium uppercase tracking-[0.14em] text-[#080808] no-underline hover:text-[#8b1a1a] dark:text-[#efebe3]/80 dark:hover:text-[#efebe3]"
+                  className="font-mono text-[0.66rem] font-semibold tracking-[0.14em] uppercase text-[#0a0a0a]/70 no-underline hover:text-[#e30613] dark:text-[#fdf8ef]/65 dark:hover:text-[#ff1a2b]"
                 >
                   {label}
                 </a>
@@ -136,9 +138,10 @@ export function Navigation() {
 
           {/* right */}
           <div className="flex items-center gap-1.5 sm:gap-2">
-            {/* brutalist language toggle PL [x] EN [ ] */}
+            {/* language — PL [x] EN [ ] — Swiss ink border 1px */}
             <div
-              className="flex items-center gap-2 border border-[#080808] bg-transparent px-2 py-1.5 dark:border-[#efebe3]/30"
+              className="flex items-center gap-2 border border-[rgba(10,10,10,0.14)] bg-transparent px-2 py-1.5 dark:border-white/18"
+              style={{ borderRadius: '4px' }}
               role="group"
               aria-label={t('language_switch')}
             >
@@ -151,27 +154,27 @@ export function Navigation() {
                     onClick={() => changeLanguage(lang)}
                     aria-pressed={active}
                     aria-label={lang.toUpperCase()}
-                    className={`inline-flex items-center font-mono text-[0.68rem] font-semibold uppercase tracking-[0.14em] transition-colors ${
+                    className={`inline-flex items-center font-mono text-[0.66rem] font-bold uppercase tracking-[0.14em] transition-colors ${
                       active
-                        ? 'text-[#080808] dark:text-[#efebe3]'
-                        : 'text-[#8d857b] hover:text-[#080808] dark:text-white/40 dark:hover:text-[#efebe3]'
+                        ? 'text-[#0a0a0a] dark:text-[#fdf8ef]'
+                        : 'text-[#8a8683] hover:text-[#0a0a0a] dark:text-white/40 dark:hover:text-[#fdf8ef]'
                     }`}
                   >
                     <span>{lang.toUpperCase()}</span>
-                    <span aria-hidden="true" className="ml-1 hidden sm:inline text-[#080808]/60 dark:text-white/40">
+                    <span aria-hidden="true" className="ml-1 hidden sm:inline text-[#0a0a0a]/50 dark:text-white/30">
                       [
                     </span>
                     <span
                       aria-hidden="true"
-                      className={`hidden sm:inline-flex h-[11px] w-[11px] items-center justify-center border text-[9px] leading-none ${
+                      className={`hidden sm:inline-flex h-[11px] w-[11px] items-center justify-center border text-[8px] leading-none ${
                         active
-                          ? 'border-[#8b1a1a] bg-[#8b1a1a] text-white'
-                          : 'border-[#080808]/25 dark:border-white/25'
+                          ? 'border-[#e30613] bg-[#e30613] text-white dark:border-[#ff1a2b] dark:bg-[#ff1a2b]'
+                          : 'border-[rgba(10,10,10,0.22)] dark:border-white/20'
                       }`}
                     >
                       {active ? '×' : ''}
                     </span>
-                    <span aria-hidden="true" className="hidden sm:inline text-[#080808]/60 dark:text-white/40">
+                    <span aria-hidden="true" className="hidden sm:inline text-[#0a0a0a]/50 dark:text-white/30">
                       ]
                     </span>
                   </button>
@@ -180,7 +183,8 @@ export function Navigation() {
             </div>
 
             <div
-              className="hidden sm:flex items-center gap-0.5 border border-[#080808] bg-transparent px-1 py-1 dark:border-[#efebe3]/30"
+              className="hidden sm:flex items-center gap-0.5 border border-[rgba(10,10,10,0.14)] bg-transparent px-1 py-1 dark:border-white/18"
+              style={{ borderRadius: '4px' }}
               role="group"
               aria-label={t('font_size')}
             >
@@ -189,11 +193,11 @@ export function Navigation() {
                 onClick={decreaseFontSize}
                 aria-label={t('font_decrease')}
                 disabled={fontScale <= 0.9}
-                className="px-1.5 py-1 text-[#080808]/60 hover:text-[#080808] disabled:opacity-30 dark:text-white/50 dark:hover:text-[#efebe3]"
+                className="px-1.5 py-1 text-[#0a0a0a]/55 hover:text-[#0a0a0a] disabled:opacity-30 dark:text-white/50 dark:hover:text-[#fdf8ef]"
               >
                 <Type className="h-3 w-3 sm:h-3.5 sm:w-3.5" aria-hidden="true" />
               </button>
-              <span className="px-1 font-mono text-[0.65rem] font-semibold tracking-[0.12em] text-[#080808]/40 dark:text-white/30" aria-hidden="true">
+              <span className="px-1 font-mono text-[0.60rem] font-bold tracking-[0.12em] text-[#0a0a0a]/30 dark:text-white/30" aria-hidden="true">
                 A
               </span>
               <button
@@ -201,21 +205,22 @@ export function Navigation() {
                 onClick={increaseFontSize}
                 aria-label={t('font_increase')}
                 disabled={fontScale >= 1.2}
-                className="px-1.5 py-1 text-[#080808]/60 hover:text-[#080808] disabled:opacity-30 dark:text-white/50 dark:hover:text-[#efebe3]"
+                className="px-1.5 py-1 text-[#0a0a0a]/55 hover:text-[#0a0a0a] disabled:opacity-30 dark:text-white/50 dark:hover:text-[#fdf8ef]"
               >
                 <Type className="h-4 w-4 sm:h-4.5 sm:w-4.5" aria-hidden="true" />
               </button>
             </div>
 
             <div
-              className="flex items-center border border-[#080808] bg-transparent p-0.5 dark:border-[#efebe3]/30"
+              className="flex items-center border border-[rgba(10,10,10,0.14)] bg-transparent p-0.5 dark:border-white/18"
+              style={{ borderRadius: '4px' }}
               role="group"
               aria-label={t('theme_switch')}
             >
               <button
                 type="button"
                 onClick={cycleTheme}
-                className="px-2 py-1.5 text-[#080808]/60 hover:text-[#080808] dark:text-white/60 dark:hover:text-[#efebe3]"
+                className="px-2 py-1.5 text-[#0a0a0a]/60 hover:text-[#0a0a0a] dark:text-white/60 dark:hover:text-[#fdf8ef]"
               >
                 {theme === 'dark' && <Sun className="h-4 w-4" aria-hidden="true" />}
                 {theme === 'light' && <Moon className="h-4 w-4" aria-hidden="true" />}
@@ -226,14 +231,18 @@ export function Navigation() {
               </button>
             </div>
 
-            <a
+            <motion.a
+              whileHover={{ y: -1 }}
+              whileTap={{ y: 0 }}
+              transition={{ type: 'spring', stiffness: 400, damping: 20 }}
               href="#contact"
               onClick={() => trackEvent('cta_click', { location: 'navigation', target: 'contact' })}
-              className="hidden sm:inline-flex items-center gap-1.5 border border-[#080808] bg-[#080808] px-4 py-2 font-mono text-[0.70rem] font-semibold uppercase tracking-[0.14em] text-[#efebe3] no-underline hover:bg-transparent hover:text-[#080808] dark:border-[#efebe3] dark:bg-[#efebe3] dark:text-[#080808] dark:hover:bg-transparent dark:hover:text-[#efebe3]"
+              className="hidden sm:inline-flex items-center gap-1.5 border border-[#0a0a0a] bg-[#0a0a0a] px-4 py-2 font-mono text-[0.68rem] font-bold uppercase tracking-[0.14em] text-[#f6f1e8] no-underline hover:bg-transparent hover:text-[#0a0a0a] dark:border-[#fdf8ef] dark:bg-[#fdf8ef] dark:text-[#0a0a0a] dark:hover:bg-transparent dark:hover:text-[#fdf8ef]"
+              style={{ borderRadius: '4px' }}
             >
               {t('nav_offer')}
               <ArrowUpRight size={14} aria-hidden="true" />
-            </a>
+            </motion.a>
           </div>
         </nav>
       </motion.header>
