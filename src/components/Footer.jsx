@@ -25,7 +25,7 @@ export function Footer() {
                 className="display-title leading-none tracking-[-0.06em]"
                 style={{ fontSize: '2.4rem', lineHeight: 0.85, color: '#f6f1e8', fontFamily: 'Instrument Serif, Georgia, serif' }}
               >
-                hf<span className="signal-dot ml-[2px] relative -top-[0.45em]" aria-hidden="true" style={{ background: '#e30613', width: '6px', height: '6px' }} /><span style={{ fontWeight: 300, color: 'rgba(246,241,232,0.35)' }}>.pl</span>
+                hf<span className="mx-[2px] inline-block h-[5px] w-[5px] self-center rounded-full bg-[#e30613]" aria-hidden="true" /><span style={{ fontWeight: 300, color: '#0a0a0a' }} className="dark:!text-[#f6f1e8]">pl</span>
               </p>
               <span
                 className="mono hidden sm:inline-flex items-center justify-center shrink-0 mt-1"
