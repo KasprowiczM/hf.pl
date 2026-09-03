@@ -7,7 +7,7 @@ import { persistLanguage } from '../i18n';
 import { trackEvent } from '../lib/analytics';
 
 const THEME_KEY = 'theme';
-const THEME_CYCLE = { light: 'dark', dark: 'system', system: 'light' };
+const THEME_CYCLE = { light: 'dark', dark: 'light', system: 'dark' };
 
 const navItems = [
   { key: 'nav_why', href: '#why' },
