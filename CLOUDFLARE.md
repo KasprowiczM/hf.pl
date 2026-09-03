@@ -1,13 +1,16 @@
 # Cloudflare deployment
 
-## Pages
+## Pages — primary (2026-09-03 Editorial-Luxury)
 
 Recommended settings:
 
 - Framework preset: `Vite`
-- Build command: `npm run build`
+- Build command: `npm run build` (generates `dist` + `dist/en/index.html` + `og-card.png` + `sitemap.xml` with hreflang)
 - Build output directory: `dist`
-- Node version: `22.16.0` (Pages build image v3 default)
+- Node version: `22.16.0` (Pages build image v3 default, engines `^22.12.0 || ^24`)
+- Headers: `public/_headers` → `dist/_headers` (CSP `script-src 'self' https://plausible.io`, `style-src 'self' 'unsafe-inline'`, immutable `/assets/*`/`/fonts/*`)
+- Redirects: `public/_redirects` → `dist/_redirects` (`/en/*  /en/index.html  200`, `/*  /index.html  200`)
+- SEO: `dist/sitemap.xml` (xhtml hreflang, lastmod git), `dist/robots.txt` (Allow GPTBot/PerplexityBot/CCBot), `dist/llms.txt`/`ai.txt`
 
 Cloudflare Pages build image versions (z dokumentacji):
 
@@ -52,6 +55,7 @@ npx wrangler login
 
 ## Notes
 
-- This project is a static SPA. It does not need the Cloudflare Vite plugin unless Worker runtime code, bindings, or SSR are introduced later.
-- For Pages, the app deploys directly as static output.
-- For Workers, the current setup is intentionally minimal and keeps the landing page portable between both deployment targets.
+- This project is a prerendered SPA (2 shells: `dist/index.html` PL + `dist/en/index.html` EN via `scripts/postbuild.js`), so `/en/` is crawlable without JS — critical for hreflang GEO.
+- `_headers` + `_redirects` are copied to `dist/` by Vite + postbuild; verify after build: `ls dist/_headers dist/_redirects dist/en/index.html`.
+- For Pages, the app deploys as static output with `not_found_handling` via `_redirects 200` (not Workers `single-page-application`).
+- For Workers fallback, current setup at `worker/index.js` + `wrangler.worker.toml` (`compatibility_date 2026-03-21`) injects nonce CSP and rewrites `og:locale`/canonical for `/en/` — kept for portability but Pages is primary since 2026-09-03.
