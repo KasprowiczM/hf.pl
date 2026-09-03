@@ -540,6 +540,81 @@ body::before {
 }
 
 /* ==========================================================================
+   hf.pl — Super Scroll Punch (feat/catchy-scroll)
+   Lenis + GSAP ScrollTrigger foundation — slogan → section pin/scrub
+   Keeps brutalist-notarial palette; additive only, no palette overrides
+   ========================================================================== */
+
+/* --- Lenis recommended CSS --- */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}
+
+/* --- snap-section — optional class for snap points (GSAP snap handles section snap) --- */
+.snap-section {
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
+
+/* --- slogan — punchy brutalist display for catchy scroll slogans --- */
+.slogan {
+  font-family: var(--font-display);
+  font-size: clamp(2.8rem, 1.6rem + 5vw, 6rem);
+  line-height: 0.85;
+  letter-spacing: -0.06em;
+  font-weight: 400;
+  text-wrap: balance;
+}
+
+/* --- pin-spacer — ScrollTrigger pinSpacing compat with brutalist borders --- */
+.pin-spacer {
+  pointer-events: none;
+  background: transparent;
+}
+.gsap-pin-spacer {
+  pointer-events: none;
+}
+
+/* --- will-change for scrubbed / batched elements (GPU hint) --- */
+.evidence-row {
+  will-change: transform, opacity;
+}
+#progress {
+  will-change: transform;
+  transform-origin: left center;
+}
+
+/* --- scroll-progress helper (fallback if JS disabled) --- */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2px;
+  width: 100%;
+  transform-origin: left;
+  background: var(--color-seal);
+  z-index: 100;
+}
+
+/* ensure section-shell works with pinSpacing (no overflow clip on pin parent) */
+.section-shell {
+  position: relative;
+}
+
+/* ==========================================================================
    Self-hosted fonts — unchanged paths, compatible with Cloudflare Pages
    ========================================================================== */
 @font-face { font-family: 'Satoshi'; src: url('/fonts/satoshi-400.woff2') format('woff2'); font-weight: 400; font-display: swap; font-style: normal; }

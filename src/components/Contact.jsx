@@ -1,20 +1,58 @@
 /* eslint-disable no-unused-vars */
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Check, Copy, Mail } from 'lucide-react';
+import { Check, Copy, Mail, ArrowRight } from 'lucide-react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { trackEvent } from '../lib/analytics';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 export function Contact() {
   const { t } = useTranslation();
   const [copied, setCopied] = useState(false);
   const shouldReduceMotion = useReducedMotion();
+  const sectionRef = useRef(null);
+  const sloganRef = useRef(null);
+
+  useEffect(() => {
+    if (shouldReduceMotion) return;
+    if (typeof window === 'undefined') return;
+    const isTestEnv = typeof navigator !== 'undefined' && /jsdom/i.test(navigator.userAgent || '');
+    if (isTestEnv) return;
+    let ctx;
+    try {
+      gsap.registerPlugin(ScrollTrigger);
+      ctx = gsap.context(() => {
+        if (sloganRef.current) {
+          gsap.fromTo(
+            sloganRef.current,
+            { xPercent: -2, opacity: 0.85 },
+            {
+              xPercent: 0,
+              opacity: 1,
+              ease: 'none',
+              scrollTrigger: {
+                trigger: sectionRef.current,
+                start: 'top 85%',
+                end: 'top 45%',
+                scrub: 1,
+              },
+            }
+          );
+        }
+      }, sectionRef);
+    } catch {
+      // ignore
+    }
+    return () => {
+      if (ctx) ctx.revert();
+    };
+  }, [shouldReduceMotion]);
 
   const handleCopy = async () => {
     if (!navigator.clipboard) {
       return;
     }
-
     await navigator.clipboard.writeText('domain@hf.pl');
     setCopied(true);
     trackEvent('contact_copy', { value: 'domain@hf.pl' });
@@ -32,22 +70,50 @@ export function Contact() {
 
   return (
     <motion.section
+      ref={sectionRef}
       className="section-shell hairline-top"
       id="contact"
       style={{ borderTopWidth: '1.5px', borderTopColor: 'var(--color-ink, #080808)' }}
       initial={shouldReduceMotion ? false : 'hidden'}
       whileInView="visible"
-      viewport={{ once: true, amount: 0.15 }}
+      viewport={{ once: true, amount: 0.12 }}
       variants={container}
     >
       <div className="section-frame grid gap-10 lg:grid-cols-[0.88fr_1.12fr] lg:gap-14 lg:items-start">
-        {/* Left — editorial protocol text */}
+        {/* Left — slogan ZANIM KONKURENT. */}
         <motion.div variants={shouldReduceMotion ? undefined : item} className="max-w-[36rem]">
           <div className="eyebrow">{t('contact_overline')}</div>
-          <h2 className="section-title text-balance mt-3">{t('contact_title')}</h2>
-          <p className="section-lead mt-5">{t('contact_desc')}</p>
-          <p className="mt-6 max-w-[34rem] text-sm leading-7 text-text-muted">{t('contact_info')}</p>
-          <p className="mono mt-6 flex items-center gap-2">
+          <h2
+            ref={sloganRef}
+            className="mt-3 font-display leading-[0.85] tracking-[-0.05em] text-ink dark:text-paper will-change-transform"
+            style={{ fontFamily: 'Instrument Serif, Georgia, serif', fontSize: 'clamp(2.8rem, 1.6rem + 4vw, 5rem)' }}
+          >
+            ZANIM <span className="text-[#8b1a1a]">KONKURENT.</span>
+          </h2>
+          <p
+            className="mt-4 max-w-[34rem] text-text-muted"
+            style={{ fontSize: '0.88rem', lineHeight: '1.6', display: '-webkit-box', WebkitLineClamp: 1, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}
+          >
+            {t('contact_desc')}
+          </p>
+          <p
+            className="mt-3 max-w-[34rem] text-text-muted"
+            style={{ fontSize: '0.84rem', lineHeight: '1.6', display: '-webkit-box', WebkitLineClamp: 1, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}
+          >
+            {t('contact_info')}
+          </p>
+          {/* CTA ink — brutalist */}
+          <motion.a
+            href="mailto:domain@hf.pl"
+            onClick={() => trackEvent('cta_click', { location: 'contact_hero', target: 'mailto' })}
+            whileHover={shouldReduceMotion ? undefined : { y: -1 }}
+            whileTap={shouldReduceMotion ? undefined : { y: 0 }}
+            className="mt-6 inline-flex items-center gap-2 border border-[#080808] bg-[#080808] px-6 py-3 font-mono text-[0.76rem] font-semibold uppercase tracking-[0.14em] text-[#efebe3] no-underline hover:bg-transparent hover:text-[#080808] dark:border-[#efebe3] dark:bg-[#efebe3] dark:text-[#080808] dark:hover:bg-transparent dark:hover:text-[#efebe3]"
+          >
+            NAPISZ TERAZ — domain@hf.pl
+            <ArrowRight size={15} aria-hidden="true" />
+          </motion.a>
+          <p className="mono mt-3 flex items-center gap-2">
             <span className="h-px w-6" aria-hidden="true" style={{ background: '#080808' }} />
             <span>NASK • 1996 • PL-676 — {t('provenance_label')}</span>
           </p>
@@ -56,10 +122,9 @@ export function Contact() {
         {/* Right — protocol-card brut: square, 1.5px ink, hairline rows */}
         <motion.div
           variants={shouldReduceMotion ? undefined : item}
-          className="overflow-hidden bg-paper dark:bg-surface p-6 sm:p-7 lg:p-8"
+          className="overflow-hidden bg-paper dark:bg-surface p-6 sm:p-7 lg:p-8 will-change-transform"
           style={{ border: '1.5px solid var(--color-ink, #080808)', borderRadius: 0 }}
         >
-          {/* Top — actions: ink CTA + ghost copy */}
           <div className="flex flex-col gap-3 sm:flex-row">
             <a
               href="mailto:domain@hf.pl"
@@ -87,7 +152,6 @@ export function Contact() {
             </button>
           </div>
 
-          {/* Middle — evidence rows 01/02/03 with red mono */}
           <div className="mt-6 border-y" style={{ borderColor: 'var(--color-hairline)', borderTopWidth: '1px', borderBottomWidth: '1px' }}>
             {['cl1', 'cl2', 'cl3'].map((key, index) => (
               <div
@@ -95,21 +159,18 @@ export function Contact() {
                 className="evidence-row flex gap-4 px-1 py-4 sm:px-2 sm:py-5"
                 style={{ borderTop: '1px solid var(--color-hairline)' }}
               >
-                <span
-                  className="mono shrink-0 pt-0.5 tabular-nums"
-                  aria-hidden="true"
-                  style={{ color: '#8b1a1a', fontSize: '0.65rem' }}
-                >
+                <span className="mono shrink-0 pt-0.5 tabular-nums" aria-hidden="true" style={{ color: '#8b1a1a', fontSize: '0.65rem' }}>
                   0{index + 1}
                 </span>
-                <span className="text-sm leading-7 text-text-muted">{t(key)}</span>
+                <span className="text-sm leading-6 text-text-muted line-clamp-1" style={{ display: '-webkit-box', WebkitLineClamp: 1, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
+                  {t(key)}
+                </span>
               </div>
             ))}
           </div>
 
-          {/* Bottom — provenance NDA */}
           <p className="mono mt-5 text-center" style={{ letterSpacing: '0.14em', color: 'var(--color-text-faint)' }}>
-            Odpowiedź w 24h • NDA
+            Odpowiedź w 24h • NDA • HF.PL — ZANIM KONKURENT
           </p>
         </motion.div>
       </div>
