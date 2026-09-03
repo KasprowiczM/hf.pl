@@ -112,7 +112,7 @@ export function Navigation() {
               style={{ fontFamily: 'Instrument Serif, Georgia, serif', fontSize: '1.55rem' }}
             >
               <span>hf</span>
-              <span className="mx-[2px] inline-block h-[5px] w-[5px] self-center rounded-full bg-[#e30613] dark:bg-[#ff1a2b]" aria-hidden="true" />
+              <span className="text-[#e30613] dark:text-[#ff1a2b]" aria-hidden="true">.</span>
               <span className="text-[#0a0a0a] dark:text-[#f6f1e8] text-[1.5rem] tracking-[-0.03em]">pl</span>
             </span>
             <span className="hidden sm:inline-flex items-center justify-center border border-[#e30613] bg-transparent px-2 py-1 font-mono text-[0.58rem] font-bold tracking-[0.16em] text-[#e30613] dark:border-[#ff1a2b] dark:text-[#ff1a2b]" style={{ borderRadius: '4px' }}>
